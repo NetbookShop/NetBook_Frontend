@@ -1,0 +1,32 @@
+{ 
+    "projects": [
+        {
+            "name": "",
+            "openTasks": 1, 
+            "closedTasks": 2, 
+            "assignedTasks": 3 
+        }, 
+        {
+            "name": "",
+            "openTasks": 1, 
+            "closedTasks": 2, 
+            "assignedTasks": 3 
+        }
+    ], 
+    "tasks": [
+        { 
+            "title": "Сделать что то, и как то", 
+            "projectName": "ProjectName",
+            "date": "", 
+            "assignedTo": "UserSchema", 
+            "status": "Xyu", 
+            "projectIcon": { 
+                "fileId": "3132131", 
+                "fileUrl": "/static/dsdadasdasdasdasdas-31321", 
+                "mimeType": "image", 
+                "fileName": "313dasdadas", 
+                "fileSize": 31321312
+            }  
+        }
+    ]
+}
