@@ -18,7 +18,26 @@
             "title": "Сделать что то, и как то", 
             "projectName": "ProjectName",
             "date": "", 
-            "assignedTo": "UserSchema", 
+            "assignedTo": { 
+                "name": "", 
+                "avatar": { 
+                    "fileId": "3132131", 
+                    "fileUrl": "/static/dsdadasdasdasdasdas-31321", 
+                    "mimeType": "image", 
+                    "fileName": "313dasdadas", 
+                    "fileSize": 31321312
+                }  
+            },
+            "createdBy": { 
+                "name": "", 
+                "avatar": { 
+                    "fileId": "3132131", 
+                    "fileUrl": "/static/dsdadasdasdasdasdas-31321", 
+                    "mimeType": "image", 
+                    "fileName": "313dasdadas", 
+                    "fileSize": 31321312
+                }  
+            }, 
             "status": "Xyu", 
             "projectIcon": { 
                 "fileId": "3132131", 
@@ -28,5 +47,6 @@
                 "fileSize": 31321312
             }  
         }
-    ]
+    ], 
+    "tasksCount": 2
 }

@@ -1,6 +1,12 @@
 import { useState } from "react"
 import { useCookies } from "react-cookie";
 import { AuthorizationCookieKey } from "../../Utils/Consts";
+import data from "../../TestData/User.json"
+
+
+const generateAuthorizationCookie = () => { 
+    return "12345678910"
+}
 
 
 const RegisterPage: React.FC = () => {
@@ -8,7 +14,7 @@ const RegisterPage: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [repeatPassword, setRepeatPassword] = useState<string>('');
-    const [cookie, setCookie] = useCookies([AuthorizationCookieKey])
+    const [cookies, setCookie] = useCookies([AuthorizationCookieKey])
 
     const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(e.target.value);

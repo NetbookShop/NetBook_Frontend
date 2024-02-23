@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import HomePage from './Pages/Home/Home';
 import UserPage from './Pages/User/User';
 import NotFoundPage from './Pages/NotFound/NotFound';
@@ -17,6 +17,7 @@ import TaskPage from './Pages/Task/Task';
 import SchedulePage from './Pages/Schedule/Schedule';
 import TeamsListPage from './Pages/TeamList/TeamList';
 import { AuthorizationCookieKey } from './Utils/Consts';
+import NavbarComponent from './Components/Navbar/Navbar';
 
 function App() {	
 	const [cookies] = useCookies([AuthorizationCookieKey]);
@@ -27,22 +28,27 @@ function App() {
 	}
 
 	return (
-		<Routes>
-			<Route path="/login" element={<LoginPage />}/>
-			<Route path="/register" element={<RegisterPage />} action={localAuthCheck}/>
-			<Route path="/" element={<HomePage />} action={localAuthCheck}/>
-			<Route path="/user/:id" element={<UserPage />} action={localAuthCheck}/>
-			<Route path="/project/:id" element={<ProjectPage />} action={localAuthCheck}/> 
-			<Route path='/project/:id/edit' element={<ProjectEditPage />} action={localAuthCheck}/>
-			<Route path="/project/create" element={<ProjectCreatePage />} action={localAuthCheck}/>
-			<Route path="/projects" element={<ProjectsListPage />} action={localAuthCheck}/>
-			<Route path="/teams" element={<TeamsListPage />} action={localAuthCheck}/>
-			<Route path="/team/:id" element={<TeamPage />} action={localAuthCheck}/>
-			<Route path='/task/:id' element={<TaskPage />} action={localAuthCheck}/> 
-			<Route path="/team/:id/performance" element={<WorkersPerformancePage />} action={localAuthCheck}/>
-			<Route path='/team/:id/time' element={<SchedulePage />} action={localAuthCheck}/>
-			<Route path="*" element={<NotFoundPage/>}/>
-		</Routes>
+		<div>
+			<NavbarComponent />
+			<div className='content'>
+				<Routes>
+					<Route path="/login" element={<LoginPage />}/>
+					<Route path="/register" element={<RegisterPage />} action={localAuthCheck}/>
+					<Route path="/" element={<HomePage />} action={localAuthCheck}/>
+					<Route path="/user/:id" element={<UserPage />} action={localAuthCheck}/>
+					<Route path="/project/:id" element={<ProjectPage />} action={localAuthCheck}/> 
+					<Route path='/project/:id/edit' element={<ProjectEditPage />} action={localAuthCheck}/>
+					<Route path="/project/create" element={<ProjectCreatePage />} action={localAuthCheck}/>
+					<Route path="/projects" element={<ProjectsListPage />} action={localAuthCheck}/>
+					<Route path="/teams" element={<TeamsListPage />} action={localAuthCheck}/>
+					<Route path="/team/:id" element={<TeamPage />} action={localAuthCheck}/>
+					<Route path='/task/:id' element={<TaskPage />} action={localAuthCheck}/> 
+					<Route path="/team/:id/performance" element={<WorkersPerformancePage />} action={localAuthCheck}/>
+					<Route path='/team/:id/time' element={<SchedulePage />} action={localAuthCheck}/>
+					<Route path="*" element={<NotFoundPage/>}/>
+				</Routes>
+			</div>
+		</div>
 	);
 }
 
