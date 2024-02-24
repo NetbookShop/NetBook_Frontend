@@ -1,11 +1,10 @@
-import { NavigateFunction, useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
+import { NavigateFunction } from 'react-router-dom';
 
 type CookieType = {Authorization?: string}
 
 const authCheck = async (navigate: NavigateFunction, cookies: CookieType) =>  {    
     if (!cookies.Authorization) { 
-        return navigate("/")
+        return navigate("/login")
     } else { 
         return 
     }

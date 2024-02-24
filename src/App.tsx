@@ -27,13 +27,19 @@ function App() {
 		return authCheck(navigate, cookies)
 	}
 
+	const localRegisteredCheck = async () => { 
+		if (cookies.Authorization) { 
+			navigate("/")
+		}
+	}
+
 	return (
 		<div>
 			<NavbarComponent />
 			<div className='content'>
 				<Routes>
-					<Route path="/login" element={<LoginPage />}/>
-					<Route path="/register" element={<RegisterPage />} action={localAuthCheck}/>
+					<Route path="/login" element={<LoginPage />} action={localRegisteredCheck}/>
+					<Route path="/register" element={<RegisterPage />} action={localRegisteredCheck}/>
 					<Route path="/" element={<HomePage />} action={localAuthCheck}/>
 					<Route path="/user/:id" element={<UserPage />} action={localAuthCheck}/>
 					<Route path="/project/:id" element={<ProjectPage />} action={localAuthCheck}/> 
