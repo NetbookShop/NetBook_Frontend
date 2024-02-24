@@ -3,6 +3,7 @@ import { useCookies } from "react-cookie";
 import { AuthorizationCookieKey } from "../../Utils/Consts";
 import data from "../../TestData/User.json"
 import { NavProps } from "../../Utils/Types";
+import "./Register.css"
 
 
 const generateAuthorizationCookie = () => { 
