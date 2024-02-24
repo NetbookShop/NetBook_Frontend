@@ -1,14 +1,11 @@
 import { useState } from "react"
 import { useCookies } from "react-cookie";
 import { AuthorizationCookieKey } from "../../Utils/Consts";
-import data from "../../TestData/User.json"
 import { NavProps } from "../../Utils/Types";
 import "./Register.css"
-
-
-const generateAuthorizationCookie = () => { 
-    return "12345678910"
-}
+import logo from "../../Static/Images/karma-systemlogo.png"
+import googleLogo from "../../Static/Images/google.png"
+import { NavLink } from "react-router-dom";
 
 
 const RegisterPage: React.FC<NavProps> = (props: NavProps) => {
@@ -45,26 +42,38 @@ const RegisterPage: React.FC<NavProps> = (props: NavProps) => {
     return (
         <div className="register-root">
             <div className="register-container">
+                <div className="register-header"><img src={logo} alt="logo" className="header-logo"></img><h3>Карма менеджмент</h3></div>
                 <h2>Регистрация</h2>
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="username">Имя пользователя:</label>
-                        <input type="text" id="username" value={username} onChange={handleUsernameChange} required />
+                <form onSubmit={handleSubmit} className="register-form">
+                    <div className="input-field">
+                        <label htmlFor="username">Введите свое имя для пользвателя <span className="required-field">*</span></label>
+                        <input type="text" id="username" value={username} onChange={handleUsernameChange} required placeholder="Введите свое имя"/>
                     </div>
-                    <div>
-                        <label htmlFor="email">Email:</label>
-                        <input type="email" id="email" value={email} onChange={handleEmailChange} required />
+                    <div className="input-field">
+                        <label htmlFor="email">Введите свою электронную почту <span className="required-field">*</span></label>
+                        <input type="email" id="email" value={email} onChange={handleEmailChange} required placeholder="Введите электронную почту"/>
                     </div>
-                    <div>
-                        <label htmlFor="password">Пароль:</label>
-                        <input type="password" id="password" value={password} onChange={handlePasswordChange} required />
+                    <div className="input-field">
+                        <label htmlFor="password">Введите пароль для своего аккаунта <span className="required-field">*</span></label>
+                        <input type="password" id="password" value={password} onChange={handlePasswordChange} required placeholder="Введите пароль"/>
                     </div>
-                    <div>
-                        <label htmlFor="repeatPassword">Повторите пароль:</label>
-                        <input type="password" id="repeatPassword" value={repeatPassword} onChange={handleRepeatPasswordChange} required />
+                    <div className="input-field">
+                        <label htmlFor="repeatPassword">Повторите пароль <span className="required-field">*</span></label>
+                        <input type="password" id="repeatPassword" value={repeatPassword} onChange={handleRepeatPasswordChange} required placeholder="Введите пароль обратно"/>
                     </div>
-                    <button type="submit">Зарегистрироваться</button>
+                    <button type="submit" className="register-button">Зарегистрироваться</button>
                 </form>
+                <hr className="line"/>
+                <h3 className="continue-with">Или продолжить с помощью:</h3>
+                <div className="oauth2">
+                    <div className="oauth2-google">
+                        <div className="google-content">
+                            <img src={googleLogo} alt="" width={30} height={30}/>
+                            <p>Google</p>
+                        </div>
+                    </div>
+                </div>
+                <NavLink to="/login" className="login-link">Уже есть аккаунт? Войти</NavLink>
             </div>
         </div>
     );
