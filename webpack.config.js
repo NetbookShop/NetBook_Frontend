@@ -30,6 +30,18 @@ module.exports = {
           },
         ],
       },
+      { test: /\\.(png|jp(e*)g|svg|gif)$/, use: ['file-loader'], }, 
+      {
+        test: /\.css$/,
+        use: [
+          { 
+            loader: "css-loader",
+            options: {
+              modules: true, // Раз — и готово
+            },
+          },
+        ],
+      },
     ],
   },
 };
