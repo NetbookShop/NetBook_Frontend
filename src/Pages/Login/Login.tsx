@@ -1,5 +1,7 @@
 import React, { useState, Dispatch } from 'react';
 import { NavProps, NavigationCategoryTypes } from '../../Utils/Types';
+import { NavLink } from 'react-router-dom';
+import googleLogo from "../../Static/Images/google.png"
 
 const LoginPage: React.FC<NavProps> = (props: NavProps) => {
     props.setCategory("none")
@@ -31,6 +33,7 @@ const LoginPage: React.FC<NavProps> = (props: NavProps) => {
                             value={email}
                             onChange={handleLoginEmailChange}
                             required
+                            placeholder='Введите электронную почту'
                         />
                     </div>
                     <div>
@@ -40,11 +43,23 @@ const LoginPage: React.FC<NavProps> = (props: NavProps) => {
                             id="password"
                             value={password}
                             onChange={handlePasswordChange}
+                            placeholder='Введите пароль'
                             required
                         />
                     </div>
                     <button type="submit">Войти</button>
                 </form>
+                <hr className="line"/>
+                <h3 className="continue-with">Или продолжить с помощью:</h3>
+                <div className="oauth2">
+                    <div className="oauth2-google">
+                        <div className="google-content">
+                            <img src={googleLogo} alt="" width={30} height={30}/>
+                            <p>Google</p>
+                        </div>
+                    </div>
+                </div>
+                <NavLink to="/login" className="login-link">Уже есть аккаунт? Войти</NavLink>
             </div>
         </div>
     );
