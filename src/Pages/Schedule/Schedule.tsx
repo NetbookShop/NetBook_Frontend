@@ -1,4 +1,8 @@
-const SchedulePage: React.FC = () => { 
+import { NavProps } from "../../Utils/Types";
+
+const SchedulePage: React.FC<NavProps> = (props: NavProps) => { 
+    props.setCategory("teams")
+
     return ( 
         <div className="schedule-root">
 

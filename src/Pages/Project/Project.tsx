@@ -1,4 +1,8 @@
-const ProjectPage: React.FC = () => { 
+import { NavProps } from "../../Utils/Types";
+
+const ProjectPage: React.FC<NavProps> = (props: NavProps) => { 
+    props.setCategory("projects")
+
     return (
         <div className="projectpage-root">
 

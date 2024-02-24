@@ -1,8 +1,10 @@
+import { NavProps } from "../../Utils/Types";
 import "./NotFound.css"
 
 import { NavLink } from "react-router-dom"
 
-const NotFoundPage: React.FC = () => { 
+const NotFoundPage: React.FC<NavProps> = (props: NavProps) => { 
+    props.setCategory("none")
     return ( 
         <div className="notfound-root">
             <h1>404</h1>

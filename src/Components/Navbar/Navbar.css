@@ -22,11 +22,24 @@
 .navbar-left-content a { 
     margin: 0 23px;
     text-decoration: none;
+    color: black; 
+}
+
+.current-link { 
+    border-bottom: 2px solid blue; 
+    color: blue; 
+    text-decoration: none;
+}
+
+.current-link p { 
+    color: blue; 
+    text-decoration: none;
 }
 
 .navbar-home-link { 
     background-color: gray;
     border-radius: 50%;
+    text-decoration: none;  
     width: 40px;
     height: 40px;
 }

@@ -1,10 +1,12 @@
 import Data from "../../TestData/Home.json"  
 import { range } from "../../Utils/Range";
+import { NavProps } from "../../Utils/Types";
 
-const HomePage: React.FC = () => { 
+const HomePage: React.FC<NavProps> = (props: NavProps) => { 
     const currentTasks = Data.tasks; 
     const projects = Data.projects; 
     const listCount = range(1, 1)
+    props.setCategory("work")
  
     return (
         <div className="home-root">

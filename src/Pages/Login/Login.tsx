@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, Dispatch } from 'react';
+import { NavProps, NavigationCategoryTypes } from '../../Utils/Types';
 
-const LoginPage: React.FC = () => {
+const LoginPage: React.FC<NavProps> = (props: NavProps) => {
+    props.setCategory("none")
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 

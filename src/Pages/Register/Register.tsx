@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useCookies } from "react-cookie";
 import { AuthorizationCookieKey } from "../../Utils/Consts";
 import data from "../../TestData/User.json"
+import { NavProps } from "../../Utils/Types";
 
 
 const generateAuthorizationCookie = () => { 
@@ -9,7 +10,8 @@ const generateAuthorizationCookie = () => {
 }
 
 
-const RegisterPage: React.FC = () => {
+const RegisterPage: React.FC<NavProps> = (props: NavProps) => {
+    props.setCategory("none")
     const [username, setUsername] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
