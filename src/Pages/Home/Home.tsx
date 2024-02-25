@@ -1,6 +1,7 @@
 import Data from "../../TestData/Home.json"  
 import { range } from "../../Utils/Range";
 import { NavProps } from "../../Utils/Types";
+import "./Home.css"
 
 const HomePage: React.FC<NavProps> = (props: NavProps) => { 
     const currentTasks = Data.tasks; 
@@ -11,27 +12,32 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
     return (
         <div className="home-root">
             <h1 className="your-work">Ваша работа</h1>
-            <h4 className="recent-projects">Недавние проекты</h4>
+            <h3 className="recent-projects">Недавние проекты</h3>
             <div className="projects-container">
                 {projects.map((project) => { 
                     return (
                         <div className="project-card">
-                            <h4 className="project-name">{project.name}</h4>
-                            <p className="fast-links">Быстрые ссылки</p>
-                            <ul>
-                                <li className="tasks-group">
-                                    <p className="tasks-type">Открытые задачи </p>
-                                    <p className="tasks-count">{project.openTasks}</p>
-                                </li>
-                                <li className="tasks-group">
-                                    <p className="tasks-type">Завершенные задачи</p>
-                                    <p className="tasks-count">{project.closedTasks}</p>
-                                </li>
-                                <li className="tasks-group">
-                                    <p className="tasks-type">Назначеные задачи</p>
-                                    <p className="tasks-count">{project.assignedTasks}</p>
-                                </li>
-                            </ul>
+                            <div className="project-content">
+                                <div className="project-header">
+                                    <img src={project.photo.fileUrl} alt="" width={24} height={24}/>
+                                    <h3 className="project-name">{project.name}</h3>
+                                </div>
+                                <p className="fast-links">Быстрые ссылки</p>
+                                <ul>
+                                    <li className="tasks-group">
+                                        <p className="tasks-type">Открытые задачи </p>
+                                        <p className="tasks-count">{project.openTasks}</p>
+                                    </li>
+                                    <li className="tasks-group">
+                                        <p className="tasks-type">Завершенные задачи</p>
+                                        <p className="tasks-count">{project.closedTasks}</p>
+                                    </li>
+                                    <li className="tasks-group">
+                                        <p className="tasks-type">Назначеные задачи</p>
+                                        <p className="tasks-count">{project.assignedTasks}</p>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     )
                 })}
