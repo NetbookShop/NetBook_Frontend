@@ -1,0 +1,13 @@
+{ 
+    "projects": [
+        {
+            "id": "123456", 
+            "name": "das", 
+            "createdAt": "2 года назад", 
+            "projectIcon": { 
+                "fileUrl": "/static/dsadsa", 
+                "fileName": "dasdsa"
+            }
+        }
+    ]
+}

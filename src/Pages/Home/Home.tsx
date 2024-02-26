@@ -4,6 +4,7 @@ import { range } from "../../Utils/Range";
 import { NavProps } from "../../Utils/Types";
 import "./Home.css"
 import ArrowIcon from "../arrow";
+import PaginationNavigation from "../../Components/Pagination/Pagination";
 
 const HomePage: React.FC<NavProps> = (props: NavProps) => { 
     const currentTasks = Data.tasks; 
@@ -102,27 +103,7 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
                     })} 
                 </ul>
                 <div className="pagination-pages">
-                    <ul className="pagination-list">
-                        <li>
-                            <div className="left-arrow">
-                                <button className="arrow-button" onClick={() => setCurrentPage(currentPage - 1)}>
-                                    <ArrowIcon />
-                                </button>
-                            </div>
-                        </li>
-                        {listCount.map((value) => {
-                            return (
-                                <li className="page">{value}</li>
-                            )
-                        })}
-                        <li>
-                            <div className="right-arrow">
-                                <button className="arrow-button" onClick={() => setCurrentPage(currentPage + 1)}>
-                                    <ArrowIcon />
-                                </button>
-                            </div>
-                        </li>
-                    </ul>
+                    <PaginationNavigation pageCounter={1} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
                 </div>
             </div>
         </div>

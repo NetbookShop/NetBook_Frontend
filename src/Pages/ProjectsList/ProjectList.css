@@ -1,0 +1,15 @@
+.create-project-button { 
+    border: none; 
+    background-color: var(--button-color);
+    color: white; 
+}
+
+.projectslist-root { 
+
+}
+
+.projects-list-navbar { 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

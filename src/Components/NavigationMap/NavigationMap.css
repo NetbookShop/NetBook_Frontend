@@ -1,0 +1,14 @@
+.navigationmap-root { 
+    display: flex;
+}
+
+.navigationmap-element { 
+    color: rbga(0, 0, 0, 0.6); 
+    margin-top: 18px; 
+}
+
+.navigationmap-link { 
+    color: black; 
+    opacity: 0.6;
+    text-decoration: none;
+}
