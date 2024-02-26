@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Data from "../../TestData/Home.json"  
 import { range } from "../../Utils/Range";
 import { NavProps } from "../../Utils/Types";
@@ -7,7 +8,12 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
     const currentTasks = Data.tasks; 
     const projects = Data.projects; 
     const listCount = range(1, 1)
+    const tasksStatus = Data.tasks.map((value) => { 
+        return value.status 
+    })
+    const tasksGroup = tasksStatus.filter((item, i, ar) => ar.indexOf(item) === i)
     props.setCategory("work")
+    const [currentTasksCategory, setCurrentTasksCategory] = useState(''); 
  
     return (
         <div className="home-root">
@@ -43,10 +49,21 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
                 })}
             </div>
             <div className="tasks">
+                <div className="tasks-navbar">
+                    {tasksGroup.map((group) => { 
+                        return (
+                            <div className="tasks-navbar-link">
+                                <button onClick={() => setCurrentTasksCategory(group)}>{group}</button>
+                            </div>
+                        )
+                    })}
+                </div>
                 <ul>
                     {currentTasks.map((task) => {
                         return (
-                            <li className="task-container">
+                            <div>
+                                {task.status == currentTasksCategory ? 
+                                <li className="task-container">
                                 <div className="task-content">
                                     <div className="left-content">
                                         <img src={task.projectIcon.fileUrl} alt={task.projectIcon.fileName} className="project-icon"/>
@@ -58,7 +75,9 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
                                         <img src={task.assignedTo.avatar.fileUrl} alt={task.assignedTo.avatar.fileName} className="avatar-icon"/>
                                     </div>
                                 </div>
-                            </li>
+                                </li>
+                                : null}
+                            </div>
                         )
                     })} 
                 </ul>
