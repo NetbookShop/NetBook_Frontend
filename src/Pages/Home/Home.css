@@ -66,8 +66,103 @@
 
 .tasks-navbar { 
     display: flex;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 .tasks-navbar .tasks-navbar-link { 
     margin: 5px;
+    margin-bottom: -1px;
+}
+
+.tasks-navbar-choice  { 
+    border: none; 
+    padding: 6px;
+    padding-bottom: 5px;
+    font-size: 17px; 
+}
+
+.tasks-navbar-counter { 
+    color: black; 
+    margin-left: 8px; 
+}
+
+.task-content { 
+    margin-left: 5px;
+    background-color: rgba(0, 0, 0, 0.15);
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.tasks-list { 
+    list-style: none;
+    margin-top: 10px; 
+    padding-left: 0;
+}
+
+.left-content { 
+    display: flex;
+    align-items: center;
+}
+
+.tasks-list h4 { 
+    margin: 0;
+}
+
+.right-content { 
+    display: flex;
+    align-items: center;
+}
+
+.project-icon { 
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    margin-right: 20px;
+}
+
+.avatar-icon { 
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    margin-left: 15px;
+}
+
+.task-timestmp { 
+    font-size: 16px; 
+    font-weight: 500;
+    margin: 10px 9px; 
+}
+
+.pagination-list { 
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    align-items: center;
+}
+
+.pagination-list li { 
+    margin: 3px; 
+}
+
+.left-arrow { 
+    rotate: 90deg; 
+}
+
+.right-arrow { 
+    rotate: -90deg;
+}
+
+.page { 
+    padding: 3px 7px;
+    background-color: rgba(152, 175, 255, 0.6);
+    border-radius: 2px;
+}
+
+.arrow-button { 
+    padding: 0;
+    border: none;  
+    cursor: pointer;  
 }

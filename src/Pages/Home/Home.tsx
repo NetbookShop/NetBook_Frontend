@@ -2,7 +2,9 @@ import { useState } from "react";
 import Data from "../../TestData/Home.json"  
 import { range } from "../../Utils/Range";
 import { NavProps } from "../../Utils/Types";
+import arrowIcon from "../../Static/Images/arrow-icon.png"
 import "./Home.css"
+import ArrowIcon from "../arrow";
 
 const HomePage: React.FC<NavProps> = (props: NavProps) => { 
     const currentTasks = Data.tasks; 
@@ -11,10 +13,15 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
     const tasksStatus = Data.tasks.map((value) => { 
         return value.status 
     })
-    const tasksGroup = tasksStatus.filter((item, i, ar) => ar.indexOf(item) === i)
+    const tasksCategories = tasksStatus.filter((item, i, ar) => ar.indexOf(item) === i)
     props.setCategory("work")
-    const [currentTasksCategory, setCurrentTasksCategory] = useState(''); 
- 
+    const [currentTasksCategory, setCurrentTasksCategory] = useState(tasksCategories.length > 1 ? tasksCategories[0] : '');  
+    const tasksCounterByCategory: { [key: string]: number } = currentTasks.reduce((counter: { [key: string]: number }, task) => {
+        counter[task.status] = (counter[task.status] || 0) + 1;
+        return counter;
+    }, {});
+    const [currentPage, setCurrentPage] = useState<number>(0); 
+
     return (
         <div className="home-root">
             <h1 className="your-work">Ваша работа</h1>
@@ -50,15 +57,27 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
             </div>
             <div className="tasks">
                 <div className="tasks-navbar">
-                    {tasksGroup.map((group) => { 
+                    {tasksCategories.map((group) => { 
                         return (
                             <div className="tasks-navbar-link">
-                                <button onClick={() => setCurrentTasksCategory(group)}>{group}</button>
+                                <button
+                                    onClick={() => setCurrentTasksCategory(group)} 
+                                    className={
+                                        "tasks-navbar-choice " + 
+                                        (group == currentTasksCategory ? "current-link" : "")
+                                    }
+                                >
+                                    {group} 
+                                    <span className="tasks-navbar-counter">
+                                        {tasksCounterByCategory[group]}
+                                    </span>
+                                </button>
                             </div>
                         )
                     })}
                 </div>
-                <ul>
+                <ul className="tasks-list">
+                    <div className="task-timestmp">Сегодня</div>
                     {currentTasks.map((task) => {
                         return (
                             <div>
@@ -67,8 +86,10 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
                                 <div className="task-content">
                                     <div className="left-content">
                                         <img src={task.projectIcon.fileUrl} alt={task.projectIcon.fileName} className="project-icon"/>
-                                        <h4 className="task-title">{task.title}</h4>
-                                        <h4 className="task-project">{task.projectName}</h4>
+                                        <div className="task-metadata">
+                                            <h4 className="task-title">{task.title}</h4>
+                                            <span className="task-project">{task.projectName}</span>
+                                        </div>
                                     </div>
                                     <div className="right-content">
                                         <h4 className="task-project">Создано</h4>
@@ -82,14 +103,26 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
                     })} 
                 </ul>
                 <div className="pagination-pages">
-                    <ul>
-                        <li><div className="left-arrow"><img src="" alt="" /></div></li>
+                    <ul className="pagination-list">
+                        <li>
+                            <div className="left-arrow">
+                                <button className="arrow-button" onClick={() => setCurrentPage(currentPage - 1)}>
+                                    <ArrowIcon />
+                                </button>
+                            </div>
+                        </li>
                         {listCount.map((value) => {
                             return (
                                 <li className="page">{value}</li>
                             )
                         })}
-                        <li><div className="right-arrow"><img src="" alt="" /></div></li>
+                        <li>
+                            <div className="right-arrow">
+                                <button className="arrow-button" onClick={() => setCurrentPage(currentPage + 1)}>
+                                    <ArrowIcon />
+                                </button>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>

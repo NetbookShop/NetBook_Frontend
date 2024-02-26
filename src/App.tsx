@@ -24,7 +24,7 @@ import { NavigationCategoryTypes } from './Utils/Types';
 function App() {	
 	const [cookies] = useCookies([AuthorizationCookieKey]);
 	const navigate = useNavigate() 
-	const [navigationCategory, setNavigationCategory] = useState<NavigationCategoryTypes>("work")
+	const [navigationCategory, setNavigationCategory] = useState<NavigationCategoryTypes>("nochoice")
 
 	const localAuthCheck = () => { 
 		return authCheck(navigate, cookies)
@@ -44,6 +44,7 @@ function App() {
 					<Route path="/login" element={<LoginPage setCategory={setNavigationCategory}/>} action={localRegisteredCheck}/>
 					<Route path="/register" element={<RegisterPage  setCategory={setNavigationCategory}/>} action={localRegisteredCheck}/>
 					<Route path="/" element={<HomePage  setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
+					<Route path="/home" element={<HomePage  setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
 					<Route path="/user/:id" element={<UserPage  setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
 					<Route path="/project/:id" element={<ProjectPage setCategory={setNavigationCategory}/>} action={localAuthCheck}/> 
 					<Route path='/project/:id/edit' element={<ProjectEditPage setCategory={setNavigationCategory}/>} action={localAuthCheck}/>

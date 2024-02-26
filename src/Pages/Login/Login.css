@@ -1,3 +1,42 @@
 .login-root { 
     background-image: image("../../Static/Images/background.jpg");
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container { 
+    display: flex;
+    flex-direction: column;
+    margin: 10% auto 0 auto;
+    width: 400px;
+    padding: 20px 40px;
+    background: rgb(255, 255, 255);
+    border-radius: 5px;
+    justify-content: center;
+    box-sizing: border-box;
+    color: rgba(0, 0, 0, 0.7); 
+    border: 0.5px solid rgba(0, 0, 0, 0.4);
+}
+
+.login-header-login { 
+    text-align: center;
+    margin: 5px 0; 
+}
+
+.login-header { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-button { 
+    padding: 11px;
+    width: 100%;
+    background-color: #007bff;
+    color: white; 
+    border: none; 
+    margin-top: 14px;   
+    border-radius: 7px;
+    cursor: pointer; 
 }

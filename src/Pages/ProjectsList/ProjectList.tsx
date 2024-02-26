@@ -5,7 +5,7 @@ const ProjectsListPage: React.FC<NavProps> = (props: NavProps) => {
 
     return ( 
         <div className="projectslist-root">
-
+            
         </div>
     )
 }

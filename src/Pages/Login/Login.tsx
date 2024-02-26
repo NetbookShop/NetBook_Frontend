@@ -2,6 +2,7 @@ import React, { useState, Dispatch } from 'react';
 import { NavProps, NavigationCategoryTypes } from '../../Utils/Types';
 import { NavLink } from 'react-router-dom';
 import googleLogo from "../../Static/Images/google.png"
+import logo from "../../Static/Images/karma-systemlogo.png"
 import "./Login.css"
 
 
@@ -26,9 +27,11 @@ const LoginPage: React.FC<NavProps> = (props: NavProps) => {
     return (
         <div className="login-root">
             <div className="login-container">
+                <div className="login-header"><img src={logo} alt="logo" className="header-logo"></img><h3>Карма менеджмент</h3></div>
+                <h2 className='login-header-login'>Войти</h2>
                 <form onSubmit={handleFormSubmit}>
-                    <div>
-                        <label htmlFor="loginEmail">Email:</label>
+                    <div className="input-field">
+                        <label htmlFor="loginEmail">Введите свою электронную почту <span className="required-field">*</span></label>
                         <input
                             type="text"
                             id="loginEmail"
@@ -38,8 +41,8 @@ const LoginPage: React.FC<NavProps> = (props: NavProps) => {
                             placeholder='Введите электронную почту'
                         />
                     </div>
-                    <div>
-                        <label htmlFor="password">Пароль:</label>
+                    <div className="input-field">
+                        <label htmlFor="password">Пароль <span className="required-field">*</span></label>
                         <input
                             type="password"
                             id="password"
@@ -49,7 +52,7 @@ const LoginPage: React.FC<NavProps> = (props: NavProps) => {
                             required
                         />
                     </div>
-                    <button type="submit">Войти</button>
+                    <button type="submit" className='login-button'>Войти</button>
                 </form>
                 <hr className="line"/>
                 <h3 className="continue-with">Или продолжить с помощью:</h3>
@@ -61,7 +64,7 @@ const LoginPage: React.FC<NavProps> = (props: NavProps) => {
                         </div>
                     </div>
                 </div>
-                <NavLink to="/login" className="login-link">Уже есть аккаунт? Войти</NavLink>
+                <NavLink to="/register" className="login-link">Нету аккаунта? Зарегистрироваться</NavLink>
             </div>
         </div>
     );
