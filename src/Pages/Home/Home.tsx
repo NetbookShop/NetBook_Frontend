@@ -2,7 +2,6 @@ import { useState } from "react";
 import Data from "../../TestData/Home.json"  
 import { range } from "../../Utils/Range";
 import { NavProps } from "../../Utils/Types";
-import arrowIcon from "../../Static/Images/arrow-icon.png"
 import "./Home.css"
 import ArrowIcon from "../arrow";
 
@@ -64,7 +63,7 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
                                     onClick={() => setCurrentTasksCategory(group)} 
                                     className={
                                         "tasks-navbar-choice " + 
-                                        (group == currentTasksCategory ? "current-link" : "")
+                                        (group === currentTasksCategory ? "current-link" : "")
                                     }
                                 >
                                     {group} 
@@ -81,7 +80,7 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
                     {currentTasks.map((task) => {
                         return (
                             <div>
-                                {task.status == currentTasksCategory ? 
+                                {task.status === currentTasksCategory ? 
                                 <li className="task-container">
                                 <div className="task-content">
                                     <div className="left-content">

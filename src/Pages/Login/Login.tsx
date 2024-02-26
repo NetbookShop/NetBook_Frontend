@@ -1,5 +1,5 @@
-import React, { useState, Dispatch } from 'react';
-import { NavProps, NavigationCategoryTypes } from '../../Utils/Types';
+import React, { useState } from 'react';
+import { NavProps } from '../../Utils/Types';
 import { NavLink } from 'react-router-dom';
 import googleLogo from "../../Static/Images/google.png"
 import logo from "../../Static/Images/karma-systemlogo.png"

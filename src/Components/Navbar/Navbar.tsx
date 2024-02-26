@@ -13,19 +13,19 @@ type props = { navigationCategory?: NavigationCategoryTypes }
 const NavbarComponent: React.FC<props> = (props: props) => { 
     return (
         <div>
-            { props.navigationCategory != "none" ?  
+            { props.navigationCategory !== "none" ?  
             <header className="navbar-root">
                 <div className="navbar-left-content">
                     <NavLink to="/" className="navbar-home-link logo-link">
                         <img src={logo} alt="something" className="logo" width={40} height={40}/>
                     </NavLink>
-                    <NavLink to="/" className={"navbar-projects-link " + (props.navigationCategory == "work" ? "current-link" : "")}>
+                    <NavLink to="/" className={"navbar-projects-link " + (props.navigationCategory === "work" ? "current-link" : "")}>
                         <p className="projects-link">Моя работа</p>
                     </NavLink>
-                    <NavLink to="/projects" className={"navbar-projects-link " + (props.navigationCategory == "projects" ? "current-link" : "")}>
+                    <NavLink to="/projects" className={"navbar-projects-link " + (props.navigationCategory === "projects" ? "current-link" : "")}>
                         <p className="projects-link">Проекты</p>
                     </NavLink>
-                    <NavLink to="/teams" className={"navbar-projects-link " + (props.navigationCategory == "teams" ? "current-link" : "")}>
+                    <NavLink to="/teams" className={"navbar-projects-link " + (props.navigationCategory === "teams" ? "current-link" : "")}>
                         <p className="projects-link">Команды</p>
                     </NavLink>
                 </div>
