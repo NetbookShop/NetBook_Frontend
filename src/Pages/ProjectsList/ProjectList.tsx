@@ -29,14 +29,17 @@ const ProjectsListPage: React.FC<NavProps> = (props: NavProps) => {
                     return (
                         <div>
                             <li className="project-container">
-                            <div className="project-content">
-                                <div className="left-content">
-                                    <img src={project.projectIcon.fileUrl} alt={project.projectIcon.fileName} className="project-icon"/>
-                                    <div className="project-metadata">
-                                        <h4 className="project-title">{project.name}</h4>
+                                <div className="project-content-list">
+                                    <div className="left-content">
+                                        <img src={project.projectIcon.fileUrl} alt={project.projectIcon.fileName} className="project-icon"/>
+                                        <div className="project-metadata">
+                                            <h4 className="project-title">{project.name}</h4>
+                                        </div>
+                                    </div>
+                                    <div className="center-content">
+                                        <div className=""></div>
                                     </div>
                                 </div>
-                            </div>
                             </li>
                         </div>
                     )

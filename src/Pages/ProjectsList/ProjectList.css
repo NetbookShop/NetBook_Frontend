@@ -4,8 +4,16 @@
     color: white; 
 }
 
-.projectslist-root { 
+.project-container { 
 
+}
+
+.projectslist-root ul { 
+    padding-left: 0;
+}
+
+.projectslist-root li { 
+    list-style: none;
 }
 
 .projects-list-navbar { 
