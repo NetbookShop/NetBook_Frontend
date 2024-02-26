@@ -2,6 +2,7 @@ import { NavProps } from "../../Utils/Types";
 import data from "../../TestData/ProjectList.json"
 import NavigationMapComponent from "../../Components/NavigationMap/NavigationMap";
 import SearchComponent from "../../Components/Search/Search";
+import propertiesIcon from "../../Static/Images/propertiesIcon.svg"
 import "./ProjectList.css"
 import CreateTeamModalCall from "../../Modals/Team/CreateTeam";
 import PaginationNavigation from "../../Components/Pagination/Pagination";
@@ -25,19 +26,32 @@ const ProjectsListPage: React.FC<NavProps> = (props: NavProps) => {
                 </div>
             </div>
             <div className="projects-list">
+                <div className="projects-list-header">
+                    <p>Имя</p>
+                    <p>Время создания</p>
+                    <p>Руководитель</p>
+                    <p></p>
+                </div>
                 {projects.map((project) => {
                     return (
                         <div>
                             <li className="project-container">
                                 <div className="project-content-list">
                                     <div className="left-content">
-                                        <img src={project.projectIcon.fileUrl} alt={project.projectIcon.fileName} className="project-icon"/>
+                                        <img src={project.projectIcon.fileUrl} alt="" className="project-icon"/>
                                         <div className="project-metadata">
                                             <h4 className="project-title">{project.name}</h4>
                                         </div>
                                     </div>
                                     <div className="center-content">
-                                        <div className=""></div>
+                                        <div className="created-at">{project.createdAt}</div>
+                                    </div>
+                                    <div className="owner">
+                                        <img src={project.ownerIcon.fileUrl} alt="" className="avatar-icon" />
+                                        <h4>{project.ownerName}</h4>
+                                    </div>
+                                    <div className="properties">
+                                        <button className="properties-button"><img src={propertiesIcon} alt="" width={24} height={24}/></button>
                                     </div>
                                 </div>
                             </li>

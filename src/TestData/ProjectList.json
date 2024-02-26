@@ -4,9 +4,20 @@
             "id": "123456", 
             "name": "das", 
             "createdAt": "2 года назад", 
+            "ownerName": "Owner", 
             "projectIcon": { 
-                "fileUrl": "/static/dsadsa", 
-                "fileName": "dasdsa"
+                "fileId": "3132131", 
+                "fileUrl": "/static/dsdadasdasdasdasdas-31321", 
+                "mimeType": "image", 
+                "fileName": "313dasdadas", 
+                "fileSize": 31321312
+            }, 
+            "ownerIcon": { 
+                "fileId": "3132131", 
+                "fileUrl": "/static/dsdadasdasdasdasdas-31321", 
+                "mimeType": "image", 
+                "fileName": "313dasdadas", 
+                "fileSize": 31321312
             }
         }
     ]
