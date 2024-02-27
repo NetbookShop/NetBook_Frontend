@@ -7,6 +7,7 @@ import "./ProjectList.css"
 import CreateTeamModalCall from "../../Modals/Team/CreateTeam";
 import PaginationNavigation from "../../Components/Pagination/Pagination";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const ProjectsListPage: React.FC<NavProps> = (props: NavProps) => { 
     const projects = data.projects
@@ -40,7 +41,7 @@ const ProjectsListPage: React.FC<NavProps> = (props: NavProps) => {
                                     <div className="left-content">
                                         <img src={project.projectIcon.fileUrl} alt="" className="project-icon"/>
                                         <div className="project-metadata">
-                                            <h4 className="project-title">{project.name}</h4>
+                                            <h4 className="project-title"><NavLink to={"/project/" + project.id} className={"project-link"}>{project.name}</NavLink></h4>
                                         </div>
                                     </div>
                                     <div className="center-content">

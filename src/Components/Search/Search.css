@@ -28,7 +28,7 @@
 
 .search-menu {
     position: absolute;
-    bottom: -170%;
+    top: 40px; /* Как то убрать */
     left: 0;
     width: inherit;
     background-color: #fff;
@@ -51,8 +51,29 @@
 .search-menu-header { 
     display: flex;
     align-items: center;
+    margin-bottom: 5px;
 }
 
 .tasks-counter { 
     margin: 0 10px;
+}
+
+.found-task { 
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    padding-left: 5px; 
+    cursor: pointer;
+}
+
+.found-task p { 
+    margin: 0;  
+}
+
+.found-task h4 { 
+    margin: 0; 
+}
+
+.found-task:hover { 
+    background-color: rgba(0, 0, 0, 0.2);
 }

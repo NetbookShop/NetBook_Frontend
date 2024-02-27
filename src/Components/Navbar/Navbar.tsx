@@ -32,7 +32,7 @@ const NavbarComponent: React.FC<props> = (props: props) => {
                 <div className="navbar-right-content">
                     <SearchComponent width={260}/>
                     <NotificationComponent />
-                    <ProfileComponent />
+                    <ProfileComponent userId="1234567" avatarUrl="static/fuckyou"/>
                 </div>
             </header>
             : null } 

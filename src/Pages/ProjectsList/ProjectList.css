@@ -5,7 +5,7 @@
 }
 
 .project-container { 
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.15);
     margin: 15px 0; 
     padding: 10px; 
     border-radius: 5px;
@@ -71,4 +71,12 @@
 
 .center-content { 
     margin-right: 40px;
+}
+
+.project-link { 
+    text-decoration: none;
+}
+
+.project-link:visited { 
+    color: blue; 
 }

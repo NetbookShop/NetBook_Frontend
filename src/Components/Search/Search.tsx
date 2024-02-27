@@ -2,12 +2,14 @@ import "./Search.css"
 import searchIcon from "../../Static/Images/search-icon.png"
 import data from "../../TestData/Search.json"
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type propsType = { width: number, placeholder?: string}
 
 const SearchComponent: React.FC<propsType> = (props: propsType) => { 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [foundTasks, setFoundTasks] = useState<Array<any>>(data)
+    const navigate = useNavigate()
 
     const handleInputClick = () => {
         setIsMenuOpen(true);
@@ -43,8 +45,12 @@ const SearchComponent: React.FC<propsType> = (props: propsType) => {
                     </div>
                     {foundTasks.map((value) => { 
                         return (
-                            <div className="">
-
+                            <div className="found-task" onClick={() => navigate("/task/" + value.id)}>
+                                <img src={value.projectIcon.fileUrl} alt="" className="project-icon"/>
+                                <div className="found-task-description">
+                                    <h4>{value.title}</h4>
+                                    <p>{value.projectName}</p>
+                                </div>
                             </div>
                         )
                     })}
