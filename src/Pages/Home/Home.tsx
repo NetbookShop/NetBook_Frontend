@@ -5,6 +5,7 @@ import { NavProps } from "../../Utils/Types";
 import "./Home.css"
 import ArrowIcon from "../arrow";
 import PaginationNavigation from "../../Components/Pagination/Pagination";
+import { NavLink } from "react-router-dom";
 
 const HomePage: React.FC<NavProps> = (props: NavProps) => { 
     const currentTasks = Data.tasks; 
@@ -82,20 +83,22 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
                         return (
                             <div>
                                 {task.status === currentTasksCategory ? 
-                                <li className="task-container">
-                                <div className="task-content">
-                                    <div className="left-content">
-                                        <img src={task.projectIcon.fileUrl} alt={task.projectIcon.fileName} className="project-icon"/>
-                                        <div className="task-metadata">
-                                            <h4 className="task-title">{task.title}</h4>
-                                            <span className="task-project">{task.projectName}</span>
+                                <li className="home-task-container">
+                                    <NavLink to={`/task/${task.id}`}>
+                                        <div className="task-content">
+                                            <div className="left-content">
+                                                <img src={task.projectIcon.fileUrl} alt={task.projectIcon.fileName} className="project-icon"/>
+                                                <div className="task-metadata">
+                                                    <h4 className="task-title">{task.title}</h4>
+                                                    <span className="task-project">{task.projectName}</span>
+                                                </div>
+                                            </div>
+                                            <div className="right-content">
+                                                <h4 className="task-project">Создано</h4>
+                                                <img src={task.assignedTo.avatar.fileUrl} alt={task.assignedTo.avatar.fileName} className="avatar-icon"/>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="right-content">
-                                        <h4 className="task-project">Создано</h4>
-                                        <img src={task.assignedTo.avatar.fileUrl} alt={task.assignedTo.avatar.fileName} className="avatar-icon"/>
-                                    </div>
-                                </div>
+                                    </NavLink>
                                 </li>
                                 : null}
                             </div>

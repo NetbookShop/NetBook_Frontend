@@ -7,6 +7,7 @@ import CreateTaskModalCall from "../../Modals/Task/CreateTask";
 import "./Project.css"
 import { FileScheme } from "../../Schemes/File";
 import ArrowIcon from "../arrow";
+import { NavLink } from "react-router-dom";
 
 type User = { id: string, name: string, avatar: FileScheme }
 
@@ -67,9 +68,11 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
                                                     return null 
                                                 } 
                                                 return (
-                                                    <div className="group-task">
+                                                    <div  className="group-task">
+                                                    <NavLink to={`/task/${task.id}`}>
                                                         <h4 className="task-name">{task.name}</h4>
                                                         <p>{task.description?.slice(0, 40)}</p>
+                                                    </NavLink>
                                                     </div>
                                                 )
                                             })}

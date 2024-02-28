@@ -37,11 +37,12 @@
 
 .group-task { 
     margin: 8px 0; 
+    cursor: pointer;
     padding: 10px 10px;
     background-color: white;
 }
 
-.tasks { 
+.project-tasks { 
     display: flex;
 }
 
@@ -75,4 +76,9 @@
     background-color: rgba(0, 0, 0, 0.09);
     cursor: pointer;
     border-radius: 3px;
+}
+
+.group-task a { 
+    text-decoration: none;
+    color: black; 
 }

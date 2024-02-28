@@ -29,6 +29,7 @@
     ], 
     "tasks": [
         { 
+            "id": "1234", 
             "title": "Сделать что то, и как то", 
             "projectName": "ProjectName",
             "date": "", 
@@ -62,6 +63,7 @@
             }  
         }, 
         { 
+            "id": "1234", 
             "title": "Хуй попинать", 
             "projectName": "ProjectName",
             "date": "", 

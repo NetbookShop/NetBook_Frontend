@@ -1,0 +1,66 @@
+{ 
+    "project": {
+        "id": "1234", 
+        "name": "name" 
+    }, 
+    "task": { 
+        "id": "1234", 
+        "name": "sdadsad",
+        "description": "Opishi svoe sostaianie", 
+        "assignedTo": { 
+            "id": "3132", 
+            "name": "dada",
+            "avatar": { 
+                "fileId": "3132131", 
+                "fileUrl": "/static/dsdadasdasdasdasdas-31321", 
+                "mimeType": "image", 
+                "fileName": "313dasdadas", 
+                "fileSize": 31321312
+            }
+        }, 
+        "tags": [ 
+            "da" 
+        ], 
+        "author": { 
+            "id": "3132", 
+            "name": "dada", 
+            "avatar": { 
+                "fileId": "3132131", 
+                "fileUrl": "/static/dsdadasdasdasdasdas-31321", 
+                "mimeType": "image", 
+                "fileName": "313dasdadas", 
+                "fileSize": 31321312
+            }
+        }, 
+        "createdAt": "Вчера"
+    }, 
+    "user": { 
+        "id": "1234", 
+        "name": "okok", 
+        "avatar": { 
+            "fileId": "3132131", 
+            "fileUrl": "/static/dsdadasdasdasdasdas-31321", 
+            "mimeType": "image", 
+            "fileName": "313dasdadas", 
+            "fileSize": 31321312
+        }
+    },
+    "comments": [ 
+        { 
+            "id": "1234", 
+            "text": "ok", 
+            "createdAt": "4 минуты назад",
+            "user": { 
+                "id": "1234", 
+                "name": "olola", 
+                "avatar": { 
+                    "fileId": "3132131", 
+                    "fileUrl": "/static/dsdadasdasdasdasdas-31321", 
+                    "mimeType": "image", 
+                    "fileName": "313dasdadas", 
+                    "fileSize": 31321312
+                }
+            }
+        }
+    ]
+}
