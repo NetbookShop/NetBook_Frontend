@@ -64,7 +64,7 @@ const SearchComponent: React.FC<propsType> = (props: propsType) => {
     };  
     return (
         <div className="search-root" style={{width: props.width}}>
-            <img src={searchIcon} alt="" className="serach-button" width={22} height={22}/>
+            <img src={searchIcon} alt="" className="serach-button" width={20} height={20}/>
             <input 
                 type="text"
                 className="search-input"

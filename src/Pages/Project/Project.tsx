@@ -13,8 +13,8 @@ type User = { id: string, name: string, avatar: FileScheme }
 const ProjectPage: React.FC<NavProps> = (props: NavProps) => { 
     let project = data.project
     const tasks = data.tasks
-    let usersNames: Array<string> = new Array; 
-    let users: Array<User> = new Array; 
+    let usersNames: Array<string> = []
+    let users: Array<User> = [] 
     data.tasks.map((value) => { 
         if (usersNames.indexOf(value.assiged_user.name) === -1) { 
             users.push(value.assiged_user)
@@ -24,7 +24,8 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
     props.setCategory("projects")
     let elemMaps = new Map<string, string>()
     elemMaps.set("Проекты", "/projects")
-    elemMaps.set(project.name, "/name")
+    elemMaps.set(project.name, `/project/` + project.name)
+    // console.log(elemMaps)
     const tasksStatus = data.tasks.map((value) => { 
         return value.status 
     })

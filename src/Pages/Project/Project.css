@@ -13,9 +13,9 @@
 }
 
 .task-group { 
-    width: 170px;
+    width: 195px;
     max-width: 200px;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.06);
     padding-left: 12px;
     padding-bottom: 9px; 
     padding-top: 9px;
@@ -24,24 +24,21 @@
     margin-right: 20px; 
 }
 
-.task-groups {
-
-} 
-
 .grouped-tasks-window {     
     max-width: 200px;
-    width: 160px;
-    border-radius: 3px;
+    width: 190px;
+    border-radius: 5px;
     padding: 10px; 
     margin-right: 20px;
     margin-top: 10px; 
     padding-top: 0; 
-    background-color: rgba(0, 0, 0, 0.15);
+    background-color: rgba(0, 0, 0, 0.06);
 }
 
 .group-task { 
     margin: 8px 0; 
-    padding: 5px;
+    padding: 10px 10px;
+    background-color: white;
 }
 
 .tasks { 
@@ -75,7 +72,7 @@
 }
 
 .create-task:hover, .group-task:hover { 
-    background-color: rgba(0, 0, 0, 0.15);
+    background-color: rgba(0, 0, 0, 0.09);
     cursor: pointer;
     border-radius: 3px;
 }
