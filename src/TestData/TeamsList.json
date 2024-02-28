@@ -1,0 +1,48 @@
+{ 
+    "teams": [
+        {
+            "id": "1234", 
+            "name": "Home",
+            "owner": { 
+                "id": "1234", 
+                "name": "dadad", 
+                "avatar": {
+                    "fileId": "3132131", 
+                    "fileUrl": "https://galymzhanamantaj.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10407?size=medium", 
+                    "mimeType": "image", 
+                    "fileName": "313dasdadas", 
+                    "fileSize": 31321312
+                }
+            }, 
+            "photo": { 
+                "fileId": "3132131", 
+                "fileUrl": "https://galymzhanamantaj.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10407?size=medium", 
+                "mimeType": "image", 
+                "fileName": "313dasdadas", 
+                "fileSize": 31321312
+            }
+        }, 
+        {
+            "id": "1234", 
+            "name": "Domoi",
+            "owner": { 
+                "id": "1234", 
+                "name": "dadad", 
+                "avatar": {
+                    "fileId": "3132131", 
+                    "fileUrl": "https://galymzhanamantaj.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10407?size=medium", 
+                    "mimeType": "image", 
+                    "fileName": "313dasdadas", 
+                    "fileSize": 31321312
+                }
+            }, 
+            "photo": { 
+                "fileId": "3132131", 
+                "fileUrl": "https://galymzhanamantaj.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10407?size=medium", 
+                "mimeType": "image", 
+                "fileName": "313dasdadas", 
+                "fileSize": 31321312
+            }
+        }
+    ]
+}
