@@ -68,11 +68,11 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
                                                     return null 
                                                 } 
                                                 return (
-                                                    <div  className="group-task">
-                                                    <NavLink to={`/task/${task.id}`}>
-                                                        <h4 className="task-name">{task.name}</h4>
-                                                        <p>{task.description?.slice(0, 40)}</p>
-                                                    </NavLink>
+                                                    <div className="group-task">
+                                                        <NavLink to={`/task/${task.id}`}>
+                                                            <h4 className="task-name">{task.name}</h4>
+                                                            <p>{task.description?.slice(0, 40)}</p>
+                                                        </NavLink>
                                                     </div>
                                                 )
                                             })}

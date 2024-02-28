@@ -3,14 +3,12 @@ import Data from "../../TestData/Home.json"
 import { range } from "../../Utils/Range";
 import { NavProps } from "../../Utils/Types";
 import "./Home.css"
-import ArrowIcon from "../arrow";
 import PaginationNavigation from "../../Components/Pagination/Pagination";
 import { NavLink } from "react-router-dom";
 
 const HomePage: React.FC<NavProps> = (props: NavProps) => { 
     const currentTasks = Data.tasks; 
     const projects = Data.projects; 
-    const listCount = range(1, 1)
     const tasksStatus = Data.tasks.map((value) => { 
         return value.status 
     })
