@@ -4,7 +4,12 @@ import data from "../../TestData/Search.json"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-type propsType = { width: number, placeholder?: string}
+type propsType = {
+    width: number,
+    placeholder?: string, 
+    handleSearchChange?: (event: React.ChangeEvent<HTMLInputElement>) => void, 
+    clildren?: React.ReactNode
+}
 
 const SearchComponent: React.FC<propsType> = (props: propsType) => { 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,13 +20,43 @@ const SearchComponent: React.FC<propsType> = (props: propsType) => {
         setIsMenuOpen(true);
     };
 
-    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => { 
-        event.preventDefault()
-        data.map((value) => {
-            if (event.target.value === value.projectName) { 
-                setFoundTasks([...foundTasks, value])
-            }
-        })
+    let handleSearchChange
+    if (!props.handleSearchChange) { 
+        handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => { 
+            event.preventDefault()
+            data.map((value) => {
+                if (event.target.value === value.projectName) { 
+                    setFoundTasks([...foundTasks, value])
+                }
+            })
+        }
+    } else { 
+        handleSearchChange = props.handleSearchChange
+    } 
+    let children: React.ReactNode; 
+
+    if (!props.clildren) { 
+        children = ( 
+            <div>
+                <div className="search-menu-header">
+                    <h2>Задания </h2>
+                    <span className="tasks-counter">{foundTasks.length}</span>
+                </div>
+                {foundTasks.map((value) => { 
+                    return (
+                        <div className="found-task" onClick={() => navigate("/task/" + value.id)}>
+                            <img src={value.projectIcon.fileUrl} alt="" className="project-icon"/>
+                            <div className="found-task-description">
+                                <h4>{value.title}</h4>
+                                <p>{value.projectName}</p>
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
+        )
+    } else { 
+        children = props.clildren
     }
 
     const handleClickOutside = () => {
@@ -39,21 +74,7 @@ const SearchComponent: React.FC<propsType> = (props: propsType) => {
             />
             {isMenuOpen && (
                 <div className="search-menu" onClick={handleClickOutside}>
-                    <div className="search-menu-header">
-                        <h2>Задания </h2>
-                        <span className="tasks-counter">{foundTasks.length}</span>
-                    </div>
-                    {foundTasks.map((value) => { 
-                        return (
-                            <div className="found-task" onClick={() => navigate("/task/" + value.id)}>
-                                <img src={value.projectIcon.fileUrl} alt="" className="project-icon"/>
-                                <div className="found-task-description">
-                                    <h4>{value.title}</h4>
-                                    <p>{value.projectName}</p>
-                                </div>
-                            </div>
-                        )
-                    })}
+                    {children}
                 </div>
             )}
         </div>

@@ -1,10 +1,11 @@
 .navigationmap-root { 
     display: flex;
+    align-items: center;
 }
 
 .navigationmap-element { 
     color: rbga(0, 0, 0, 0.6); 
-    margin-top: 18px; 
+    margin: 18px 10px 0 0; 
 }
 
 .navigationmap-link { 

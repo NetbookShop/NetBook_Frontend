@@ -2,6 +2,17 @@
     "project": { 
         "name": "blah", 
         "id": "31231"
-        
-    }
+    }, 
+    "tasks": [
+        { 
+            "id": "31231", 
+            "name": "blah", 
+            "description": "dsadas", 
+            "status": "work", 
+            "assiged_user": { 
+                "id": "12345", 
+                "name": "blah"
+            }
+        }
+    ]
 }
