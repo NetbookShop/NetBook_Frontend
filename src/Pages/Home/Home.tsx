@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Data from "../../TestData/Home.json"  
-import { range } from "../../Utils/Range";
 import { NavProps } from "../../Utils/Types";
 import "./Home.css"
 import PaginationNavigation from "../../Components/Pagination/Pagination";
