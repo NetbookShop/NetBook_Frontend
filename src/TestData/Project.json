@@ -11,7 +11,48 @@
             "status": "work", 
             "assiged_user": { 
                 "id": "12345", 
-                "name": "blah"
+                "name": "blah", 
+                "avatar": { 
+                    "fileId": "3132131", 
+                    "fileUrl": "/static/dsdadasdasdasdasdas-31321", 
+                    "mimeType": "image", 
+                    "fileName": "313dasdadas", 
+                    "fileSize": 31321312
+                }
+            }
+        }, 
+        { 
+            "id": "31231", 
+            "name": "blah", 
+            "description": "dsadas", 
+            "status": "work", 
+            "assiged_user": { 
+                "id": "12345", 
+                "name": "blah", 
+                "avatar": { 
+                    "fileId": "3132131", 
+                    "fileUrl": "/static/dsdadasdasdasdasdas-31321", 
+                    "mimeType": "image", 
+                    "fileName": "313dasdadas", 
+                    "fileSize": 31321312
+                }
+            }
+        }, 
+        { 
+            "id": "31231", 
+            "name": "blah", 
+            "description": "dsadas", 
+            "status": "completed", 
+            "assiged_user": { 
+                "id": "12345", 
+                "name": "blah", 
+                "avatar": { 
+                    "fileId": "3132131", 
+                    "fileUrl": "/static/dsdadasdasdasdasdas-31321", 
+                    "mimeType": "image", 
+                    "fileName": "313dasdadas", 
+                    "fileSize": 31321312
+                }
             }
         }
     ]
