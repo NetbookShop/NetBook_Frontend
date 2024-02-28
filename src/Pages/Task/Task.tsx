@@ -2,6 +2,7 @@ import NavigationMapComponent from "../../Components/NavigationMap/NavigationMap
 import { NavProps } from "../../Utils/Types";
 import "./Task.css"
 import data from "../../TestData/Task.json"
+import { useState } from "react";
 
 const TaskPage: React.FC<NavProps> = (props: NavProps) => { 
     let elements = new Map<string, string>()
@@ -12,13 +13,34 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
     elements.set(data.project.name, `/project/${data.project.id}`)
     elements.set(data.task.name, `/task/${data.task.id}`)
     props.setCategory("projects")
+    const [ commentText, setCommentText ] = useState<string>()
+    const [ comments, setComments ] = useState(data.comments)
+
+    const OnCommentInput = (e: React.ChangeEvent<HTMLInputElement>) => { 
+        setCommentText(e.target.value)
+    }
+    let i = 0 
+    
+    const addComment = () => {
+        let newComment = structuredClone(comments[0])
+        newComment.text = commentText
+        newComment.id = i + 1 
+        setComments([...comments, newComment])
+        setCommentText("")
+    }
 
     const changeComment = (id: string) => { 
 
     }
 
     const deleteComment = (id: string) => { 
-        
+        setComments(comments.filter((value, index) => {
+            if (value.id === id) { 
+                return false 
+            } else { 
+                return true 
+            }
+        }))
     }
 
     return ( 
@@ -37,9 +59,10 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
                         <div className="comments-container">
                             <div className="create-comment">
                                 <img src={user.avatar.fileUrl} alt="" className="comment-profile-image"  height={34} width={34}/>
-                                <input type="text" className="create-comment-input" placeholder="Добавить коментарий"/>
+                                <input type="text" className="create-comment-input" placeholder="Добавить коментарий" value={commentText} onChange={OnCommentInput}/>
                             </div>
-                            {data.comments.map((value) => {
+                            <div className="apply-comment" onClick={addComment}><p>Опубликовать</p></div>
+                            {comments.map((value) => {
                                 return ( 
                                     <div className="comment-container">
                                         <img src={value.user.avatar.fileUrl} alt="" className="comment-profile-image" height={34} width={34}/>
@@ -55,7 +78,7 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
                                             <div className="comment-actions">
                                                 <div onClick={() => changeComment(value.id)} className="change-comment-action">Изменить</div>
                                                 <div>•</div>
-                                                <div onAbort={() => deleteComment(value.id)} className="delete-comment-action">Удалить</div>
+                                                <div onClick={() => deleteComment(value.id)} className="delete-comment-action">Удалить</div>
                                             </div>
                                         </div>
                                     </div>
