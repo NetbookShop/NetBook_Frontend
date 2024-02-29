@@ -11,7 +11,7 @@ import ProjectPage from './Pages/Project/Project';
 import ProjectCreatePage from './Pages/ProjectCreate/ProjectCreate';
 import TeamPage from './Pages/Team/Team';
 import RegisterPage from './Pages/Register/Register';
-import WorkersPerformancePage from './Pages/WorkersPerformance/WorkersPerformance';
+import WorkersAttendancePage from './Pages/WorkersAttendance/WorkersAttendance';
 import ProjectEditPage from './Pages/ProjectEdit/ProjectEdit';
 import ProjectsListPage from './Pages/ProjectsList/ProjectList';
 import TaskPage from './Pages/Task/Task';
@@ -53,8 +53,8 @@ function App() {
 					<Route path="/teams" element={<TeamsListPage setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
 					<Route path="/team/:id" element={<TeamPage setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
 					<Route path='/task/:id' element={<TaskPage setCategory={setNavigationCategory}/>} action={localAuthCheck}/> 
-					<Route path="/team/:id/performance" element={<WorkersPerformancePage setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
-					<Route path='/team/:id/time' element={<SchedulePage setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
+					<Route path="/team/:id/attendance" element={<WorkersAttendancePage setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
+					<Route path='/team/:id/schedule' element={<SchedulePage setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
 					<Route path="*" element={<NotFoundPage setCategory={setNavigationCategory}/>}/>
 				</Routes>
 			</div>

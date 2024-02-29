@@ -64,7 +64,7 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
                     <div className="teampage-attendance-user teampage-button" onClick={() => navigate(`/team/${team.id}/attendance`)}>
                         Успеваемость сотрудников
                     </div>
-                    <div className="teampage-button" onClick={() => navigate(`/team/${team.id}/timetable`)}>
+                    <div className="teampage-button" onClick={() => navigate(`/team/${team.id}/schedule`)}>
                         Добавить график
                     </div>
                 </div>
