@@ -4,6 +4,23 @@ import "./Task.css"
 import data from "../../TestData/Task.json"
 import { useState } from "react";
 
+const exampleComment = { 
+    "id": "1234", 
+    "text": "ok", 
+    "createdAt": "4 минуты назад",
+    "user": { 
+        "id": "1234", 
+        "name": "olola", 
+        "avatar": { 
+            "fileId": "3132131", 
+            "fileUrl": "/static/dsdadasdasdasdasdas-31321", 
+            "mimeType": "image", 
+            "fileName": "313dasdadas", 
+            "fileSize": 31321312
+        }
+    }
+}
+
 const TaskPage: React.FC<NavProps> = (props: NavProps) => { 
     let elements = new Map<string, string>()
     const task = data.task
@@ -15,26 +32,44 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
     props.setCategory("projects")
     const [ commentText, setCommentText ] = useState<string>()
     const [ comments, setComments ] = useState(data.comments)
+    const [ currentCommentID, setCurrentCommentID] = useState<string>()
+    const [ currentCommentText, setCurrentCommentText] = useState('')
 
     const OnCommentInput = (e: React.ChangeEvent<HTMLInputElement>) => { 
         setCommentText(e.target.value)
     }
-    let i = 0 
-    
+
     const addComment = () => {
-        let newComment = structuredClone(comments[0])
-        newComment.text = commentText
-        newComment.id = i + 1 
+        let newComment: any
+        newComment = structuredClone(exampleComment)
+
+        newComment.text = commentText  
+        newComment.id = crypto.randomUUID() 
+        console.log(newComment.id)
         setComments([...comments, newComment])
         setCommentText("")
     }
 
     const changeComment = (id: string) => { 
+        setCurrentCommentID(id)
+        comments.map((value) => { 
+            setCurrentCommentText(value.text)
+        })
+    }
 
+    const submitChange = (id: string) => { 
+        comments.map((value, index) => { 
+            if (value.id === id && currentCommentText !== undefined) { 
+                comments[index].text = currentCommentText
+            }
+        })
+        setCurrentCommentID(undefined)
+        setCurrentCommentText('')
     }
 
     const deleteComment = (id: string) => { 
         setComments(comments.filter((value, index) => {
+            console.log(id, value.id)
             if (value.id === id) { 
                 return false 
             } else { 
@@ -73,12 +108,29 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
                                                 <p className="comment-date">{value.createdAt}</p>
                                             </div>
                                             <div className="comment-text">
-                                                {value.text}
+                                                {currentCommentID !== value.id ?  
+                                                    <div>
+                                                        {value.text}
+                                                    </div> : 
+                                                    <input
+                                                        type="text" 
+                                                        className="change-comment-input" 
+                                                        placeholder="Изменить коментарий" 
+                                                        value={currentCommentText} 
+                                                        onChange={(e) => setCurrentCommentText(e.target.value)}
+                                                    />
+                                                } 
                                             </div>
                                             <div className="comment-actions">
-                                                <div onClick={() => changeComment(value.id)} className="change-comment-action">Изменить</div>
-                                                <div>•</div>
-                                                <div onClick={() => deleteComment(value.id)} className="delete-comment-action">Удалить</div>
+                                                { currentCommentID !== value.id ? 
+                                                    <div className="comment-actions">
+                                                        <div onClick={() => changeComment(value.id)} className="change-comment-action">Изменить</div>
+                                                        <div>•</div>
+                                                        <div onClick={() => deleteComment(value.id)} className="delete-comment-action">Удалить</div>
+                                                    </div>
+                                                : <div>
+                                                    <div onClick={() => submitChange(value.id)} className="apply-comment-change">Подвердить</div>
+                                                </div> } 
                                             </div>
                                         </div>
                                     </div>

@@ -1,6 +1,11 @@
-[ 
-    {
-        "id": "31321", 
-        "name": "dasdsa"
+{
+    "id": "31321", 
+    "name": "xyu", 
+    "banner": { 
+        "fileId": "3132131", 
+        "fileUrl": "https://www.robin-noorda.com/uploads/1/6/8/3/16830688/3347022_orig.jpg", 
+        "mimeType": "image", 
+        "fileName": "313dasdadas", 
+        "fileSize": 31321312
     }
-]
+}
