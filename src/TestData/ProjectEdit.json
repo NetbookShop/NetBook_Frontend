@@ -1,0 +1,35 @@
+{ 
+    "id": "131231", 
+    "name": "Project name", 
+    "icon": { 
+        "fileId": "3132131", 
+        "fileUrl": "/static/dsdadasdasdasdasdas-31321", 
+        "mimeType": "image", 
+        "fileName": "313dasdadas", 
+        "fileSize": 31321312
+    }, 
+    "owner": { 
+        "id": "31231",
+        "name": "Blah", 
+        "avatar": { 
+            "fileId": "3132131", 
+            "fileUrl": "/static/dsdadasdasdasdasdas-31321", 
+            "mimeType": "image", 
+            "fileName": "313dasdadas", 
+            "fileSize": 31321312
+        }
+    },
+    "users": [ 
+        { 
+            "id": "31231",
+            "name": "Blah", 
+            "avatar": { 
+                "fileId": "3132131", 
+                "fileUrl": "/static/dsdadasdasdasdasdas-31321", 
+                "mimeType": "image", 
+                "fileName": "313dasdadas", 
+                "fileSize": 31321312
+            }
+        }
+    ]
+}
