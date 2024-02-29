@@ -65,38 +65,38 @@ const UserPage: React.FC<NavProps> = (props: NavProps) => {
                     </div>
                 </div>
                 <div className="account-activity">
-                        <div className="account-tasks">
-                            <h3 className="account-info-header">Активность на работе</h3>
-                            {data.tasks.map((task) => { 
-                                return ( 
-                                    <div className="account-task">
-                                        <p className="account-task-name">{task.name}</p>
-                                        <div className="account-task-metainfo">
-                                            <p className="account-project-name">
-                                                {task.projectName}
-                                            </p>
-                                            <p>•</p>
-                                            <p className="account-project-data">
-                                                {task.createdAt}
-                                            </p>
-                                        </div>  
-                                    </div>
-                                )
+                    <div className="account-tasks">
+                        <h3 className="account-info-header">Активность на работе</h3>
+                        {data.tasks.map((task) => { 
+                            return ( 
+                                <div className="account-task">
+                                    <p className="account-task-name">{task.name}</p>
+                                    <div className="account-task-metainfo">
+                                        <p className="account-project-name">
+                                            {task.projectName}
+                                        </p>
+                                        <p>•</p>
+                                        <p className="account-project-data">
+                                            {task.createdAt}
+                                        </p>
+                                    </div>  
+                                </div>
+                            )
+                        })}
+                    </div>
+
+                    <div className="account-attendance">
+                        <h3 className="account-info-header">Посещаемость</h3>
+                        <div className="attendance-list">
+                            {data.workVisits.map((visit) => { 
+                                return <div className="account-work-visit">
+                                    <p>Посщение работы</p>
+                                    <p>{visit.visitedAt}</p>
+                                </div>
                             })}
                         </div>
-
-                        <div className="account-attendance">
-                            <h3 className="account-info-header">Посещаемость</h3>
-                            <div className="attendance-list">
-                                {data.workVisits.map((visit) => { 
-                                    return <div className="account-work-visit">
-                                        <p>Посщение работы</p>
-                                        <p>{visit.visitedAt}</p>
-                                    </div>
-                                })}
-                            </div>
-                        </div>
                     </div>
+                </div>
             </div>
         </div>
     )

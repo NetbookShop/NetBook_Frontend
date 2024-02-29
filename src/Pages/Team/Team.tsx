@@ -2,11 +2,13 @@ import { NavProps } from "../../Utils/Types";
 import data from "../../TestData/Team.json"
 import "./Team.css"
 import { AddUserModalCall } from "../../Modals/Team/AddUser";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import addIcon from "../../Static/Images/add-icon.png"
 
 const TeamPage: React.FC<NavProps> = (props: NavProps) => { 
     props.setCategory("teams")
     const team = data
+    const navigate = useNavigate(); 
 
     const GroupAddUser = (id: string) => { 
 
@@ -27,7 +29,7 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
                             {team.description}
                         </p>
                     </div>
-                    <div className="teampage-add-user" onClick={AddUserModalCall}>
+                    <div className="teampage-add-user teampage-button" onClick={AddUserModalCall}>
                         Добавить пользвателя
                     </div>
                     <div className="team-main-info">
@@ -35,8 +37,10 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
                             {team.groups.map((value) => {
                                 return ( 
                                     <div className="teampage-container">
-                                        <h4>{value.name}</h4>
-                                        <p>{value.users.length}</p>
+                                        <div className="teampage-team-header">
+                                            <h3>{value.name}</h3>
+                                            <p className="team-members-counter">{value.users.length} Участников</p>
+                                        </div>
                                         <hr />
                                         <div className="teampage-group-users">
                                             {value.users.map((user) => { 
@@ -56,6 +60,33 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
                                 )
                             })}
                         </div>
+                    </div>
+                    <div className="teampage-attendance-user teampage-button" onClick={() => navigate(`/team/${team.id}/attendance`)}>
+                        Успеваемость сотрудников
+                    </div>
+                    <div className="teampage-button" onClick={() => navigate(`/team/${team.id}/timetable`)}>
+                        Добавить график
+                    </div>
+                </div>
+                <div className="team-activity">
+                    <div className="team-tasks">
+                        <h3 className="team-info-header">Активность на работе</h3>
+                        {data.tasks.map((task) => { 
+                            return ( 
+                                <div className="team-task">
+                                    <p className="team-task-name">{task.name}</p>
+                                    <div className="team-task-metainfo">
+                                        <p className="team-project-name">
+                                            {task.projectName}
+                                        </p>
+                                        <p>•</p>
+                                        <p className="team-project-data">
+                                            {task.createdAt}
+                                        </p>
+                                    </div>  
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             </div>
