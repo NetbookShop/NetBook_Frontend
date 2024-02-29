@@ -1,0 +1,28 @@
+.user-root * { 
+    margin: 0; 
+    padding: 0; 
+}
+
+.user-container { 
+    margin: 0 auto; 
+    max-width: 900px;
+}
+
+.user-avatar-icon { 
+    width: 160px;
+    height: 160px;
+    border-radius: 100%;
+    margin-top: -85px; 
+}
+
+.user-left-navbar-main { 
+    display: flex;
+    flex-direction: column;
+    width: 225px;
+}
+
+.user-left-navbar { 
+    width: 223px;
+    height: 1000px;
+    background-color: gray;
+}
