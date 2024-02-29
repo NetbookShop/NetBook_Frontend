@@ -1,0 +1,48 @@
+{
+    "id": "31231", 
+    "name": "Большое название", 
+    "description": "Дададададаадад", 
+    "avatar": {
+        "fileId": "3132131", 
+        "fileUrl": "https://img.freepik.com/premium-photo/wide-field-with-sunflowers-and-cloudy-sky-over-the-field_199743-11638.jpg", 
+        "mimeType": "image", 
+        "fileName": "313dasdadas", 
+        "fileSize": 31321312
+    }, 
+    "groups": [
+        { 
+            "id": "3123", 
+            "name": "members",
+            "users": [
+                { 
+                    "id": "1234", 
+                    "name": "Руководитель", 
+                    "avatar": { 
+                        "fileId": "3132131", 
+                        "fileUrl": "https://img.freepik.com/premium-photo/wide-field-with-sunflowers-and-cloudy-sky-over-the-field_199743-11638.jpg", 
+                        "mimeType": "image", 
+                        "fileName": "313dasdadas", 
+                        "fileSize": 31321312
+                    }
+                }
+            ]
+        }, 
+        { 
+            "id": "3123", 
+            "name": "owners", 
+            "users": [
+                { 
+                    "id": "1234", 
+                    "name": "Дада", 
+                    "avatar": { 
+                        "fileId": "3132131", 
+                        "fileUrl": "https://img.freepik.com/premium-photo/wide-field-with-sunflowers-and-cloudy-sky-over-the-field_199743-11638.jpg", 
+                        "mimeType": "image", 
+                        "fileName": "313dasdadas", 
+                        "fileSize": 31321312
+                    }
+                }
+            ]
+        }
+    ]
+}

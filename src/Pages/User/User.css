@@ -5,7 +5,10 @@
 
 .user-container { 
     margin: 0 auto; 
-    max-width: 900px;
+    max-width: 750px;
+    display: flex;
+    justify-content: space-between;
+    display: flex;
 }
 
 .user-avatar-icon { 
@@ -21,8 +24,99 @@
     width: 225px;
 }
 
-.user-left-navbar { 
+.user-left-navbar-info { 
     width: 223px;
-    height: 1000px;
-    background-color: gray;
+}
+
+.userpage-username { 
+    display: flex;
+    align-items: center;
+}
+
+.account-control { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: rgb(205, 205, 205);
+    margin: 10px 0; 
+    padding: 5px 0;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.account-control:hover { 
+    background-color: rgb(184, 184, 184);
+}
+
+.account-info-field {
+    display: flex;
+    align-items: center;
+    margin: 8px 5px; 
+}
+
+.account-team-container { 
+    display: flex;
+    align-items: center;
+}
+
+.account-team-logo { 
+    border-radius: 100%;
+    margin-right: 10px;    
+}
+
+.account-info-header { 
+    margin: 15px 0;
+}
+
+.account-info-line { 
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.account-activity { 
+    width: 65%;
+}
+
+.account-task { 
+    display: flex;
+    flex-direction: column;
+    padding: 15px 10px;
+    background-color: rgb(216, 216, 216);   
+    border-radius: 5px;
+}
+
+.account-task:hover { 
+    background-color: rgb(184, 184, 184);
+}
+
+.account-work-visit:hover { 
+    background-color: rgb(184, 184, 184);
+}
+
+.account-task-metainfo { 
+    display: flex;
+    align-items: center;
+}
+
+.account-task-metainfo p { 
+    padding-right: 5px;
+    color: rgb(117, 117, 117); 
+}
+
+.account-work-visit { 
+    display: flex;
+    flex-direction: column;
+    padding: 15px 10px; 
+    border-radius: 5px;
+    background-color: rgb(216, 216, 216);  
+}
+
+.account-team-memebers-count { 
+    font-size: 13px; 
+    color: gray;
+}
+
+.organization-icon { 
+    margin-right: 7px;
 }
