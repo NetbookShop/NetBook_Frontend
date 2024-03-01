@@ -1,0 +1,54 @@
+{ 
+    "workers": [ 
+        { 
+            "id": "32131", 
+            "name": "dadsad", 
+            "avatar": { 
+                "fileId": "3132131", 
+                "fileUrl": "https://img.freepik.com/premium-photo/wide-field-with-sunflowers-and-cloudy-sky-over-the-field_199743-11638.jpg", 
+                "mimeType": "image", 
+                "fileName": "313dasdadas", 
+                "fileSize": 31321312
+            }, 
+            "workType": "online"
+        }, 
+        { 
+            "id": "32131", 
+            "name": "dadsad", 
+            "avatar": { 
+                "fileId": "3132131", 
+                "fileUrl": "https://img.freepik.com/premium-photo/wide-field-with-sunflowers-and-cloudy-sky-over-the-field_199743-11638.jpg", 
+                "mimeType": "image", 
+                "fileName": "313dasdadas", 
+                "fileSize": 31321312
+            }, 
+            "workType": "office"
+        }
+    ],
+    "workVisits": [ 
+        { 
+            "id": "1231", 
+            "userId": "32131", 
+            "visitedAt": "20:00 20.12.2012"
+        }
+    ], 
+    "team": { 
+        "id": "3123", 
+        "name": "3123", 
+        "schedule": [ 
+            { 
+                "id": "21312", 
+                "name": "Понидельник", 
+                "startsAt": "11:00",  
+                "dayType": "Monday"
+            }
+        ], 
+        "logo": {
+            "fileId": "3132131", 
+            "fileUrl": "https://img.freepik.com/premium-photo/wide-field-with-sunflowers-and-cloudy-sky-over-the-field_199743-11638.jpg", 
+            "mimeType": "image", 
+            "fileName": "313dasdadas", 
+            "fileSize": 31321312
+        }
+    }
+}
