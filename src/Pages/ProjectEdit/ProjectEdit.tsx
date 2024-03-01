@@ -4,6 +4,7 @@ import NavigationMapComponent from "../../Components/NavigationMap/NavigationMap
 import "./ProjectEdit.css"
 import data from "../../TestData/ProjectEdit.json"
 import { UserScheme } from "../../Schemes/User";
+import { FileScheme } from "../../Schemes/File";
 
 const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => { 
     props.setCategory("projects")
@@ -16,6 +17,22 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
     const [ foundUsers, setFoundUsers ] = useState<Array<UserScheme>>([]); 
     const [ searchRequest, setSearchRequest ] = useState()
     const [ owner, setOwner ] = useState(data.owner) 
+    const [ uploadedIcon, setUploadedIcon ] = useState<FileScheme>()
+    const [ image, setImage ] = useState<string | ArrayBuffer | null>()
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => { 
+        if (event.target.files === null) { 
+            return  
+        }
+        const file = event.target.files[0]
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file)
+
+        reader.onloadend = () => {
+            setImage(reader.result);
+        }
+    }
 
     const serachUsersToSelect = (event: React.ChangeEvent<HTMLInputElement>) => { 
         
@@ -29,9 +46,27 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
         <div className="projectedit-root">
             <NavigationMapComponent elements={elements}/>
             <div className="projectedit-form">
-                <div className="projectedit-project-image">
-                    <img src={data.icon.fileUrl} alt="" className="projectedit-project-icon"/>
-                    <div className="projectedit-project-icon-button"></div>
+                <div className="projectedit-project-image-container">
+                    <img src={
+                        (
+                            image === null ||
+                            image === undefined
+                        )
+                        ? data.icon.fileUrl
+                        : String(image)}
+                        alt=""
+                        className="projectedit-project-icon"
+                    />
+                    <label htmlFor="photoInput" className='projectedit-project-icon-change'>
+                        <input
+                            type="file"
+                            id="photoInput"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                            style={{ display: 'none' }}
+                        />
+                        <p className="projectedit-icon-button">Изменить значок</p>
+                    </label>
                 </div>
                 <div className="projectedit-fields">
                     <div className="project-edit-name edit-project-field">
@@ -57,7 +92,7 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
                         <div className="input-owner">
                             {owner !== undefined ? 
                                 <div className="owner-user">
-                                    <img src={owner.avatar.fileUrl} alt="" className="avatar-icon"/>
+                                    <img src={owner.avatar.fileUrl} alt="" className="avatar-icon-projectedit"/>
                                     <p>{ owner.name }</p>
                                 </div>
                             : null }

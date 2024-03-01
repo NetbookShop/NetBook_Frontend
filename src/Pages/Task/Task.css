@@ -57,10 +57,6 @@
     align-items: center;
 }
 
-.avatar-icon { 
-    margin-right: 10px;
-}
-
 .description-container { 
     height: 100px;
     padding: 10px;
@@ -89,10 +85,6 @@
 .create-comment { 
     display: flex;
     align-items: center;
-}
-
-.profile-image { 
-    margin-right: 20px;
 }
 
 .comment-container { 

@@ -35,8 +35,16 @@
 .projects-container li { 
     list-style: none;
     display: flex;
-    margin: 10px 0; 
+    margin: 5px 0;
+    margin-left: -5px;  
+    padding: 3px 5px;
+    border-radius: 2px;
     justify-content: space-between;
+    cursor: pointer;
+}
+
+.projects-container li:hover {
+    background-color: rgb(219, 219, 219); 
 }
 
 .projects-container ul { 
@@ -97,6 +105,10 @@
     justify-content: space-between;
 }
 
+.task-content:hover { 
+    background-color: rgba(0, 0, 0, 0.18);
+}
+
 .tasks-list { 
     list-style: none;
     margin-top: 10px; 
@@ -140,4 +152,11 @@
 .home-task-container a { 
     text-decoration: none;
     color: black; 
+}
+
+.avatar-owner-icon { 
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    margin-left: 15px; 
 }

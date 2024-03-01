@@ -3,7 +3,7 @@ import Data from "../../TestData/Home.json"
 import { NavProps } from "../../Utils/Types";
 import "./Home.css"
 import PaginationNavigation from "../../Components/Pagination/Pagination";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const HomePage: React.FC<NavProps> = (props: NavProps) => { 
     const currentTasks = Data.tasks; 
@@ -19,6 +19,7 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
         return counter;
     }, {});
     const [currentPage, setCurrentPage] = useState<number>(0); 
+    const navigate = useNavigate()
 
     return (
         <div className="home-root">
@@ -35,15 +36,15 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
                                 </div>
                                 <p className="fast-links">Быстрые ссылки</p>
                                 <ul>
-                                    <li className="tasks-group">
+                                    <li className="tasks-group" onClick={() => navigate(`/project/${project.id}`)}>
                                         <p className="tasks-type">Открытые задачи </p>
                                         <p className="tasks-count">{project.openTasks}</p>
                                     </li>
-                                    <li className="tasks-group">
+                                    <li className="tasks-group" onClick={() => navigate(`/project/${project.id}`)}>
                                         <p className="tasks-type">Завершенные задачи</p>
                                         <p className="tasks-count">{project.closedTasks}</p>
                                     </li>
-                                    <li className="tasks-group">
+                                    <li className="tasks-group" onClick={() => navigate(`/project/${project.id}`)}>
                                         <p className="tasks-type">Назначеные задачи</p>
                                         <p className="tasks-count">{project.assignedTasks}</p>
                                     </li>
@@ -92,7 +93,7 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
                                             </div>
                                             <div className="right-content">
                                                 <h4 className="task-project">Создано</h4>
-                                                <img src={task.assignedTo.avatar.fileUrl} alt={task.assignedTo.avatar.fileName} className="avatar-icon"/>
+                                                <img src={task.assignedTo.avatar.fileUrl} alt={task.assignedTo.avatar.fileName} className="avatar-owner-icon"/>
                                             </div>
                                         </div>
                                     </NavLink>

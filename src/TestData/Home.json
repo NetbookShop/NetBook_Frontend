@@ -1,6 +1,7 @@
 { 
     "projects": [
         {
+            "id": "13213", 
             "name": "Home",
             "openTasks": 1, 
             "closedTasks": 2, 
@@ -14,7 +15,8 @@
             }
         }, 
         {
-            "name": "Fuck",
+            "id": "13213", 
+            "name": "Da",
             "openTasks": 1, 
             "closedTasks": 2, 
             "assignedTasks": 3,

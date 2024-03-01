@@ -7,7 +7,7 @@ import "./ProjectList.css"
 import CreateTeamModalCall from "../../Modals/Team/CreateTeam";
 import PaginationNavigation from "../../Components/Pagination/Pagination";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const ProjectsListPage: React.FC<NavProps> = (props: NavProps) => { 
     const projects = data.projects
@@ -15,6 +15,11 @@ const ProjectsListPage: React.FC<NavProps> = (props: NavProps) => {
     const elements = new Map<string, string>()
     elements.set("Проекты", "/projects")
     const [currentPage, setCurrentPage] = useState<number>(1)
+    const [selectedProjectProperties, setSelectedProjectProperties] = useState<string>()
+    const navigate = useNavigate()
+    const showProjectControls = (id: string) => { 
+        setSelectedProjectProperties(id)
+    }
 
     return ( 
         <div className="projectslist-root">
@@ -52,7 +57,29 @@ const ProjectsListPage: React.FC<NavProps> = (props: NavProps) => {
                                         <h4>{project.ownerName}</h4>
                                     </div>
                                     <div className="properties">
-                                        <button className="properties-button"><img src={propertiesIcon} alt="" width={24} height={24}/></button>
+                                        <button
+                                            className="properties-button" 
+                                            // onClick={() => showProjectControls(project.id)}
+                                            onClick={() => navigate(`/project/${project.id}/edit`)}
+                                        >
+                                            <img src={propertiesIcon} alt="" width={24} height={24}/>
+                                        </button>
+                                        {selectedProjectProperties !== undefined ?
+                                            <div className="properties-list" onClick={() => setSelectedProjectProperties(undefined)}>
+                                                <div
+                                                    className="properties-button" 
+                                                    onClick={() => navigate(`/project/${project.id}/edit`)}
+                                                >
+                                                    Настройки проекта
+                                                </div>
+                                                {/* <div
+                                                    className="properties-button"
+                                                    onClick={() => deleteProject(project.id)}
+                                                >
+                                                    Переместить в корзину
+                                                </div> */}
+                                            </div> 
+                                        : null }
                                     </div>
                                 </div>
                             </li>
