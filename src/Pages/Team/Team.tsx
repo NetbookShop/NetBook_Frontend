@@ -46,13 +46,13 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
                                             {value.users.map((user) => { 
                                                 return ( 
                                                     <NavLink to={`/user/${user.id}`} className="group-user">
-                                                        <img src={user.avatar.fileUrl} alt="" className="avatar-icon"/>
+                                                        <img src={user.avatar.fileUrl} alt="" className="team-avatar-icon"/>
                                                         <p>{user.name}</p>
                                                     </NavLink>
                                                 )
                                             })}
                                             <div className="group-add-user" onClick={() => {GroupAddUser(value.id)}}>
-                                                <img src={addIcon} alt="" className="avatar-icon"/>
+                                                <img src={addIcon} alt="" className="team-avatar-icon"/>
                                                 <p>Добавить сотрудника</p>
                                             </div>
                                         </div>
@@ -73,7 +73,7 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
                         <h3 className="team-info-header">Активность на работе</h3>
                         {data.tasks.map((task) => { 
                             return ( 
-                                <div className="team-task">
+                                <div className="team-task" onClick={() => navigate(`/task/${task.id}`)}>
                                     <p className="team-task-name">{task.name}</p>
                                     <div className="team-task-metainfo">
                                         <p className="team-project-name">

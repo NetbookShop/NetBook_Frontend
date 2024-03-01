@@ -5,6 +5,7 @@ import "./ProjectEdit.css"
 import data from "../../TestData/ProjectEdit.json"
 import { UserScheme } from "../../Schemes/User";
 import { FileScheme } from "../../Schemes/File";
+import { useNavigate } from "react-router-dom";
 
 const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => { 
     props.setCategory("projects")
@@ -19,6 +20,7 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
     const [ owner, setOwner ] = useState(data.owner) 
     const [ uploadedIcon, setUploadedIcon ] = useState<FileScheme>()
     const [ image, setImage ] = useState<string | ArrayBuffer | null>()
+    const navigate = useNavigate()
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => { 
         if (event.target.files === null) { 
@@ -38,8 +40,9 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
         
     }
 
-    const submitProjectEdit = () => { 
+    const submitProjectEdit = (id: string) => { 
         // TODO: будет выполнен запрос к бекенду 
+        setTimeout(() => navigate(`/project/${id}`), 400)
     }
 
     return ( 
@@ -111,7 +114,7 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
                         </div>
                     </div>
                 </div>
-                <div className="projectedit-submit" onClick={submitProjectEdit}>
+                <div className="projectedit-submit" onClick={() => submitProjectEdit(data.id)}>
                     Сохранить
                 </div>
             </div>

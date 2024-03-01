@@ -100,6 +100,7 @@
     padding: 10px;
     border-radius: 5px;
     background-color: rgb(206, 206, 206);   
+    cursor: pointer;
 } 
 
 .team-info-header { 
@@ -117,4 +118,11 @@
 
 .team-task:hover { 
     background-color: rgb(184, 184, 184);
+}
+
+.team-avatar-icon { 
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    margin-right: 10px;
 }
