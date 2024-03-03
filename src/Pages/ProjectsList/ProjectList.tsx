@@ -59,7 +59,7 @@ const ProjectsListPage: React.FC<NavProps> = (props: NavProps) => {
                                     <div className="properties">
                                         <button
                                             className="properties-button" 
-                                            // onClick={() => showProjectControls(project.id)}
+                                            // onClick={() => showProjectControls(project.id)} 
                                             onClick={() => navigate(`/project/${project.id}/edit`)}
                                         >
                                             <img src={propertiesIcon} alt="" width={24} height={24}/>

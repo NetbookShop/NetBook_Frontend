@@ -4,6 +4,8 @@ import "./Team.css"
 import { AddUserModel } from "../../Modals/Team/AddUser";
 import { NavLink, useNavigate } from "react-router-dom";
 import addIcon from "../../Static/Images/add-icon.png"
+import { useState } from "react";
+import Modal from "../../Modals/Base/Base";
 
 const TeamPage: React.FC<NavProps> = (props: NavProps) => { 
     props.setCategory("teams")
@@ -11,11 +13,16 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
     const navigate = useNavigate(); 
 
     const GroupAddUser = (id: string) => { 
-
+        
     }
+
+    const [isOpenUserModal, setIsOpenUserModal] = useState(false); 
 
     return ( 
         <div className="team-root">
+            <Modal isOpen={isOpenUserModal} onClose={() => setIsOpenUserModal(false)}> 
+                <AddUserModel />
+            </Modal>
             <div className="team-banner">
                 <img src={team.avatar.fileUrl} alt="banner" width={"100%"} height={"200px"}/>
             </div>
@@ -29,7 +36,7 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
                             {team.description}
                         </p>
                     </div>
-                    <div className="teampage-add-user teampage-button" onClick={AddUserModel}>
+                    <div className="teampage-add-user teampage-button" onClick={() => setIsOpenUserModal(true)}>
                         Добавить пользвателя
                     </div>
                     <div className="team-main-info">
