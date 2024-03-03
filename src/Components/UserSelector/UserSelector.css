@@ -1,0 +1,32 @@
+.users-list { 
+    display: flex;
+    flex-direction: column;
+}
+
+.users-list { 
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px; 
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.user-list-selector { 
+    padding: 7px 0; 
+    display: flex;
+    justify-content: space-between;
+}
+
+.check-mark-active { 
+    background-color: blue;
+    border-radius: 5px;
+    border: 0.5px solid rgba(0, 0, 0, 1)
+}
+
+.check-mark-inactive { 
+    width: 26px;
+    height: 24px;
+    border-radius: 5px;
+    border: 0.5px solid rgba(0, 0, 0, 0.5)
+}

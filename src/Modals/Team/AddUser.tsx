@@ -1,38 +1,37 @@
 import "./CreateTeam.css"
 import data from "../../TestData/CreateUser.json"
-import { useState } from "react";
+import { useState, Dispatch } from "react";
 import checkMark from "../../Static/Images/check-mark.png"
+import "./AddUser.css"
+import UserSelectorComponent from "../../Components/UserSelector/UserSelector";
+import ActionsButtonsComponent from "../../Components/Actions/Actions";
 
-export const AddUserModel = () => {
+type props = { setIsOpenModal: Dispatch<boolean>} 
+
+export const AddUserModel: React.FC<props> = (props: props) => {
     const usersList = data; 
     const [ selectedUsers, setSelectedUsers ] = useState<Array<string>>([])
-    const MarkUserAsSelected = (id: string) => { 
-        setSelectedUsers([...selectedUsers, id])
+    const [searchTerm, setSearchTerm] = useState('');
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(event.target.value);
+    };
+    
+    const addUsers = () => { 
+        props.setIsOpenModal(false)
     }
+    
+    const filteredUsers = usersList.filter(user =>
+        user.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
-        <div className="create-team-modal">
-            <div className="create-team-cotainer">
-                <input type="text" className="search-input-field"/>
-                <div className="users-list">
-                    {usersList.map((value) => { 
-                        return (
-                            <div className="user-list-selector">
-                                <div className="user-list-container">
-                                    <img src={value.avatar.fileUrl} alt="" className="avatar-icon"/>
-                                    <p>{value.name}</p>
-                                </div>
-
-                                <div className="check-mark-container" onClick={() => MarkUserAsSelected(value.id)}>
-                                    {selectedUsers.indexOf(value.id) !== -1 ?
-                                    <div className="check-mark-active">
-                                        <img src={checkMark} alt="" width={24} height={24}/>
-                                    </div>: null }
-                                </div>
-                            </div>
-                        )
-                    })}
-                </div>
+        <div className="add-user-modal">
+            <div className="add-user-cotainer">
+                <h1 className="add-user-header">Добавление участников команды </h1>
+                <p className="add-user-text">Расширяйте свою команду и оптимизируйте совместную работу. При добавлении в команду новых участников они получают доступ ко всей работе команды</p>
+                <input type="text" className="search-input-field" onChange={handleSearchChange}/>
+                <UserSelectorComponent users={usersList} selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers}/>
+                <ActionsButtonsComponent submitAction={() => addUsers()} cancelAction={() => props.setIsOpenModal(false)}/>
             </div>
         </div>
     )

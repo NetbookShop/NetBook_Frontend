@@ -7,7 +7,9 @@
     padding: 7px;
     padding-left: 10px; 
     border-radius: 3px;
-    height: 35px;
+    height: 40px;
+    padding-top: 10px; 
+    padding-bottom: 10px;
 }
 
 .team-name { 

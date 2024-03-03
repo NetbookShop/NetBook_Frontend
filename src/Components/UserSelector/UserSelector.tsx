@@ -1,19 +1,25 @@
 import { ChangeEventHandler, Dispatch, useState } from "react";
 import { UserScheme } from "../../Schemes/User";
 import checkMark from "../../Static/Images/check-mark.png"
+import "./UserSelector.css"
 
-type props = { users: Array<UserScheme>, selectedUsers: Array<string>, setSelectedUsers: Dispatch<Array<string>>, searchChangeHandler: ChangeEventHandler }
+type props = { users: Array<UserScheme>, selectedUsers: Array<string>, setSelectedUsers: Dispatch<Array<string>> }
 
-const UserSelector: React.FC<props> = (props: props) => { 
+const UserSelectorComponent: React.FC<props> = (props: props) => { 
     const usersList = props.users; 
     const MarkUserAsSelected = (id: string) => { 
-        props.setSelectedUsers([...props.selectedUsers, id])
+        if (props.selectedUsers.indexOf(id) !== -1) { 
+            props.setSelectedUsers(props.selectedUsers.filter(v => { 
+                return v !== id
+            }))
+        } else { 
+            props.setSelectedUsers([...props.selectedUsers, id])
+        } 
     }
 
     return ( 
         <div className="users-list">
-            <input type="text" className="search-input-field" onChange={props.searchChangeHandler}/>
-            <div className="users-list">
+            <div className="users-list-container">
                 {usersList.map((value) => { 
                     return (
                         <div className="user-list-selector">
@@ -25,8 +31,11 @@ const UserSelector: React.FC<props> = (props: props) => {
                             <div className="check-mark-container" onClick={() => MarkUserAsSelected(value.id)}>
                                 {props.selectedUsers.indexOf(value.id) !== -1 ?
                                 <div className="check-mark-active">
-                                    <img src={checkMark} alt="" width={24} height={24}/>
-                                </div>: null }
+                                    <img src={checkMark} alt="" width={26} height={24}/>
+                                </div>: 
+                                <div className="check-mark-inactive">
+
+                                </div> }
                             </div>
                         </div>
                     )
@@ -36,4 +45,4 @@ const UserSelector: React.FC<props> = (props: props) => {
     )
 }
 
-export default UserSelector; 
+export default UserSelectorComponent; 

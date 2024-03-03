@@ -21,7 +21,7 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
     return ( 
         <div className="team-root">
             <Modal isOpen={isOpenUserModal} onClose={() => setIsOpenUserModal(false)}> 
-                <AddUserModel />
+                <AddUserModel setIsOpenModal={setIsOpenUserModal}/>
             </Modal>
             <div className="team-banner">
                 <img src={team.avatar.fileUrl} alt="banner" width={"100%"} height={"200px"}/>
