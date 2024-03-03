@@ -1,24 +1,22 @@
-import React, { useState } from 'react';
+import React, { ReactNode } from 'react';
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  children: any; 
+  children: ReactNode;
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
-    return (
-      <>
-        {isOpen && (
-          <div className="modal">
-            <div className="modal-content">
-              <span className="close" onClick={onClose}>&times;</span>
-              {children}
-            </div>
-          </div>
-        )}
-      </>
-    );
-  };
+  if (!isOpen) return null;
 
-export default Modal; 
+  return (
+    <div className="modal">
+      <div className="modal-content">
+        {children}
+        <button onClick={onClose}>Close</button>
+      </div>
+    </div>
+  );
+};
+
+export default Modal;

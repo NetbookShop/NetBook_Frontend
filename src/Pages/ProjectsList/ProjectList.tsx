@@ -4,7 +4,7 @@ import NavigationMapComponent from "../../Components/NavigationMap/NavigationMap
 import SearchComponent from "../../Components/Search/Search";
 import propertiesIcon from "../../Static/Images/propertiesIcon.svg"
 import "./ProjectList.css"
-import CreateTeamModalCall from "../../Modals/Team/CreateTeam";
+import CreateTeamModal from "../../Modals/Team/CreateTeam";
 import PaginationNavigation from "../../Components/Pagination/Pagination";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -28,7 +28,7 @@ const ProjectsListPage: React.FC<NavProps> = (props: NavProps) => {
             <div className="projects-list-navbar">
                 <SearchComponent width={234} placeholder="Введите название проекта"/>
                 <div className="create-projects general-button">
-                    <button className="create-project-button" onClick={() => CreateTeamModalCall()}>Создать команду</button>
+                    <button className="create-project-button" onClick={() => CreateTeamModal()}>Создать команду</button>
                 </div>
             </div>
             <div className="projects-list">

@@ -1,3 +1,3 @@
-export const AddUserModalCall = () => {
+export const AddUserModel = () => {
     
 }

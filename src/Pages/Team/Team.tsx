@@ -1,7 +1,7 @@
 import { NavProps } from "../../Utils/Types";
 import data from "../../TestData/Team.json"
 import "./Team.css"
-import { AddUserModalCall } from "../../Modals/Team/AddUser";
+import { AddUserModel } from "../../Modals/Team/AddUser";
 import { NavLink, useNavigate } from "react-router-dom";
 import addIcon from "../../Static/Images/add-icon.png"
 
@@ -29,7 +29,7 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
                             {team.description}
                         </p>
                     </div>
-                    <div className="teampage-add-user teampage-button" onClick={AddUserModalCall}>
+                    <div className="teampage-add-user teampage-button" onClick={AddUserModel}>
                         Добавить пользвателя
                     </div>
                     <div className="team-main-info">
