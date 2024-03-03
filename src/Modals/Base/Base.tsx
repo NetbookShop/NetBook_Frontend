@@ -11,10 +11,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="modal">
-      <div className="modal-content">
+    <div className="modal-container" onClick={onClose}>
+      <div className="modal-content" onClick={e => e.stopPropagation()}>
+        <button onClick={onClose} className='modal-close-button'>Close</button>
         {children}
-        <button onClick={onClose}>Close</button>
       </div>
     </div>
   );
