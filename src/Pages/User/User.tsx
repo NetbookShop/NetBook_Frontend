@@ -4,9 +4,11 @@ import "./User.css"
 import organizationIcon from "../../Static/Images/organization-icon.png"
 import emailIcon from "../../Static/Images/email-icon.png"
 import jobIcon from "../../Static/Images/job-icon.png"
+import { useNavigate } from "react-router-dom";
 
 const UserPage: React.FC<NavProps> = (props: NavProps) => { 
     props.setCategory("teams")
+    const navigate = useNavigate(); 
 
     return (
         <div className="user-root">
@@ -51,7 +53,7 @@ const UserPage: React.FC<NavProps> = (props: NavProps) => {
                                 <hr className="account-info-line"/>
                                 {data.teams.map((value) => { 
                                     return ( 
-                                        <div className="account-team-container">
+                                        <div className="account-team-container" onClick={() => navigate(`/team/${value.id}`)}>
                                             <img src={value.logo.fileUrl} alt="" className="account-team-logo" width={30} height={30}/>
                                             <div className="account-team-info">
                                                 <p>{value.name}</p>
@@ -69,7 +71,7 @@ const UserPage: React.FC<NavProps> = (props: NavProps) => {
                         <h3 className="account-info-header">Активность на работе</h3>
                         {data.tasks.map((task) => { 
                             return ( 
-                                <div className="account-task">
+                                <div className="account-task" onClick={() => navigate(`/task/${task.id}`)}>
                                     <p className="account-task-name">{task.name}</p>
                                     <div className="account-task-metainfo">
                                         <p className="account-project-name">

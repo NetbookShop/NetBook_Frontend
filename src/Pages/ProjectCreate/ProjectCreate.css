@@ -1,0 +1,36 @@
+.back-arrow { 
+    width: 25px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.projectcreate-root { 
+    height: 100%;
+}
+
+.create-project-cotainer { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 700px;
+    margin: 0 auto; 
+    max-width: 700px;
+    padding: 20px; 
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.projectcreate-root { 
+    margin-top: 20px; 
+}
+
+.project-create-nav { 
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    align-items: center;
+}
+
+.project-create-nav p { 
+    font-size: 14px; 
+}

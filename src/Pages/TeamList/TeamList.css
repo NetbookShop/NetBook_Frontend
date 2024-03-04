@@ -31,6 +31,12 @@
     box-sizing: border-box;
 }
 
+.teams-container { 
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4  );
+}
+
 .teamslist-root h1 { 
     margin: 15px 0; 
 } 
@@ -68,3 +74,16 @@
     background-color: rgba(0, 0, 0, 0.20);
 }
 
+
+.team-create-button { 
+    border: none; 
+    background-color: var(--button-color);
+    color: white;
+    padding: 5px 8px;
+    cursor: pointer;   
+    margin-bottom: 7px;
+}
+
+.team-create-button:hover { 
+    background-color: #3753b8; 
+}

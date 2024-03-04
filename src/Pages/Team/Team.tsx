@@ -1,7 +1,7 @@
 import { NavProps } from "../../Utils/Types";
 import data from "../../TestData/Team.json"
 import "./Team.css"
-import { AddUserModel } from "../../Modals/Team/AddUser";
+import { AddUserToGroupModal, AddUserToTeamModel } from "../../Modals/Team/AddUser";
 import { NavLink, useNavigate } from "react-router-dom";
 import addIcon from "../../Static/Images/add-icon.png"
 import { useState } from "react";
@@ -12,16 +12,22 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
     const team = data
     const navigate = useNavigate(); 
 
-    const GroupAddUser = (id: string) => { 
-        
+    const GroupAddUser = (name: string, id: string) => { 
+        setCurrentGroup(name)
+        setIsOpenAddUserModal(true)
     }
 
+    const [isOpenAddUserModal, setIsOpenAddUserModal] = useState(false); 
     const [isOpenUserModal, setIsOpenUserModal] = useState(false); 
+    const [currentGroup, setCurrentGroup] = useState(''); 
 
     return ( 
         <div className="team-root">
             <Modal isOpen={isOpenUserModal} onClose={() => setIsOpenUserModal(false)}> 
-                <AddUserModel setIsOpenModal={setIsOpenUserModal}/>
+                <AddUserToTeamModel setIsOpenModal={setIsOpenUserModal}/>
+            </Modal>
+            <Modal isOpen={isOpenAddUserModal} onClose={() => setIsOpenAddUserModal(false)}>
+                <AddUserToGroupModal setIsOpenModal={setIsOpenAddUserModal} groupName={currentGroup} />
             </Modal>
             <div className="team-banner">
                 <img src={team.avatar.fileUrl} alt="banner" width={"100%"} height={"200px"}/>
@@ -58,7 +64,7 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
                                                     </NavLink>
                                                 )
                                             })}
-                                            <div className="group-add-user" onClick={() => {GroupAddUser(value.id)}}>
+                                            <div className="group-add-user" onClick={() => {GroupAddUser(value.name, value.id)}}>
                                                 <img src={addIcon} alt="" className="team-avatar-icon"/>
                                                 <p>Добавить сотрудника</p>
                                             </div>

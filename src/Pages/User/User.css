@@ -58,6 +58,12 @@
 .account-team-container { 
     display: flex;
     align-items: center;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.account-team-container:hover { 
+    background-color: rgb(184, 184, 184);
 }
 
 .account-team-logo { 

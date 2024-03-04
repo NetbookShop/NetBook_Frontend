@@ -8,7 +8,8 @@
             "mimeType": "image", 
             "fileName": "313dasdadas", 
             "fileSize": 31321312
-        }
+        }, 
+        "currentGroup": "worker"
     }, 
     { 
         "id": "213123dsaaaa0", 
@@ -19,7 +20,8 @@
             "mimeType": "image", 
             "fileName": "313dasdadas", 
             "fileSize": 31321312
-        }
+        },
+        "currentGroup": "worker"
     }, 
     { 
         "id": "213123gfddsa0", 
@@ -30,7 +32,8 @@
             "mimeType": "image", 
             "fileName": "313dasdadas", 
             "fileSize": 31321312
-        }
+        }, 
+        "currentGroup": "worker"
     }, 
     { 
         "id": "213dasd123dsa0", 
@@ -41,6 +44,7 @@
             "mimeType": "image", 
             "fileName": "313dasdadas", 
             "fileSize": 31321312
-        }
+        }, 
+        "currentGroup": "owner"
     }
 ]

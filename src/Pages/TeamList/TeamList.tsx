@@ -1,18 +1,25 @@
+import { useState } from "react"
 import NavigationMapComponent from "../../Components/NavigationMap/NavigationMap";
 import { NavProps } from "../../Utils/Types";
 import "./TeamList.css"
 import data from "../../TestData/TeamsList.json"
 import properties from "../../Static/Images/propertiesIcon.svg"
 import { NavLink } from "react-router-dom";
+import Modal from "../../Modals/Base/Base";
+import CreateTeamModal from "../../Modals/Team/CreateTeam";
 
 const TeamsListPage: React.FC<NavProps> = (props: NavProps) => { 
     props.setCategory("teams")
     let elements = new Map<string, string>()
     elements.set("Команды", "/teams")
     let teams = data.teams
+    const [isTeamCreateModal, setTeamCreateModal] = useState(false)
 
     return (
         <div className="teamslist-root">
+            <Modal isOpen={isTeamCreateModal} onClose={() => setTeamCreateModal(false)}>
+                <CreateTeamModal setIsOpenModal={setTeamCreateModal}/>
+            </Modal>
             <NavigationMapComponent elements={elements}/>
             <h1>Команды</h1>
             <div className="teams-container">
@@ -20,8 +27,8 @@ const TeamsListPage: React.FC<NavProps> = (props: NavProps) => {
                     <div className="teams-field-name">Имя</div>
                     <div className="teams-field-owner">Руководитель</div>
                 </div>
-                <div className="nonono">
-                    {/* <div>&nbsp;</div> */}
+                <div className="team-create-button general-button" onClick={() => setTeamCreateModal(true)}>
+                    Создать команду
                 </div>
             </div>
             <div className="teams-list">

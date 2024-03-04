@@ -8,6 +8,7 @@ import CreateTeamModal from "../../Modals/Team/CreateTeam";
 import PaginationNavigation from "../../Components/Pagination/Pagination";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import Modal from "../../Modals/Base/Base";
 
 const ProjectsListPage: React.FC<NavProps> = (props: NavProps) => { 
     const projects = data.projects
@@ -28,7 +29,7 @@ const ProjectsListPage: React.FC<NavProps> = (props: NavProps) => {
             <div className="projects-list-navbar">
                 <SearchComponent width={234} placeholder="Введите название проекта"/>
                 <div className="create-projects general-button">
-                    <button className="create-project-button" onClick={() => CreateTeamModal()}>Создать команду</button>
+                    <button className="create-project-button" onClick={() => navigate("/project/create")}>Создать команду</button>
                 </div>
             </div>
             <div className="projects-list">
