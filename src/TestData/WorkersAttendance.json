@@ -10,7 +10,7 @@
                 "fileName": "313dasdadas", 
                 "fileSize": 31321312
             }, 
-            "workType": "online"
+            "workType": "На удаленке"
         }, 
         { 
             "id": "32131", 
@@ -22,7 +22,7 @@
                 "fileName": "313dasdadas", 
                 "fileSize": 31321312
             }, 
-            "workType": "office"
+            "workType": "Офис"
         }
     ],
     "workVisits": [ 

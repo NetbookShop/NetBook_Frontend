@@ -14,8 +14,8 @@ const WorkersAttendancePage: React.FC<NavProps> = (props: NavProps) => {
     elements.set(data.team.name, `/team/${id}`)
     elements.set("Посещения", `/team/${id}/attendance`)
     const workers = data.workers
-    const workersCategories = ["office", "online", "unable"] 
-    const [currentWorkersCategory, setCurrentWorkersCategory] = useState<string>();  
+    const workersCategories = ["Офис", "На удаленке", "Не могут"] 
+    const [currentWorkersCategory, setCurrentWorkersCategory] = useState<string>(workersCategories[0]);  
     const tasksCounterByCategory: { [key: string]: number } = workers.reduce((counter: { [key: string]: number }, worker) => {
         counter[worker.workType] = (counter[worker.workType] || 0) + 1;
         return counter;
