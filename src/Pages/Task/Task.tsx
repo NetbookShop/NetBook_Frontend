@@ -4,6 +4,8 @@ import "./Task.css"
 import data from "../../TestData/Task.json"
 import { useState } from "react";
 import addIcon from "../../Static/Images/add-icon.png"
+import Modal from "../../Modals/Base/Base";
+import AssignTask from "../../Modals/Task/AssignTask";
 
 const exampleComment = { 
     "id": "1234", 
@@ -35,6 +37,7 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
     const [ comments, setComments ] = useState(data.comments)
     const [ currentCommentID, setCurrentCommentID] = useState<string>()
     const [ currentCommentText, setCurrentCommentText] = useState('')
+    const [ isOpenAssignUser, setIsOpenAssignUser ] = useState(false)
 
     const OnCommentInput = (e: React.ChangeEvent<HTMLInputElement>) => { 
         setCommentText(e.target.value)
@@ -81,6 +84,9 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
 
     return ( 
         <div className="task-root">
+            <Modal isOpen={isOpenAssignUser} onClose={() => setIsOpenAssignUser(true)}> 
+                <AssignTask setIsOpenModal={setIsOpenAssignUser}/>
+            </Modal>
             <NavigationMapComponent elements={elements}/>
             <div className="task-container">
                 <div className="task-main-info">
@@ -152,7 +158,7 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
                                     <img src={task.assignedTo.avatar.fileUrl} alt="" className="comment-profile-image" width={25} height={25}/>
                                     <div>{task.assignedTo.name}</div>
                                 </div>
-                            : <div className="metainfo-add-user">
+                            : <div className="metainfo-add-user" onClick={() => setIsOpenAssignUser(true)}>
                                 <img src={addIcon} alt="" className="metainfo-add-user-image" width={25} height={25}/>
                                 <div>Добавить пользвателя</div>
                             </div> }
