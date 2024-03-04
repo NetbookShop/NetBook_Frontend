@@ -79,7 +79,7 @@
     border: none; 
     background-color: var(--button-color);
     color: white;
-    padding: 5px 8px;
+    padding: 8px 10px;
     cursor: pointer;   
     margin-bottom: 7px;
 }
