@@ -3,11 +3,13 @@ import { NavProps } from "../../Utils/Types";
 import data from "../../TestData/Project.json"
 import SearchComponent from "../../Components/Search/Search";
 import closeIcon from "../../Static/Images/close-icon.svg"
-import CreateTaskModalCall from "../../Modals/Task/CreateTask";
+import CreateTaskModal from "../../Modals/Task/CreateTask";
 import "./Project.css"
 import { FileScheme } from "../../Schemes/File";
 import ArrowIcon from "../arrow";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
+import { useState } from "react";
+import Modal from "../../Modals/Base/Base";
 
 type User = { id: string, name: string, avatar: FileScheme }
 
@@ -22,18 +24,34 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
             usersNames.push(value.assiged_user.name)
         }
     })
+    let { projectId } = useParams() 
     props.setCategory("projects")
     let elemMaps = new Map<string, string>()
     elemMaps.set("Проекты", "/projects")
     elemMaps.set(project.name, `/project/` + project.name)
-    // console.log(elemMaps)
     const tasksStatus = data.tasks.map((value) => { 
         return value.status 
     })
+    const [isOepnCreateTask, setIsCreateTaskOpen] = useState(false)
     const tasksGroups = tasksStatus.filter((item, i, ar) => ar.indexOf(item) === i)
+    const [currentUserId, setCurrentUserId] = useState('')
+    const [currentStatusName, setCurrentStatusName] = useState('')
+    const openCreateTaskModal = (user: any, group: string) => { 
+        setCurrentUserId(user.id)
+        setCurrentStatusName(group)
+        setIsCreateTaskOpen(true)
+    }
 
     return (
         <div className="projectpage-root">
+            <Modal onClose={() => setIsCreateTaskOpen(false)} isOpen={isOepnCreateTask}>
+                <CreateTaskModal 
+                    setIsOpenModal={setIsCreateTaskOpen} 
+                    projectId={projectId} 
+                    assigedUserId={currentUserId} 
+                    taskStatus={currentStatusName}
+                />
+            </Modal>
             <NavigationMapComponent elements={elemMaps}/>
                 <h1>Доска проекта</h1>
             <div className="projectpage-navbar">
@@ -51,13 +69,13 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
                     )}
                 </div>
                 <div className="tasks">
-                    {users.map((value) => {
+                    {users.map((user) => {
                         return (
                             <div>
                                 <div className="users-info">
                                     <ArrowIcon width={28} height={28}/>
-                                    <img src={value.avatar.fileUrl} alt="fuckyou" className="profile-image"></img>
-                                    <p>{value.name}</p>
+                                    <img src={user.avatar.fileUrl} alt="fuckyou" className="profile-image"></img>
+                                    <p>{user.name}</p>
                                 </div>
                                 <div className="user-tasks-container">
                                 {tasksGroups.map((group) => {
@@ -76,7 +94,7 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
                                                     </div>
                                                 )
                                             })}
-                                            <div className="create-task" onClick={CreateTaskModalCall}>
+                                            <div className="create-task" onClick={() => openCreateTaskModal(user, group)}>
                                                 <img src={closeIcon} alt="close-icon" />
                                                 <p>Создать задачу</p>
                                             </div>

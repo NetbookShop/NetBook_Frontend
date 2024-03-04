@@ -1,0 +1,16 @@
+.create-task-root * { 
+    margin: 0; 
+    padding: 0;
+}
+
+.create-task-root { 
+    display: flex;
+    flex-direction: column;
+}
+
+.create-task-input { 
+    width: 100%;
+    margin: 20px 0; 
+    padding: 10px;
+}
+
