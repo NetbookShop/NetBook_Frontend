@@ -3,6 +3,7 @@ import { NavProps } from "../../Utils/Types";
 import "./Task.css"
 import data from "../../TestData/Task.json"
 import { useState } from "react";
+import addIcon from "../../Static/Images/add-icon.png"
 
 const exampleComment = { 
     "id": "1234", 
@@ -146,12 +147,15 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
                         <div className="metainfo-assiged metainfo-field">
                             <p className="metainfo-header">Исполнитель</p>
                             <div className="maininfo-value">
-                            {task.assignedTo !== null ?  
+                            {task.assignedTo.id  !== null ?  
                                 <div className="metainfo-account">
                                     <img src={task.assignedTo.avatar.fileUrl} alt="" className="comment-profile-image" width={25} height={25}/>
                                     <div>{task.assignedTo.name}</div>
                                 </div>
-                            : null }
+                            : <div className="metainfo-add-user">
+                                <img src={addIcon} alt="" className="metainfo-add-user-image" width={25} height={25}/>
+                                <div>Добавить пользвателя</div>
+                            </div> }
                             </div>
                         </div>
                         <div className="metainfo-tags metainfo-field">

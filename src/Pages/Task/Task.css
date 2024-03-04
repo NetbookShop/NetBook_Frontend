@@ -10,9 +10,9 @@
 
 .task-metainfo { 
     padding: 20px;
-    height: 200px;
+    height: 300px;
     border: 0.5px solid rgba(0, 0, 0, 0.1);
-    width: 280px;
+    width: 400px;
 }
 
 .apply-comment { 
@@ -37,6 +37,7 @@
 .metainfo-field { 
     display: flex;
     align-items: center; 
+    margin: 5px 0; 
     /* justify-content: space-between; */
 }
 
@@ -127,6 +128,7 @@
 
 .metainfo-header { 
     width: 50%;
+    margin-right: 10px;
 }
 
 .change-comment-action, .delete-comment-action { 
@@ -153,4 +155,23 @@
     height: 20px; 
     max-width: 100px;
     cursor: pointer;
+}
+
+.maininfo-value { 
+    width: 50%;
+}
+
+.metainfo-add-user { 
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.metainfo-add-user-image { 
+    margin-right: 10px;
+}
+
+.metainfo-add-user div { 
+    display: inline;
 }

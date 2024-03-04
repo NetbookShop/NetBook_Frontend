@@ -47,7 +47,7 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
             <Modal onClose={() => setIsCreateTaskOpen(false)} isOpen={isOepnCreateTask}>
                 <CreateTaskModal 
                     setIsOpenModal={setIsCreateTaskOpen} 
-                    projectId={projectId} 
+                    projectId={projectId || ""} 
                     assigedUserId={currentUserId} 
                     taskStatus={currentStatusName}
                 />
