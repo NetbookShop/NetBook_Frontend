@@ -4,6 +4,8 @@ import { NavLink } from 'react-router-dom';
 import googleLogo from "../../Static/Images/google.png"
 import logo from "../../Static/Images/karma-systemlogo.png"
 import "./Login.css"
+import { RegisterUserApi, UserControllersApi } from 'task-manager';
+import { ApiConfig } from '../../Gateway/Config';
 
 
 const LoginPage: React.FC<NavProps> = (props: NavProps) => {
@@ -19,9 +21,15 @@ const LoginPage: React.FC<NavProps> = (props: NavProps) => {
         setPassword(event.target.value);
     };
 
-    const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // Добавьте здесь логику для отправки данных на сервер или их обработки
+        // Добавьте здесь логику для отправки данных на сервер или их обработки 
+        let authApi = new RegisterUserApi(ApiConfig)
+        authApi.apiAuthLoginPost(
+            { 
+                
+            }
+        )
     };
 
     return (

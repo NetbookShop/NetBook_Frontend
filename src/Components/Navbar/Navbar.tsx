@@ -6,8 +6,10 @@ import { NavigationCategoryTypes } from "../../Utils/Types";
 import SearchComponent from "../Search/Search";
 import NotificationComponent from "../Notification/Notification";
 import ProfileComponent from "../Profile/Profile";
+import { UserModel } from "task-manager";
+import { asFileUrl } from "../../Gateway/Config";
 
-type props = { navigationCategory?: NavigationCategoryTypes }
+type props = { navigationCategory?: NavigationCategoryTypes, user: UserModel | undefined }
 
 
 const NavbarComponent: React.FC<props> = (props: props) => { 
@@ -32,7 +34,14 @@ const NavbarComponent: React.FC<props> = (props: props) => {
                 <div className="navbar-right-content">
                     <SearchComponent width={260}/>
                     <NotificationComponent />
-                    <ProfileComponent userId="1234567" avatarUrl="static/fuckyou"/>
+                    {props.user !== undefined ? 
+                        <div>
+                            <ProfileComponent 
+                                userId={props.user.id || ""} 
+                                avatarUrl={asFileUrl(props.user.avatar?.filePath || "")}
+                            />
+                        </div>
+                    : null }
                 </div>
             </header>
             : null } 

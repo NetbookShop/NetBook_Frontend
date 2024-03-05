@@ -1,5 +1,5 @@
 import './App.css';
-import {useState} from 'react'; 
+import {useEffect, useState} from 'react'; 
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import HomePage from './Pages/Home/Home';
 import UserPage from './Pages/User/User';
@@ -20,11 +20,14 @@ import TeamsListPage from './Pages/TeamList/TeamList';
 import { AuthorizationCookieKey } from './Utils/Consts';
 import NavbarComponent from './Components/Navbar/Navbar';
 import { NavigationCategoryTypes } from './Utils/Types';
+import { UserControllersApi, UserModel } from 'task-manager';
+import { ApiConfig } from './Gateway/Config';
 
 function App() {	
 	const [cookies] = useCookies([AuthorizationCookieKey]);
 	const navigate = useNavigate() 
 	const [navigationCategory, setNavigationCategory] = useState<NavigationCategoryTypes>("nochoice")
+	const [currentUser, setCurrentUser] = useState<UserModel>(); 
 
 	const localAuthCheck = () => { 
 		return authCheck(navigate, cookies)
@@ -36,9 +39,15 @@ function App() {
 		}
 	}
 
+	useEffect(() => { 
+		let userApi = new UserControllersApi(ApiConfig)
+		userApi.getMe()
+			.then((value) => setCurrentUser(value.data))
+			.catch((error) => console.log(error)); 
+	}) 
 	return (
 		<div>
-			<NavbarComponent navigationCategory={navigationCategory}/>
+			<NavbarComponent navigationCategory={navigationCategory} user={currentUser}/>
 			<div className='content'>
 				<Routes>
 					<Route path="/login" element={<LoginPage setCategory={setNavigationCategory}/>} action={localRegisteredCheck}/>

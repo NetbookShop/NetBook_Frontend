@@ -13,10 +13,9 @@
 
 import { Configuration } from "task-manager";
 import { AuthKey, baseDownloadPath } from "./Consts";
-import { Dispatch } from "react";
 
 
-export let config = new Configuration();  
+export let ApiConfig = new Configuration();  
 
 export function setToken(token: string, setCookie: any) { 
     setAccessTokenForClient(token)
@@ -27,11 +26,11 @@ export function setToken(token: string, setCookie: any) {
 
 function setAccessTokenForClient(token: string) { 
     if (
-        config.accessToken === null ||
-        config.accessToken === undefined ||
-        config.accessToken !== token
+        ApiConfig.accessToken === null ||
+        ApiConfig.accessToken === undefined ||
+        ApiConfig.accessToken !== token
     ) { 
-        config.accessToken = token 
+        ApiConfig.accessToken = token 
     }
 }
 
