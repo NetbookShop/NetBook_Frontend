@@ -1,0 +1,3 @@
+[submodule "TaskManagerRestClient"]
+	path = TaskManagerRestClient
+	url = https://github.com/pikoUsername/TaskManagerRestClient.git
