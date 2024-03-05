@@ -1,6 +1,6 @@
 import './App.css';
 import {useEffect, useState} from 'react'; 
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import HomePage from './Pages/Home/Home';
 import UserPage from './Pages/User/User';
 import NotFoundPage from './Pages/NotFound/NotFound';
@@ -21,20 +21,22 @@ import { AuthorizationCookieKey } from './Utils/Consts';
 import NavbarComponent from './Components/Navbar/Navbar';
 import { NavigationCategoryTypes } from './Utils/Types';
 import { UserControllersApi, UserModel } from 'task-manager';
-import { ApiConfig } from './Gateway/Config';
+import { ApiConfig, removeToken } from './Gateway/Config';
 
 function App() {	
-	const [cookies] = useCookies([AuthorizationCookieKey]);
+	const [cookies, setCookies, removeCookies] = useCookies([AuthorizationCookieKey]);
 	const navigate = useNavigate() 
 	const [navigationCategory, setNavigationCategory] = useState<NavigationCategoryTypes>("nochoice")
 	const [currentUser, setCurrentUser] = useState<UserModel>(); 
+	const location = useLocation()
+	const { hash, pathname, search } = location;
 
 	const localAuthCheck = () => { 
 		return authCheck(navigate, cookies)
 	}
 
 	const localRegisteredCheck = async () => { 
-		if (cookies.Authorization) { 
+		if (cookies.Authorization !== undefined) { 
 			navigate("/")
 		}
 	}
@@ -43,8 +45,17 @@ function App() {
 		let userApi = new UserControllersApi(ApiConfig)
 		userApi.getMe()
 			.then((value) => setCurrentUser(value.data))
-			.catch((error) => console.log(error)); 
-	}) 
+			.catch((error) => {
+				if (pathname !== "/login" && pathname !== "/register") { 
+					navigate("/login")
+				} 
+				if (error.response) { 
+					if (error.response.status === 400) { 
+						removeToken(removeCookies)
+					} 	
+				} 
+			})
+	}, [currentUser]) 
 	return (
 		<div>
 			<NavbarComponent navigationCategory={navigationCategory} user={currentUser}/>

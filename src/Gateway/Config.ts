@@ -12,16 +12,25 @@
 
 
 import { Configuration } from "task-manager";
-import { AuthKey, baseDownloadPath } from "./Consts";
+import { AuthKey, baseDownloadPath, basePath } from "./Consts";
 
 
-export let ApiConfig = new Configuration();  
+export let ApiConfig = new Configuration({ 
+    basePath: basePath,
+});  
 
 export function setToken(token: string, setCookie: any) { 
     setAccessTokenForClient(token)
     setCookie(AuthKey, token, {
         path: '/', 
+        maxAge: 3600 * 24 
+
     }); // Устанавливаем cookie с access_token
+}
+
+export function removeToken(removeCookie: any) { 
+    ApiConfig.accessToken = undefined
+    removeCookie(AuthKey)
 }
 
 function setAccessTokenForClient(token: string) { 

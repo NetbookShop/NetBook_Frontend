@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
 import { NavProps } from '../../Utils/Types';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import googleLogo from "../../Static/Images/google.png"
 import logo from "../../Static/Images/karma-systemlogo.png"
 import "./Login.css"
-import { RegisterUserApi, UserControllersApi } from 'task-manager';
-import { ApiConfig } from '../../Gateway/Config';
+import { RegisterUserApi } from 'task-manager';
+import { ApiConfig, setToken } from '../../Gateway/Config';
+import { useCookies } from 'react-cookie';
+import { AuthKey } from '../../Gateway/Consts';
 
 
 const LoginPage: React.FC<NavProps> = (props: NavProps) => {
     props.setCategory("none")
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [cookies, setCookie] = useCookies([AuthKey])
+    const navigate = useNavigate()
+    const [error, setError] = useState<string>()
 
     const handleLoginEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
@@ -25,11 +30,18 @@ const LoginPage: React.FC<NavProps> = (props: NavProps) => {
         event.preventDefault();
         // Добавьте здесь логику для отправки данных на сервер или их обработки 
         let authApi = new RegisterUserApi(ApiConfig)
-        authApi.apiAuthLoginPost(
-            { 
-                
-            }
-        )
+        try { 
+            let response = await authApi.apiAuthLoginPost(
+                { 
+                    email: email, 
+                    password: password, 
+                }, { method: "POST"}
+            )
+            setToken(response.data.accessToken || "", setCookie)
+            setTimeout(() => navigate("/"), 500)
+        } catch (e: any) { 
+            setError(String(e))
+        } 
     };
 
     return (
@@ -60,6 +72,10 @@ const LoginPage: React.FC<NavProps> = (props: NavProps) => {
                             required
                         />
                     </div>
+                    {error !== undefined ?
+                    <div className="error-message">
+                        {error}
+                    </div>: null}
                     <button type="submit" className='login-button'>Войти</button>
                 </form>
                 <hr className="line"/>

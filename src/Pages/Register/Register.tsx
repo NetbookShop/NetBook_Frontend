@@ -5,7 +5,9 @@ import { NavProps } from "../../Utils/Types";
 import "./Register.css"
 import logo from "../../Static/Images/karma-systemlogo.png"
 import googleLogo from "../../Static/Images/google.png"
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { RegisterUserApi } from "task-manager";
+import { ApiConfig, setToken } from "../../Gateway/Config";
 
 
 const RegisterPage: React.FC<NavProps> = (props: NavProps) => {
@@ -15,6 +17,8 @@ const RegisterPage: React.FC<NavProps> = (props: NavProps) => {
     const [password, setPassword] = useState<string>('');
     const [repeatPassword, setRepeatPassword] = useState<string>('');
     const [cookies, setCookie] = useCookies([AuthorizationCookieKey])
+    const [error, setError] = useState<string>()
+    const navigate = useNavigate()
 
     const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(e.target.value);
@@ -32,11 +36,34 @@ const RegisterPage: React.FC<NavProps> = (props: NavProps) => {
         setRepeatPassword(e.target.value);
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        setCookie(AuthorizationCookieKey, "Fuck you", {secure: true, maxAge: 3600 * 24})
-        // Добавьте здесь логику обработки отправки данных (например, отправка на сервер)
+        
+        if (password !== repeatPassword) { 
+            setError("Ваш пароль не совпадает с повторенным паролем")
+            return 
+        }
+        let authApi = new RegisterUserApi(ApiConfig)
+        try { 
+        await authApi.apiAuthRegisterPost(
+            { 
+                email: email, 
+                password: password, 
+                fullName: username, 
+            }
+        )
+        } catch (e: any) { 
+            setError(String(e))
+            return
+        }
+        let response = await authApi.apiAuthLoginPost(
+            { 
+                email: email, 
+                password: password, 
+            }
+        )
+        setToken(response.data.accessToken || "", setCookie)
+        setTimeout(() => navigate("/"), 500)
     };
 
     return (
@@ -61,6 +88,10 @@ const RegisterPage: React.FC<NavProps> = (props: NavProps) => {
                         <label htmlFor="repeatPassword">Повторите пароль <span className="required-field">*</span></label>
                         <input type="password" id="repeatPassword" value={repeatPassword} onChange={handleRepeatPasswordChange} required placeholder="Введите пароль обратно"/>
                     </div>
+                    {error !== undefined ?
+                    <div className="error-message">
+                        {error}
+                    </div>: null}
                     <button type="submit" className="register-button">Зарегистрироваться</button>
                 </form>
                 <hr className="line"/>
