@@ -4,41 +4,60 @@ import "./User.css"
 import organizationIcon from "../../Static/Images/organization-icon.png"
 import emailIcon from "../../Static/Images/email-icon.png"
 import jobIcon from "../../Static/Images/job-icon.png"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { TaskControllersApi, TaskModel } from "task-manager";
-import { ApiConfig } from "../../Gateway/Config";
+import { TaskControllersApi, TaskModel, UserControllersApi, UserModel } from "task-manager";
+import { ApiConfig, asFileUrl } from "../../Gateway/Config";
 
 const UserPage: React.FC<NavProps> = (props: NavProps) => { 
     props.setCategory("teams")
-    const navigate = useNavigate();  
+    const navigate = useNavigate();
+    const { id } = useParams();   
+    const [user, setUser] = useState<UserModel>();
     const [tasks, setTasks] = useState<Array<TaskModel>>([])
-    const taskApi = new TaskControllersApi(ApiConfig)
-    useEffect(() => { 
-        const getData = async () => { 
-            try { 
-                
-            } catch { 
 
-            }
+    useEffect(() => { 
+        const taskApi = new TaskControllersApi(ApiConfig)
+        const userApi = new UserControllersApi(ApiConfig)
+        const getData = async () => { 
+            if (props.user !== undefined) { 
+                try { 
+                    let _tasks = await taskApi.getTasks(undefined, props.user.id, undefined, true)
+                    setTasks(_tasks.data)
+                } catch (e) { 
+                    console.error(e)
+                }
+            } 
+            if (props.user?.id === id) { 
+                setUser(props.user)
+                return 
+            } 
+            if (id !== undefined) { 
+                let _user = await userApi.getUser(id)
+                setUser(_user.data)
+                return 
+            } 
         }
 
         getData(); 
-    })
+    }, [props.user])
 
     return (
         <div className="user-root">
             <div className="user-banner">
                 <img src={data.banner.fileUrl} alt="banner" width={"100%"} height={"200px"}/>
             </div>
+            {user !== undefined ? 
             <div className="user-container">
                 <div className="user-left-navbar-main">
                     <div className="user-avatar">
-                        <img src={data.avatar.fileUrl} alt="" className="user-avatar-icon" width={"160px"} height={"160px"}/>
+                        {user.avatar !== undefined ? 
+                            <img src={asFileUrl(user.avatar.filePath || "")} alt="" className="user-avatar-icon" width={"160px"} height={"160px"}/>
+                        : null } 
                     </div>
                     <div className="user-left-navbar-info">
                         <h1 className="userpage-username">
-                            {data.name}
+                            {user.fullName}
                         </h1>   
                         <div className="account-control">
                             Управление аккаунтом
@@ -116,6 +135,7 @@ const UserPage: React.FC<NavProps> = (props: NavProps) => {
                     </div>
                 </div>
             </div>
+            : null } 
         </div>
     )
 }

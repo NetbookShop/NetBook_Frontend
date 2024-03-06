@@ -21,11 +21,7 @@ import { AuthorizationCookieKey } from './Utils/Consts';
 import NavbarComponent from './Components/Navbar/Navbar';
 import { NavigationCategoryTypes } from './Utils/Types';
 import { UserControllersApi, UserModel } from 'task-manager';
-<<<<<<< HEAD
 import { ApiConfig, removeToken, setAccessTokenForClient } from './Gateway/Config';
-=======
-import { ApiConfig, removeToken, setToken } from './Gateway/Config';
->>>>>>> 627cd19139ee6872c2bf9c5612751fd72a976aeb
 
 function App() {	
 	const [cookies, setCookies, removeCookies] = useCookies([AuthorizationCookieKey]);
@@ -49,8 +45,8 @@ function App() {
 		setAccessTokenForClient(cookies.Authorization); 
 		let userApi = new UserControllersApi(ApiConfig)
 		userApi.getMe()
-			.then((value: any) => {
-				setCurrentUser(value.data.value)
+			.then((value) => {
+				setCurrentUser(value.data)
 				setTimeout(() => navigate("/"), 500)
 			})
 			.catch((error) => {
@@ -73,7 +69,7 @@ function App() {
 					<Route path="/register" element={<RegisterPage  setCategory={setNavigationCategory}/>} action={localRegisteredCheck}/>
 					<Route path="/" element={<HomePage  setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
 					<Route path="/home" element={<HomePage  setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
-					<Route path="/user/:id" element={<UserPage  setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
+					<Route path="/user/:id" element={<UserPage  setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>
 					<Route path="/project/:id" element={<ProjectPage setCategory={setNavigationCategory}/>} action={localAuthCheck}/> 
 					<Route path='/project/:id/edit' element={<ProjectEditPage setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
 					<Route path="/project/create" element={<ProjectCreatePage setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
