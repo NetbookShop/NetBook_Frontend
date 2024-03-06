@@ -1,9 +1,9 @@
 [
     { 
-        "id": "poshelnaxyu", 
+        "id": "project", 
         "title": "name", 
         "projectName": "dsada", 
-        "status": "Zakonchil", 
+        "status": "Закончено", 
         "projectIcon": { 
             "fileId": "3132131", 
             "fileUrl": "/static/dsdadasdasdasdasdas-31321", 

@@ -55,7 +55,7 @@
                     "fileSize": 31321312
                 }  
             }, 
-            "status": "Xyu", 
+            "status": "Da", 
             "projectIcon": { 
                 "fileId": "3132131", 
                 "fileUrl": "/static/dsdadasdasdasdasdas-31321", 
@@ -66,7 +66,7 @@
         }, 
         { 
             "id": "1234", 
-            "title": "Хуй попинать", 
+            "title": "Что то", 
             "projectName": "ProjectName",
             "date": "", 
             "assignedTo": { 
@@ -89,7 +89,7 @@
                     "fileSize": 31321312
                 }  
             }, 
-            "status": "Zakonchil", 
+            "status": "Закончено", 
             "projectIcon": { 
                 "fileId": "3132131", 
                 "fileUrl": "/static/dsdadasdasdasdasdas-31321", 

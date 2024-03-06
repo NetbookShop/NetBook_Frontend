@@ -33,7 +33,7 @@ export function removeToken(removeCookie: any) {
     removeCookie(AuthKey)
 }
 
-function setAccessTokenForClient(token: string) { 
+export function setAccessTokenForClient(token: string) { 
     if (
         ApiConfig.accessToken === null ||
         ApiConfig.accessToken === undefined ||

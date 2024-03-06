@@ -40,7 +40,7 @@ const LoginPage: React.FC<NavProps> = (props: NavProps) => {
             setToken(response.data.accessToken || "", setCookie)
             setTimeout(() => navigate("/"), 500)
         } catch (e: any) { 
-            setError(String(e))
+            setError("Ваш емейл или пароль не правильный")
         } 
     };
 

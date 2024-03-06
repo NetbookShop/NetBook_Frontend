@@ -9,7 +9,7 @@ import ProfileComponent from "../Profile/Profile";
 import { UserModel } from "task-manager";
 import { asFileUrl } from "../../Gateway/Config";
 
-type props = { navigationCategory?: NavigationCategoryTypes, user: UserModel | undefined }
+type props = { navigationCategory?: NavigationCategoryTypes, user: UserModel | undefined | null }
 
 
 const NavbarComponent: React.FC<props> = (props: props) => { 
@@ -34,7 +34,7 @@ const NavbarComponent: React.FC<props> = (props: props) => {
                 <div className="navbar-right-content">
                     <SearchComponent width={260}/>
                     <NotificationComponent />
-                    {props.user !== undefined ? 
+                    {props.user !== undefined && props.user !== null ? 
                         <div>
                             <ProfileComponent 
                                 userId={props.user.id || ""} 

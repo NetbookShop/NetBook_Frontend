@@ -53,7 +53,7 @@ const RegisterPage: React.FC<NavProps> = (props: NavProps) => {
             }
         )
         } catch (e: any) { 
-            setError(String(e))
+            setError("Такой пользватель уже существует")
             return
         }
         let response = await authApi.apiAuthLoginPost(

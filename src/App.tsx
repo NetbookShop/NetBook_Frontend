@@ -4,7 +4,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import HomePage from './Pages/Home/Home';
 import UserPage from './Pages/User/User';
 import NotFoundPage from './Pages/NotFound/NotFound';
-import { useCookies } from 'react-cookie';
+import { Cookies, useCookies } from 'react-cookie';
 import authCheck from './Utils/AuthCheck';
 import LoginPage from './Pages/Login/Login';
 import ProjectPage from './Pages/Project/Project';
@@ -21,7 +21,7 @@ import { AuthorizationCookieKey } from './Utils/Consts';
 import NavbarComponent from './Components/Navbar/Navbar';
 import { NavigationCategoryTypes } from './Utils/Types';
 import { UserControllersApi, UserModel } from 'task-manager';
-import { ApiConfig, removeToken } from './Gateway/Config';
+import { ApiConfig, removeToken, setAccessTokenForClient } from './Gateway/Config';
 
 function App() {	
 	const [cookies, setCookies, removeCookies] = useCookies([AuthorizationCookieKey]);
@@ -42,9 +42,13 @@ function App() {
 	}
 
 	useEffect(() => { 
+		setAccessTokenForClient(cookies.Authorization); 
 		let userApi = new UserControllersApi(ApiConfig)
 		userApi.getMe()
-			.then((value) => setCurrentUser(value.data))
+			.then((value: any) => {
+				setCurrentUser(value.data.value)
+				setTimeout(() => navigate("/"), 500)
+			})
 			.catch((error) => {
 				if (pathname !== "/login" && pathname !== "/register") { 
 					navigate("/login")
@@ -55,7 +59,7 @@ function App() {
 					} 	
 				} 
 			})
-	}, [currentUser]) 
+	}, []) 
 	return (
 		<div>
 			<NavbarComponent navigationCategory={navigationCategory} user={currentUser}/>
