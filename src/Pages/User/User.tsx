@@ -5,10 +5,26 @@ import organizationIcon from "../../Static/Images/organization-icon.png"
 import emailIcon from "../../Static/Images/email-icon.png"
 import jobIcon from "../../Static/Images/job-icon.png"
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { TaskControllersApi, TaskModel } from "task-manager";
+import { ApiConfig } from "../../Gateway/Config";
 
 const UserPage: React.FC<NavProps> = (props: NavProps) => { 
     props.setCategory("teams")
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();  
+    const [tasks, setTasks] = useState<Array<TaskModel>>([])
+    const taskApi = new TaskControllersApi(ApiConfig)
+    useEffect(() => { 
+        const getData = async () => { 
+            try { 
+                
+            } catch { 
+
+            }
+        }
+
+        getData(); 
+    })
 
     return (
         <div className="user-root">
@@ -69,17 +85,17 @@ const UserPage: React.FC<NavProps> = (props: NavProps) => {
                 <div className="account-activity">
                     <div className="account-tasks">
                         <h3 className="account-info-header">Активность на работе</h3>
-                        {data.tasks.map((task) => { 
+                        {tasks.map((task) => { 
                             return ( 
                                 <div className="account-task" onClick={() => navigate(`/task/${task.id}`)}>
-                                    <p className="account-task-name">{task.name}</p>
+                                    <p className="account-task-name">{task.title}</p>
                                     <div className="account-task-metainfo">
                                         <p className="account-project-name">
-                                            {task.projectName}
+                                            {task.project?.name}
                                         </p>
                                         <p>•</p>
                                         <p className="account-project-data">
-                                            {task.createdAt}
+                                            "Сегодня"
                                         </p>
                                     </div>  
                                 </div>

@@ -21,7 +21,11 @@ import { AuthorizationCookieKey } from './Utils/Consts';
 import NavbarComponent from './Components/Navbar/Navbar';
 import { NavigationCategoryTypes } from './Utils/Types';
 import { UserControllersApi, UserModel } from 'task-manager';
+<<<<<<< HEAD
 import { ApiConfig, removeToken, setAccessTokenForClient } from './Gateway/Config';
+=======
+import { ApiConfig, removeToken, setToken } from './Gateway/Config';
+>>>>>>> 627cd19139ee6872c2bf9c5612751fd72a976aeb
 
 function App() {	
 	const [cookies, setCookies, removeCookies] = useCookies([AuthorizationCookieKey]);
@@ -36,8 +40,8 @@ function App() {
 	}
 
 	const localRegisteredCheck = async () => { 
-		if (cookies.Authorization !== undefined) { 
-			navigate("/")
+		if (cookies.Authorization !== undefined || cookies.Authorization !== "" || cookies.Authorization !== null) { 
+			navigate("/login")
 		}
 	}
 
