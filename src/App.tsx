@@ -21,7 +21,7 @@ import { AuthorizationCookieKey } from './Utils/Consts';
 import NavbarComponent from './Components/Navbar/Navbar';
 import { NavigationCategoryTypes } from './Utils/Types';
 import { UserControllersApi, UserModel } from 'task-manager';
-import { ApiConfig, removeToken } from './Gateway/Config';
+import { ApiConfig, removeToken, setToken } from './Gateway/Config';
 
 function App() {	
 	const [cookies, setCookies, removeCookies] = useCookies([AuthorizationCookieKey]);
@@ -36,16 +36,21 @@ function App() {
 	}
 
 	const localRegisteredCheck = async () => { 
-		if (cookies.Authorization !== undefined) { 
-			navigate("/")
+		if (cookies.Authorization !== undefined || cookies.Authorization !== "" || cookies.Authorization !== null) { 
+			navigate("/login")
 		}
 	}
 
-	useEffect(() => { 
-		let userApi = new UserControllersApi(ApiConfig)
-		userApi.getMe()
-			.then((value) => setCurrentUser(value.data))
-			.catch((error) => {
+	useEffect(() => {
+		if (cookies.Authorization !== undefined || cookies.Authorization !== "" || cookies.Authorization !== null) { 
+			setToken(cookies.Authorization, setCookies)
+		}
+		let userApi = new UserControllersApi(ApiConfig) 
+		const getData = async () => { 
+			try {
+				let data = await userApi.getMe()
+				setCurrentUser(data.data)
+			} catch (error: any) { 
 				if (pathname !== "/login" && pathname !== "/register") { 
 					navigate("/login")
 				} 
@@ -54,8 +59,11 @@ function App() {
 						removeToken(removeCookies)
 					} 	
 				} 
-			})
-	}, [currentUser]) 
+			}
+		}
+
+		getData(); 
+	}, []) 
 	return (
 		<div>
 			<NavbarComponent navigationCategory={navigationCategory} user={currentUser}/>
