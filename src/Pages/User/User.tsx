@@ -6,17 +6,19 @@ import emailIcon from "../../Static/Images/email-icon.png"
 import jobIcon from "../../Static/Images/job-icon.png"
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { TaskControllersApi, TaskModel, UserControllersApi, UserModel } from "task-manager";
+import { TaskControllersApi, TaskModel, Team, TeamControllersApi, UserControllersApi, UserModel } from "task-manager";
 import { ApiConfig, asFileUrl } from "../../Gateway/Config";
 
 const UserPage: React.FC<NavProps> = (props: NavProps) => { 
     props.setCategory("teams")
     const navigate = useNavigate();
+    const [userTeams, setUserTeams] = useState<Array<Team>>([]); 
     const { id } = useParams();   
-    const [user, setUser] = useState<UserModel>();
+    const [user, setUser] = useState<UserModel>({});
     const [tasks, setTasks] = useState<Array<TaskModel>>([])
 
     useEffect(() => { 
+        const teamApi = new TeamControllersApi(ApiConfig)
         const taskApi = new TaskControllersApi(ApiConfig)
         const userApi = new UserControllersApi(ApiConfig)
         const getData = async () => { 
@@ -24,11 +26,13 @@ const UserPage: React.FC<NavProps> = (props: NavProps) => {
                 try { 
                     let _tasks = await taskApi.getTasks(undefined, props.user.id, undefined, true)
                     setTasks(_tasks.data)
+                    let teams = await teamApi.getTeamsAll(props.user.id)
+                    setUserTeams(teams.data)
                 } catch (e) { 
                     console.error(e)
                 }
             } 
-            if (props.user?.id === id) { 
+            if (props.user?.id === id && props.user !== undefined) { 
                 setUser(props.user)
                 return 
             } 
@@ -80,23 +84,24 @@ const UserPage: React.FC<NavProps> = (props: NavProps) => {
                                 <hr className="account-info-line"/>
                                 <div className="account-email account-info-field">
                                     <img src={emailIcon} alt="org" className="organization-icon"/>
-                                    <p>{data.email}</p>
+                                    <p>{user.email}</p>
                                 </div>
                             </div>
                             <div className="account-teams">
                                 <h3 className="account-info-header">Команды</h3>
                                 <hr className="account-info-line"/>
-                                {data.teams.map((value) => { 
-                                    return ( 
-                                        <div className="account-team-container" onClick={() => navigate(`/team/${value.id}`)}>
-                                            <img src={value.logo.fileUrl} alt="" className="account-team-logo" width={30} height={30}/>
-                                            <div className="account-team-info">
-                                                <p>{value.name}</p>
-                                                <p className="account-team-memebers-count">{value.membersCount} Участника</p>
+                                    {userTeams.map((value) => { 
+                                        return ( 
+                                            <div className="account-team-container" onClick={() => navigate(`/team/${value.id}`)}>
+                                                <img src={asFileUrl(value.avatar?.filePath || "")} alt="" className="account-team-logo" width={30} height={30}/>
+                                                <div className="account-team-info">
+                                                    <p>{value.name}</p>
+                                                    {/* <p className="account-team-memebers-count">{value.membersCount} Участника</p> */}
+                                                    <p className="account-team-memebers-count">2 Участника</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    )
-                                })}
+                                        )
+                                    })}
                             </div>
                         </div>
                     </div>

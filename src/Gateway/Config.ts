@@ -53,6 +53,6 @@ export function isAuthorized(cookies: any) {
     }
 }
 
-export function asFileUrl(fileUrl: string) { 
+export function asFileUrl(fileUrl: string | null | undefined) { 
     return baseDownloadPath + fileUrl
 }

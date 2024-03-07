@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import NavigationMapComponent from "../../Components/NavigationMap/NavigationMap";
 import { NavProps } from "../../Utils/Types";
 import "./TeamList.css"
@@ -7,13 +7,26 @@ import properties from "../../Static/Images/propertiesIcon.svg"
 import { NavLink } from "react-router-dom";
 import Modal from "../../Modals/Base/Base";
 import CreateTeamModal from "../../Modals/Team/CreateTeam";
+import { Team, TeamControllersApi } from "task-manager";
+import { ApiConfig, asFileUrl } from "../../Gateway/Config";
 
 const TeamsListPage: React.FC<NavProps> = (props: NavProps) => { 
     props.setCategory("teams")
     let elements = new Map<string, string>()
     elements.set("Команды", "/teams")
-    let teams = data.teams
     const [isTeamCreateModal, setTeamCreateModal] = useState(false)
+    const [teams, setTeams] = useState<Array<Team>>([])
+
+    useEffect(() => { 
+        let teamApi = new TeamControllersApi(ApiConfig)
+
+        const getData = async () => { 
+            let response = await teamApi.getTeamsAll() 
+            setTeams(response.data)
+        }
+
+        getData() 
+    })
 
     return (
         <div className="teamslist-root">
@@ -37,12 +50,12 @@ const TeamsListPage: React.FC<NavProps> = (props: NavProps) => {
                         <NavLink to={`/team/${value.id}`} className="team-list-container">
                             <div className="team-container-left-content">
                                 <div className="team-container-name">
-                                    <img src={value.photo.fileUrl} alt="" width={24} height={24} className="avatar-icon"/>
+                                    <img src={asFileUrl(value.avatar?.filePath)} alt="" width={24} height={24} className="avatar-icon"/>
                                     <p className="team-name">{value.name}</p>
                                 </div>
                                 <div className="team-container-owner">
-                                    <img src={value.owner.avatar.fileUrl} alt="" className="avatar-icon"/>
-                                    <p className="owner-name">{value.owner.name}</p>
+                                    <img src={asFileUrl(value.createdBy?.avatar?.filePath)} alt="" className="avatar-icon"/>
+                                    <p className="owner-name">{value.createdBy?.fullName}</p>
                                 </div>
                             </div>
                             <div className="team-container-properties">
