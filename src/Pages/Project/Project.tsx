@@ -1,45 +1,42 @@
 import NavigationMapComponent from "../../Components/NavigationMap/NavigationMap";
 import { NavProps } from "../../Utils/Types";
-import data from "../../TestData/Project.json"
 import SearchComponent from "../../Components/Search/Search";
 import closeIcon from "../../Static/Images/close-icon.svg"
 import CreateTaskModal from "../../Modals/Task/CreateTask";
 import "./Project.css"
-import { FileScheme } from "../../Schemes/File";
 import ArrowIcon from "../arrow";
 import { NavLink, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Modal from "../../Modals/Base/Base";
-import { Project, ProjectControllersApi, TaskControllersApi, TaskModel, UserControllersApi, UserModel } from "task-manager";
+import { Project, ProjectControllersApi, TaskControllersApi, TaskModel, UserModel } from "task-manager";
 import { ApiConfig, asFileUrl } from "../../Gateway/Config";
+import AddUserToProjectModal from "../../Modals/Project/AddUserToProject";
 
 const ProjectPage: React.FC<NavProps> = (props: NavProps) => { 
     const [project, setProject] = useState<Project>()
     const [tasks, setTasks] = useState<Array<TaskModel>>([])
     let usersNames: Array<string> = []
     let users: Array<UserModel> = [] 
-    tasks.map((value) => { 
-        if (value !== undefined && value.assignedUser !== undefined) { 
-            if (usersNames.indexOf(value.assignedUser?.fullName || "") === -1) { 
-                users.push(value.assignedUser)
-                usersNames.push(value.assignedUser.fullName || "")
-            }
+    tasks.forEach((value) => { 
+        if (value !== undefined && value.assignedUser !== null) {
+            if (value.assignedUser !== undefined) {  
+                if (usersNames.indexOf(value.assignedUser.fullName || "") === -1) { 
+                    users.push(value.assignedUser)
+                    usersNames.push(value.assignedUser.fullName || "")
+                }
+            } 
         } 
     })
-    let { projectId } = useParams() 
+    let { id } = useParams() 
     props.setCategory("projects")
     let elemMaps = new Map<string, string>()
     elemMaps.set("Проекты", "/projects")
-    if (project !== undefined) { 
-        elemMaps.set(project.name || "", `/project/` + project.name)
-    } 
-    const tasksStatus: Array<string> = tasks.map((value) => { 
-        return value.status || ""
-    })
+    elemMaps.set(project?.name || "", `/project/` + project?.id)
     const [isOepnCreateTask, setIsCreateTaskOpen] = useState(false)
-    const tasksGroups = tasksStatus.filter((item, i, ar) => ar.indexOf(item) === i)
+    const [tasksGroups, setTasksGroups] = useState<Array<string>>([])
     const [currentUserId, setCurrentUserId] = useState('')
     const [currentStatusName, setCurrentStatusName] = useState('')
+    const [isAddUserOpen, setIsAddUserOpen] = useState(false)
     const openCreateTaskModal = (user: any, group: string) => { 
         setCurrentUserId(user.id)
         setCurrentStatusName(group)
@@ -47,13 +44,17 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
     }
     const projectApi = new ProjectControllersApi(ApiConfig)
     const tasksApi = new TaskControllersApi(ApiConfig)
-    const userApi = new UserControllersApi(ApiConfig)
     useEffect(() => { 
         const getData = async () => { 
             try { 
-                let response = await projectApi.getProject(undefined, projectId)
+                let response = await projectApi.getProject(id || "")
                 setProject(response.data)
-                let tasksResponse = await tasksApi.getTasks(project?.id)
+                response.data.taskTypes?.forEach((value) => {
+                    if (tasksGroups.indexOf(value.name) === -1) { 
+                        setTasksGroups([...tasksGroups, value.name])
+                    } 
+                })
+                let tasksResponse = await tasksApi.getTasks(project?.id || "")
                 setTasks(tasksResponse.data)
             } catch (e) { 
                 console.error(e)
@@ -61,31 +62,35 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
         }
 
         getData()
-    }, [])
+    }, [tasksGroups])
 
     return (
         <div className="projectpage-root">
             <Modal onClose={() => setIsCreateTaskOpen(false)} isOpen={isOepnCreateTask}>
                 <CreateTaskModal 
                     setIsOpenModal={setIsCreateTaskOpen} 
-                    projectId={projectId || ""} 
+                    projectId={id || ""} 
                     assigedUserId={currentUserId} 
                     taskStatus={currentStatusName}
                 />
             </Modal>
+            <Modal onClose={() => setIsAddUserOpen(false)} isOpen={isAddUserOpen}> 
+                <AddUserToProjectModal setIsOpenModal={setIsAddUserOpen} projectId={project?.id || ""} />
+            </Modal>
             <NavigationMapComponent elements={elemMaps}/>
-                <h1>Доска проекта</h1>
+            <h1>Доска проекта</h1>
             <div className="projectpage-navbar">
                 <SearchComponent width={234} placeholder="Поиск по доске" />
+                <div onClick={() => setIsAddUserOpen(true)} className="add-user-to-project">Добавить пользвателя</div>
             </div>
             <div className="project-board-container">
                 <div className="tasks-groups">
                     {tasksGroups.map((value) => { 
-                            return (
-                                <div className="task-group">
-                                    <p className="task-group-name">{value}</p>
-                                </div>
-                            )
+                        return (
+                            <div className="task-group">
+                                <p className="task-group-name">{value}</p>
+                            </div>
+                        )
                         }
                     )}
                 </div>

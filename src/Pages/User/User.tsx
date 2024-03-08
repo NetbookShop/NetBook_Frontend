@@ -25,7 +25,7 @@ const UserPage: React.FC<NavProps> = (props: NavProps) => {
         const getData = async () => { 
             if (props.user !== undefined) { 
                 try { 
-                    let _tasks = await taskApi.getTasks(undefined, props.user.id, undefined, true)
+                    let _tasks = await taskApi.getTasks(props.user.id || "", undefined, undefined, true)
                     setTasks(_tasks.data)
                     let teams = await teamApi.getTeamsAll(props.user.id)
                     setUserTeams(teams.data)

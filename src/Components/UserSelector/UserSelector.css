@@ -30,3 +30,12 @@
     border-radius: 5px;
     border: 0.5px solid rgba(0, 0, 0, 0.5)
 }
+
+.user-list-container p { 
+    margin: 0 10px;
+}
+
+.user-list-container { 
+    display: flex;
+    align-items: center;
+}

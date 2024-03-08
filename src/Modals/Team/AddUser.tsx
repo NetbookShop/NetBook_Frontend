@@ -1,7 +1,6 @@
 import "./CreateTeam.css"
 import data from "../../TestData/CreateUser.json"
 import { useState, Dispatch } from "react";
-import checkMark from "../../Static/Images/check-mark.png"
 import "./AddUser.css"
 import UserSelectorComponent from "../../Components/UserSelector/UserSelector";
 import ActionsButtonsComponent from "../../Components/Actions/Actions";

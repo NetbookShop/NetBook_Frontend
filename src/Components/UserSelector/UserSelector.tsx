@@ -1,4 +1,4 @@
-import { ChangeEventHandler, Dispatch, useState } from "react";
+import { Dispatch } from "react";
 import { UserScheme } from "../../Schemes/User";
 import checkMark from "../../Static/Images/check-mark.png"
 import "./UserSelector.css"

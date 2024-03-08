@@ -2,15 +2,18 @@ import { NavProps } from "../../Utils/Types";
 import data from "../../TestData/Team.json"
 import "./Team.css"
 import { AddUserToGroupModal, AddUserToTeamModel } from "../../Modals/Team/AddUser";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import addIcon from "../../Static/Images/add-icon.png"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../../Modals/Base/Base";
+import { Team, TeamControllersApi } from "task-manager";
+import { ApiConfig, asFileUrl } from "../../Gateway/Config";
 
 const TeamPage: React.FC<NavProps> = (props: NavProps) => { 
     props.setCategory("teams")
-    const team = data
+    const [team, setTeam] = useState<Team>()
     const navigate = useNavigate(); 
+    const { id } = useParams()
 
     const GroupAddUser = (name: string, id: string) => { 
         setCurrentGroup(name)
@@ -20,6 +23,20 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
     const [isOpenAddUserModal, setIsOpenAddUserModal] = useState(false); 
     const [isOpenUserModal, setIsOpenUserModal] = useState(false); 
     const [currentGroup, setCurrentGroup] = useState(''); 
+    const teamApi = new TeamControllersApi(ApiConfig)
+
+    useEffect(() => { 
+        const getData = async () => { 
+            try { 
+                let teamResponse = await teamApi.getTeam(id || "")
+                setTeam(teamResponse.data)
+            } catch (e) { 
+                console.error(e)
+            }
+        }
+
+        getData()
+    }, [])
 
     return ( 
         <div className="team-root">
@@ -30,16 +47,18 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
                 <AddUserToGroupModal setIsOpenModal={setIsOpenAddUserModal} groupName={currentGroup} />
             </Modal>
             <div className="team-banner">
-                <img src={team.avatar.fileUrl} alt="banner" width={"100%"} height={"200px"}/>
+                {team?.avatar !== null ?
+                    <img src={asFileUrl(team?.avatar?.filePath)} alt="banner" width={"100%"} height={"200px"}/>
+                : <img src={data.avatar.fileUrl} alt="banner" width={"100%"} height={"200px"}/>} 
             </div>
             <div className="team-container">
                 <div className="team-left-navbar-main">
                     <div className="team-left-navbar-info">
                         <h2 className="teampage-teamname">
-                            {team.name}
+                            {team?.name}
                         </h2>
                         <p className="teampage-description">
-                            {team.description}
+                            {team?.description}
                         </p>
                     </div>
                     <div className="teampage-add-user teampage-button" onClick={() => setIsOpenUserModal(true)}>
@@ -47,24 +66,24 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
                     </div>
                     <div className="team-main-info">
                         <div className="team-groups-list">
-                            {team.groups.map((value) => {
+                            {team?.groups?.map((value) => {
                                 return ( 
                                     <div className="teampage-container">
                                         <div className="teampage-team-header">
                                             <h3>{value.name}</h3>
-                                            <p className="team-members-counter">{value.users.length} Участников</p>
+                                            <p className="team-members-counter">{value.users?.length} Участников</p>
                                         </div>
                                         <hr />
                                         <div className="teampage-group-users">
-                                            {value.users.map((user) => { 
+                                            {value.users?.map((user) => { 
                                                 return ( 
                                                     <NavLink to={`/user/${user.id}`} className="group-user">
-                                                        <img src={user.avatar.fileUrl} alt="" className="team-avatar-icon"/>
-                                                        <p>{user.name}</p>
+                                                        <img src={asFileUrl(user.avatar?.filePath)} alt="" className="team-avatar-icon"/>
+                                                        <p>{user?.fullName}</p>
                                                     </NavLink>
                                                 )
                                             })}
-                                            <div className="group-add-user" onClick={() => {GroupAddUser(value.name, value.id)}}>
+                                            <div className="group-add-user" onClick={() => {GroupAddUser(value.name, value.id || "")}}>
                                                 <img src={addIcon} alt="" className="team-avatar-icon"/>
                                                 <p>Добавить сотрудника</p>
                                             </div>
@@ -74,10 +93,10 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
                             })}
                         </div>
                     </div>
-                    <div className="teampage-attendance-user teampage-button" onClick={() => navigate(`/team/${team.id}/attendance`)}>
+                    <div className="teampage-attendance-user teampage-button" onClick={() => navigate(`/team/${team?.id}/attendance`)}>
                         Успеваемость сотрудников
                     </div>
-                    <div className="teampage-button" onClick={() => navigate(`/team/${team.id}/schedule`)}>
+                    <div className="teampage-button" onClick={() => navigate(`/team/${team?.id}/schedule`)}>
                         Добавить график
                     </div>
                 </div>

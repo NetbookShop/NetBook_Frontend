@@ -53,7 +53,7 @@ const LoginPage: React.FC<NavProps> = (props: NavProps) => {
                     <div className="input-field">
                         <label htmlFor="loginEmail">Введите свою электронную почту <span className="required-field">*</span></label>
                         <input
-                            type="text"
+                            type="email"
                             id="loginEmail"
                             value={email}
                             onChange={handleLoginEmailChange}
