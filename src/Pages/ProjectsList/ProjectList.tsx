@@ -1,26 +1,38 @@
 import { NavProps } from "../../Utils/Types";
-import data from "../../TestData/ProjectList.json"
 import NavigationMapComponent from "../../Components/NavigationMap/NavigationMap";
 import SearchComponent from "../../Components/Search/Search";
 import propertiesIcon from "../../Static/Images/propertiesIcon.svg"
 import "./ProjectList.css"
-import CreateTeamModal from "../../Modals/Team/CreateTeam";
 import PaginationNavigation from "../../Components/Pagination/Pagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import Modal from "../../Modals/Base/Base";
+import { Project, ProjectControllersApi } from "task-manager";
+import { ApiConfig, asFileUrl } from "../../Gateway/Config";
 
 const ProjectsListPage: React.FC<NavProps> = (props: NavProps) => { 
-    const projects = data.projects
     props.setCategory("projects")
     const elements = new Map<string, string>()
     elements.set("Проекты", "/projects")
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [selectedProjectProperties, setSelectedProjectProperties] = useState<string>()
+    const [projects, setProjects] = useState<Array<Project>>([])
     const navigate = useNavigate()
     const showProjectControls = (id: string) => { 
         setSelectedProjectProperties(id)
     }
+    useEffect(() => {        
+        const projectApi = new ProjectControllersApi(ApiConfig)
+        const getData = async () => { 
+            try { 
+                let response = await projectApi.getProjectsList() 
+                setProjects(response.data)
+            } catch (e) { 
+                console.error(e)
+            }
+        }
+
+        getData()
+    }, [props.user])
 
     return ( 
         <div className="projectslist-root">
@@ -45,17 +57,17 @@ const ProjectsListPage: React.FC<NavProps> = (props: NavProps) => {
                             <li className="project-container">
                                 <div className="project-content-list">
                                     <div className="left-content">
-                                        <img src={project.projectIcon.fileUrl} alt="" className="project-icon"/>
+                                        <img src={asFileUrl(project.icon?.filePath)} alt="" className="project-icon"/>
                                         <div className="project-metadata">
                                             <h4 className="project-title"><NavLink to={"/project/" + project.id} className={"project-link"}>{project.name}</NavLink></h4>
                                         </div>
                                     </div>
                                     <div className="center-content">
-                                        <div className="created-at">{project.createdAt}</div>
+                                        <div className="created-at">{project.createdAt?.toString()}</div>
                                     </div>
                                     <div className="owner">
-                                        <img src={project.ownerIcon.fileUrl} alt="" className="avatar-icon" />
-                                        <h4>{project.ownerName}</h4>
+                                        <img src={asFileUrl(project.createdBy?.avatar?.filePath)} alt="" className="avatar-icon" />
+                                        <h4>{project.createdBy?.fullName}</h4>
                                     </div>
                                     <div className="properties">
                                         <button

@@ -4,7 +4,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import HomePage from './Pages/Home/Home';
 import UserPage from './Pages/User/User';
 import NotFoundPage from './Pages/NotFound/NotFound';
-import { Cookies, useCookies } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 import authCheck from './Utils/AuthCheck';
 import LoginPage from './Pages/Login/Login';
 import ProjectPage from './Pages/Project/Project';
@@ -47,7 +47,6 @@ function App() {
 		userApi.getMe()
 			.then((value) => {
 				setCurrentUser(value.data)
-				setTimeout(() => navigate("/"), 500)
 			})
 			.catch((error) => {
 				if (pathname !== "/login" && pathname !== "/register") { 
@@ -59,27 +58,27 @@ function App() {
 					} 	
 				} 
 			})
-	}, []) 
+	}, [cookies.Authorization]) 
 	return (
 		<div>
 			<NavbarComponent navigationCategory={navigationCategory} user={currentUser}/>
 			<div className='content'>
 				<Routes>
-					<Route path="/login" element={<LoginPage setCategory={setNavigationCategory}/>} action={localRegisteredCheck}/>
-					<Route path="/register" element={<RegisterPage  setCategory={setNavigationCategory}/>} action={localRegisteredCheck}/>
-					<Route path="/" element={<HomePage  setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
-					<Route path="/home" element={<HomePage  setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
-					<Route path="/user/:id" element={<UserPage  setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>
-					<Route path="/project/:id" element={<ProjectPage setCategory={setNavigationCategory}/>} action={localAuthCheck}/> 
-					<Route path='/project/:id/edit' element={<ProjectEditPage setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
-					<Route path="/project/create" element={<ProjectCreatePage setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
-					<Route path="/projects" element={<ProjectsListPage setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
-					<Route path="/teams" element={<TeamsListPage setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
-					<Route path="/team/:id" element={<TeamPage setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
-					<Route path='/task/:id' element={<TaskPage setCategory={setNavigationCategory}/>} action={localAuthCheck}/> 
-					<Route path="/team/:id/attendance" element={<WorkersAttendancePage setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
-					<Route path='/team/:id/schedule' element={<SchedulePage setCategory={setNavigationCategory}/>} action={localAuthCheck}/>
-					<Route path="*" element={<NotFoundPage setCategory={setNavigationCategory}/>}/>
+					<Route path="/login" element={<LoginPage setCategory={setNavigationCategory} user={currentUser} />} action={localRegisteredCheck}/>
+					<Route path="/register" element={<RegisterPage  setCategory={setNavigationCategory} user={currentUser}/>} action={localRegisteredCheck}/>
+					<Route path="/" element={<HomePage  setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>
+					<Route path="/home" element={<HomePage  setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>
+					<Route path="/user/:id" element={<UserPage  setCategory={setNavigationCategory} user={currentUser} />} action={localAuthCheck}/>
+					<Route path="/project/:id" element={<ProjectPage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/> 
+					<Route path='/project/:id/edit' element={<ProjectEditPage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>
+					<Route path="/project/create" element={<ProjectCreatePage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>
+					<Route path="/projects" element={<ProjectsListPage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>
+					<Route path="/teams" element={<TeamsListPage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>
+					<Route path="/team/:id" element={<TeamPage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>
+					<Route path='/task/:id' element={<TaskPage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/> 
+					<Route path="/team/:id/attendance" element={<WorkersAttendancePage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>
+					<Route path='/team/:id/schedule' element={<SchedulePage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>
+					<Route path="*" element={<NotFoundPage setCategory={setNavigationCategory} user={currentUser}/>}/>
 				</Routes>
 			</div>
 		</div>

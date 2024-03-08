@@ -8,29 +8,33 @@ import "./Project.css"
 import { FileScheme } from "../../Schemes/File";
 import ArrowIcon from "../arrow";
 import { NavLink, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../../Modals/Base/Base";
-
-type User = { id: string, name: string, avatar: FileScheme }
+import { Project, ProjectControllersApi, TaskControllersApi, TaskModel, UserControllersApi, UserModel } from "task-manager";
+import { ApiConfig, asFileUrl } from "../../Gateway/Config";
 
 const ProjectPage: React.FC<NavProps> = (props: NavProps) => { 
-    let project = data.project
-    const tasks = data.tasks
+    const [project, setProject] = useState<Project>()
+    const [tasks, setTasks] = useState<Array<TaskModel>>([])
     let usersNames: Array<string> = []
-    let users: Array<User> = [] 
-    data.tasks.map((value) => { 
-        if (usersNames.indexOf(value.assiged_user.name) === -1) { 
-            users.push(value.assiged_user)
-            usersNames.push(value.assiged_user.name)
-        }
+    let users: Array<UserModel> = [] 
+    tasks.map((value) => { 
+        if (value !== undefined && value.assignedUser !== undefined) { 
+            if (usersNames.indexOf(value.assignedUser?.fullName || "") === -1) { 
+                users.push(value.assignedUser)
+                usersNames.push(value.assignedUser.fullName || "")
+            }
+        } 
     })
     let { projectId } = useParams() 
     props.setCategory("projects")
     let elemMaps = new Map<string, string>()
     elemMaps.set("Проекты", "/projects")
-    elemMaps.set(project.name, `/project/` + project.name)
-    const tasksStatus = data.tasks.map((value) => { 
-        return value.status 
+    if (project !== undefined) { 
+        elemMaps.set(project.name || "", `/project/` + project.name)
+    } 
+    const tasksStatus: Array<string> = tasks.map((value) => { 
+        return value.status || ""
     })
     const [isOepnCreateTask, setIsCreateTaskOpen] = useState(false)
     const tasksGroups = tasksStatus.filter((item, i, ar) => ar.indexOf(item) === i)
@@ -41,6 +45,23 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
         setCurrentStatusName(group)
         setIsCreateTaskOpen(true)
     }
+    const projectApi = new ProjectControllersApi(ApiConfig)
+    const tasksApi = new TaskControllersApi(ApiConfig)
+    const userApi = new UserControllersApi(ApiConfig)
+    useEffect(() => { 
+        const getData = async () => { 
+            try { 
+                let response = await projectApi.getProject(undefined, projectId)
+                setProject(response.data)
+                let tasksResponse = await tasksApi.getTasks(project?.id)
+                setTasks(tasksResponse.data)
+            } catch (e) { 
+                console.error(e)
+            }
+        }
+
+        getData()
+    }, [])
 
     return (
         <div className="projectpage-root">
@@ -74,8 +95,8 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
                             <div>
                                 <div className="users-info">
                                     <ArrowIcon width={28} height={28}/>
-                                    <img src={user.avatar.fileUrl} alt="fuckyou" className="profile-image"></img>
-                                    <p>{user.name}</p>
+                                    <img src={asFileUrl(user.avatar?.filePath)} alt="fuckyou" className="profile-image"></img>
+                                    <p>{user.fullName}</p>
                                 </div>
                                 <div className="user-tasks-container">
                                 {tasksGroups.map((group) => {
@@ -88,7 +109,7 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
                                                 return (
                                                     <div className="group-task">
                                                         <NavLink to={`/task/${task.id}`}>
-                                                            <h4 className="task-name">{task.name}</h4>
+                                                            <h4 className="task-name">{task.title}</h4>
                                                             <p>{task.description?.slice(0, 40)}</p>
                                                         </NavLink>
                                                     </div>

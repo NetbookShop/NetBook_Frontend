@@ -6,7 +6,7 @@ import emailIcon from "../../Static/Images/email-icon.png"
 import jobIcon from "../../Static/Images/job-icon.png"
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { TaskControllersApi, TaskModel, Team, TeamControllersApi, UserControllersApi, UserModel } from "task-manager";
+import { TaskControllersApi, TaskModel, Team, TeamControllersApi, UserControllersApi, UserModel, WorkVisit } from "task-manager";
 import { ApiConfig, asFileUrl } from "../../Gateway/Config";
 
 const UserPage: React.FC<NavProps> = (props: NavProps) => { 
@@ -14,7 +14,8 @@ const UserPage: React.FC<NavProps> = (props: NavProps) => {
     const navigate = useNavigate();
     const [userTeams, setUserTeams] = useState<Array<Team>>([]); 
     const { id } = useParams();   
-    const [user, setUser] = useState<UserModel>({});
+    const [user, setUser] = useState<UserModel>();
+    const [workVisits, setWorkVisists] = useState<Array<WorkVisit>>([])
     const [tasks, setTasks] = useState<Array<TaskModel>>([])
 
     useEffect(() => { 
@@ -41,9 +42,10 @@ const UserPage: React.FC<NavProps> = (props: NavProps) => {
                 setUser(_user.data)
                 return 
             } 
+            setWorkVisists(user?.workVisits || [])
         }
 
-        getData(); 
+        getData().catch((error) => console.error(error)).then((id) => 1); 
     }, [props.user])
 
     return (
@@ -55,8 +57,8 @@ const UserPage: React.FC<NavProps> = (props: NavProps) => {
             <div className="user-container">
                 <div className="user-left-navbar-main">
                     <div className="user-avatar">
-                        {user.avatar !== undefined ? 
-                            <img src={asFileUrl(user.avatar.filePath || "")} alt="" className="user-avatar-icon" width={"160px"} height={"160px"}/>
+                        {user.avatar !== null ? 
+                            <img src={asFileUrl(user.avatar?.filePath || "")} alt="" className="user-avatar-icon" width={"160px"} height={"160px"}/>
                         : null } 
                     </div>
                     <div className="user-left-navbar-info">
@@ -130,10 +132,10 @@ const UserPage: React.FC<NavProps> = (props: NavProps) => {
                     <div className="account-attendance">
                         <h3 className="account-info-header">Посещаемость</h3>
                         <div className="attendance-list">
-                            {data.workVisits.map((visit) => { 
+                            {workVisits.map((visit) => { 
                                 return <div className="account-work-visit">
                                     <p>Посщение работы</p>
-                                    <p>{visit.visitedAt}</p>
+                                    <p>{visit.visitedAt?.toString()}</p>
                                 </div>
                             })}
                         </div>

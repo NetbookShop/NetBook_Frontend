@@ -21,12 +21,16 @@ const TeamsListPage: React.FC<NavProps> = (props: NavProps) => {
         let teamApi = new TeamControllersApi(ApiConfig)
 
         const getData = async () => { 
-            let response = await teamApi.getTeamsAll() 
-            setTeams(response.data)
+            try { 
+                let response = await teamApi.getTeamsAll() 
+                setTeams(response.data)
+            } catch (e) { 
+                console.error(e)
+            }
         }
 
         getData() 
-    })
+    }, [props.user])
 
     return (
         <div className="teamslist-root">
