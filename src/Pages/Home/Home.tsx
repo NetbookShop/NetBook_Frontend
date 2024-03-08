@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Data from "../../TestData/Home.json"  
 import { NavProps } from "../../Utils/Types";
 import "./Home.css"
 import PaginationNavigation from "../../Components/Pagination/Pagination";
 import { NavLink, useNavigate } from "react-router-dom";
+import { Project, ProjectControllersApi, TaskControllersApi, TaskModel } from "task-manager";
+import { ApiConfig } from "../../Gateway/Config";
 
 const HomePage: React.FC<NavProps> = (props: NavProps) => { 
-    const currentTasks = Data.tasks; 
-    const projects = Data.projects; 
-    const tasksStatus = Data.tasks.map((value) => { 
+    const [currentTasks, setCurrentTasks] = useState<Array<TaskModel>>([]); 
+    const [projects, setProjects] = useState<Array<Project>>([]); 
+    const tasksStatus = currentTasks.map((value) => { 
         return value.status 
     })
     const tasksCategories = tasksStatus.filter((item, i, ar) => ar.indexOf(item) === i)
@@ -21,6 +23,23 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
     const [currentPage, setCurrentPage] = useState<number>(0); 
     const navigate = useNavigate()
 
+    useEffect(() => { 
+        const projectApi = new ProjectControllersApi(ApiConfig)
+        const taskApi = new TaskControllersApi(ApiConfig)
+
+        const getData = async () => { 
+            try { 
+                let projectResponse = await projectApi.getProjectsList()
+                setProjects(projectResponse.data)
+                
+            } catch (e) { 
+                console.error(e)
+            }
+        }
+
+        getData()
+    }, [projects, currentTasks]) 
+
     return (
         <div className="home-root">
             <h1 className="your-work">Ваша работа</h1>
@@ -31,22 +50,22 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
                         <div className="project-card">
                             <div className="project-content">
                                 <div className="project-header">
-                                    <img src={project.photo.fileUrl} alt="" width={24} height={24}/>
+                                    <img src={project.icon?.fileUrl} alt="" width={24} height={24}/>
                                     <h3 className="project-name">{project.name}</h3>
                                 </div>
                                 <p className="fast-links">Быстрые ссылки</p>
                                 <ul>
                                     <li className="tasks-group" onClick={() => navigate(`/project/${project.id}`)}>
                                         <p className="tasks-type">Открытые задачи </p>
-                                        <p className="tasks-count">{project.openTasks}</p>
+                                        <p className="tasks-count">{openTasksCounter}</p>
                                     </li>
                                     <li className="tasks-group" onClick={() => navigate(`/project/${project.id}`)}>
                                         <p className="tasks-type">Завершенные задачи</p>
-                                        <p className="tasks-count">{project.closedTasks}</p>
+                                        <p className="tasks-count">{closedTasksCounter}</p>
                                     </li>
                                     <li className="tasks-group" onClick={() => navigate(`/project/${project.id}`)}>
                                         <p className="tasks-type">Назначеные задачи</p>
-                                        <p className="tasks-count">{project.assignedTasks}</p>
+                                        <p className="tasks-count">{assignedTasksCounter}</p>
                                     </li>
                                 </ul>
                             </div>
