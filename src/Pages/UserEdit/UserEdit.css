@@ -1,4 +1,14 @@
 .useredit-container { 
     margin: 0 auto; 
-    max-width: 900px;
+    max-width: 500px;
+}
+
+.useredit-input { 
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;  
+}
+
+.useredit-header { 
+    text-align: center;
 }
