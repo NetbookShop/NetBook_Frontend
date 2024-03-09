@@ -101,3 +101,7 @@
 .add-user-to-project:hover { 
     background-color: #4460ba;
 }
+
+.tasks { 
+    display: flex;
+}

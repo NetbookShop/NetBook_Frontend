@@ -28,7 +28,6 @@ const LoginPage: React.FC<NavProps> = (props: NavProps) => {
 
     const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // Добавьте здесь логику для отправки данных на сервер или их обработки 
         let authApi = new RegisterUserApi(ApiConfig)
         try { 
             let response = await authApi.apiAuthLoginPost(

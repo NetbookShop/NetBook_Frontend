@@ -1,27 +1,54 @@
 import "./CreateTeam.css"
-import data from "../../TestData/CreateUser.json"
-import { useState, Dispatch } from "react";
+import { useState, Dispatch, useEffect } from "react";
 import UserSelectorComponent from "../../Components/UserSelector/UserSelector";
 import ActionsButtonsComponent from "../../Components/Actions/Actions";
 import "./CreateTeam.css"
 import bannerForPlacement from "../../Static/Images/banner-for-place.svg"
+import { TeamControllersApi, UserControllersApi, UserModel } from "task-manager";
+import { ApiConfig } from "../../Gateway/Config";
 
 type props = { setIsOpenModal: Dispatch<boolean>} 
 
 const CreateTeamModal = (props: props) => {
-    const usersList = data; 
+    const [usersList, setUsersList] = useState<Array<UserModel>>([])
+    const [teamName, setTeamName] = useState<string>('')
+    const [description, setDescription] = useState<string>('')    
     const [ selectedUsers, setSelectedUsers ] = useState<Array<string>>([])
     const [searchTerm, setSearchTerm] = useState('');
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
     };
     
-    const addUsers = () => { 
-        props.setIsOpenModal(false)
+    useEffect(() => { 
+        (async () => { 
+            let userApi = new UserControllersApi(ApiConfig)
+
+            try {  
+                let userResponse = await userApi.getUsers()
+                setUsersList(userResponse.data)
+            } catch (e) { 
+                console.error(e)
+            }
+        })()
+    }, [ ])
+    
+    const submitTeam = async () => { 
+        let teamApi = new TeamControllersApi(ApiConfig)
+        try { 
+            await teamApi.createTeam({ 
+                name: teamName, 
+                userIds: selectedUsers, 
+                description: description, 
+            })
+            props.setIsOpenModal(false)
+
+        } catch (e) { 
+            console.error(e)
+        } 
     }
     
     const filteredUsers = usersList.filter(user =>
-        user.name.toLowerCase().includes(searchTerm.toLowerCase())
+        user.fullName.toLowerCase().includes(searchTerm.toLowerCase())
     );
     return (
         <div className="create-team-modal">
@@ -36,6 +63,17 @@ const CreateTeamModal = (props: props) => {
                             id="name" 
                             placeholder="Например, отдел кадров, тестровщики и т.д." 
                             className="create-team-field-input"
+                            onChange={(e) => setTeamName(e.target.value)}
+                        />
+                    </div>
+                    <div className="create-team-field">
+                        <label htmlFor="name">Описание команды <span className="required-field">*</span></label>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            placeholder="Например чем занимается ваша команда" 
+                            className="create-team-field-input"
+                            onChange={(e) => setDescription(e.target.value)}
                         />
                     </div>
                     <div className="create-team-field">
@@ -50,7 +88,7 @@ const CreateTeamModal = (props: props) => {
                     </div>
                     <UserSelectorComponent users={filteredUsers} selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers}/>
                     <div className="create-team-actions">
-                        <ActionsButtonsComponent submitAction={() => addUsers()} cancelAction={() => props.setIsOpenModal(false)}/>
+                        <ActionsButtonsComponent submitAction={() => submitTeam()} cancelAction={() => props.setIsOpenModal(false)}/>
                     </div>
                 </div>
             </div>

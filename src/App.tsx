@@ -47,6 +47,7 @@ function App() {
 		userApi.getMe()
 			.then((value) => {
 				setCurrentUser(value.data)
+				setAccessTokenForClient(cookies.Authorization)
 			})
 			.catch((error) => {
 				if (pathname !== "/login" && pathname !== "/register") { 

@@ -13,7 +13,8 @@ import { useParams } from "react-router-dom";
 const TaskPage: React.FC<NavProps> = (props: NavProps) => { 
     let elements = new Map<string, string>()
     const [task, setTask] = useState<TaskModel>()
-    const { taskId } = useParams()
+    const { id } = useParams()
+    const taskId = id 
     const taskTags = data.task.tags 
     elements.set("Проекты", "/projects")
     elements.set(data.project.name, `/project/${data.project.id}`)
@@ -93,15 +94,23 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
             try { 
                 let taskResponse = await taskApi.getTask(taskId || "")
                 setTask(taskResponse.data)
+
+            } catch (e) { 
+                console.error(e)
+            }
+        }
+        getData()
+    }, [])
+    useEffect(() => { 
+        (async () => { 
+            try { 
                 let commentsResponse = await commentApi.getComments(taskId)
                 setComments(commentsResponse.data)
             } catch (e) { 
                 console.error(e)
             }
-        }
-
-        getData()
-    })
+        })() 
+    }, [comments])
 
     return ( 
         <div className="task-root">

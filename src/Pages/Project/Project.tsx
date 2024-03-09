@@ -54,7 +54,7 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
                         setTasksGroups([...tasksGroups, value.name])
                     } 
                 })
-                let tasksResponse = await tasksApi.getTasks(project?.id || "")
+                let tasksResponse = await tasksApi.getTasks(undefined, project?.id || "")
                 setTasks(tasksResponse.data)
             } catch (e) { 
                 console.error(e)
@@ -131,6 +131,31 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
                             </div>
                         )
                     })}
+                    <div className="tasks">
+                    {tasksGroups.map((group) => {
+                        return (
+                            <div className="grouped-tasks-window">
+                                {tasks.map((task) => { 
+                                    if (task.assignedUser !== null) { 
+                                        return null 
+                                    }
+                                    return (
+                                        <div className="group-task">
+                                            <NavLink to={`/task/${task.id}`}>
+                                                <h4 className="task-name">{task.title}</h4>
+                                                <p>{task.description?.slice(0, 40)}</p>
+                                            </NavLink>
+                                        </div>
+                                    )
+                                })}
+                                <div className="create-task" onClick={() => openCreateTaskModal(props.user, group)}>
+                                    <img src={closeIcon} alt="close-icon" />
+                                    <p>Создать задачу</p>
+                                </div>
+                            </div>
+                        )
+                        })}
+                    </div>
                 </div>
             </div>
         </div>

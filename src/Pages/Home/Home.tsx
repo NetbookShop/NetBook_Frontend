@@ -25,21 +25,31 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
 
     useEffect(() => { 
         const projectApi = new ProjectControllersApi(ApiConfig)
-        const taskApi = new TaskControllersApi(ApiConfig)
 
         const getData = async () => { 
             try { 
                 let projectResponse = await projectApi.getProjectsList()
                 setProjects(projectResponse.data)
-                let tasksResponse = await taskApi.getTasks(props.user?.id || "")
-                setCurrentTasks(tasksResponse.data)            
+  
             } catch (e) { 
                 console.error(e)
             }
         }
 
         getData()
-    }, [projects, currentTasks, props.user]) 
+    }, [props.user]) 
+    useEffect(() => { 
+        (async () => {
+            const taskApi = new TaskControllersApi(ApiConfig)
+ 
+            try { 
+                let tasksResponse = await taskApi.getTasks(props.user?.id || "")
+                setCurrentTasks(tasksResponse.data)          
+            } catch (e) { 
+                console.error(e)
+            }
+        })()
+    }, [props.user])
 
     return (
         <div className="home-root">

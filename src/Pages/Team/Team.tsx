@@ -41,10 +41,10 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
     return ( 
         <div className="team-root">
             <Modal isOpen={isOpenUserModal} onClose={() => setIsOpenUserModal(false)}> 
-                <AddUserToTeamModel setIsOpenModal={setIsOpenUserModal}/>
+                <AddUserToTeamModel setIsOpenModal={setIsOpenUserModal} teamId={id || ""}/>
             </Modal>
             <Modal isOpen={isOpenAddUserModal} onClose={() => setIsOpenAddUserModal(false)}>
-                <AddUserToGroupModal setIsOpenModal={setIsOpenAddUserModal} groupName={currentGroup} />
+                <AddUserToGroupModal setIsOpenModal={setIsOpenAddUserModal} groupName={currentGroup} teamId={id || ""}/>
             </Modal>
             <div className="team-banner">
                 {team?.avatar !== null ?
