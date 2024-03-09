@@ -5,7 +5,7 @@ import "./Home.css"
 import PaginationNavigation from "../../Components/Pagination/Pagination";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Project, ProjectControllersApi, TaskControllersApi, TaskModel } from "task-manager";
-import { ApiConfig } from "../../Gateway/Config";
+import { ApiConfig, asFileUrl } from "../../Gateway/Config";
 
 const HomePage: React.FC<NavProps> = (props: NavProps) => { 
     const [currentTasks, setCurrentTasks] = useState<Array<TaskModel>>([]); 
@@ -31,14 +31,15 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
             try { 
                 let projectResponse = await projectApi.getProjectsList()
                 setProjects(projectResponse.data)
-                
+                let tasksResponse = await taskApi.getTasks(props.user?.id || "")
+                setCurrentTasks(tasksResponse.data)            
             } catch (e) { 
                 console.error(e)
             }
         }
 
         getData()
-    }, [projects, currentTasks]) 
+    }, [projects, currentTasks, props.user]) 
 
     return (
         <div className="home-root">
@@ -50,22 +51,22 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
                         <div className="project-card">
                             <div className="project-content">
                                 <div className="project-header">
-                                    <img src={project.icon?.fileUrl} alt="" width={24} height={24}/>
+                                    <img src={asFileUrl(project.icon?.filePath)} alt="" width={24} height={24}/>
                                     <h3 className="project-name">{project.name}</h3>
                                 </div>
                                 <p className="fast-links">Быстрые ссылки</p>
                                 <ul>
                                     <li className="tasks-group" onClick={() => navigate(`/project/${project.id}`)}>
                                         <p className="tasks-type">Открытые задачи </p>
-                                        <p className="tasks-count">{openTasksCounter}</p>
+                                        <p className="tasks-count">{tasksCounterByCategory['open'] || 0}</p>
                                     </li>
                                     <li className="tasks-group" onClick={() => navigate(`/project/${project.id}`)}>
                                         <p className="tasks-type">Завершенные задачи</p>
-                                        <p className="tasks-count">{closedTasksCounter}</p>
+                                        <p className="tasks-count">{tasksCounterByCategory["completed"] || 0}</p>
                                     </li>
                                     <li className="tasks-group" onClick={() => navigate(`/project/${project.id}`)}>
                                         <p className="tasks-type">Назначеные задачи</p>
-                                        <p className="tasks-count">{assignedTasksCounter}</p>
+                                        <p className="tasks-count">{tasksCounterByCategory['onWork'] || 0}</p>
                                     </li>
                                 </ul>
                             </div>
@@ -104,15 +105,15 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
                                     <NavLink to={`/task/${task.id}`}>
                                         <div className="task-content">
                                             <div className="left-content">
-                                                <img src={task.projectIcon.fileUrl} alt={task.projectIcon.fileName} className="project-icon"/>
+                                                <img src={asFileUrl(task.project.icon?.filePath)} alt={task.project.icon?.fileName} className="project-icon"/>
                                                 <div className="task-metadata">
                                                     <h4 className="task-title">{task.title}</h4>
-                                                    <span className="task-project">{task.projectName}</span>
+                                                    <span className="task-project">{task.project.name}</span>
                                                 </div>
                                             </div>
                                             <div className="right-content">
                                                 <h4 className="task-project">Создано</h4>
-                                                <img src={task.assignedTo.avatar.fileUrl} alt={task.assignedTo.avatar.fileName} className="avatar-owner-icon"/>
+                                                <img src={asFileUrl(task.createdBy.avatar?.filePath)} alt={task.createdBy.avatar?.fileName} className="avatar-owner-icon"/>
                                             </div>
                                         </div>
                                     </NavLink>
