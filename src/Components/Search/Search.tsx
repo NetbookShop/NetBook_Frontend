@@ -1,8 +1,9 @@
 import "./Search.css"
 import searchIcon from "../../Static/Images/search-icon.png"
-import data from "../../TestData/Search.json"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { TaskControllersApi, TaskModel } from "task-manager";
+import { ApiConfig, asFileUrl } from "../../Gateway/Config";
 
 type propsType = {
     width: number,
@@ -13,19 +14,32 @@ type propsType = {
 
 const SearchComponent: React.FC<propsType> = (props: propsType) => { 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [foundTasks, setFoundTasks] = useState<Array<any>>(data)
+    const [foundTasks, setFoundTasks] = useState<Array<TaskModel>>([])
     const navigate = useNavigate()
 
     const handleInputClick = () => {
         setIsMenuOpen(true);
     };
 
+    useEffect(() => {
+        (async () => {
+            let taskApi = new TaskControllersApi(ApiConfig)
+
+            try { 
+                let tasksResponse = await taskApi.getTasks()
+                setFoundTasks(tasksResponse.data)
+            } catch (e) { 
+                console.error(e)
+            }
+        })()
+    }, [])
+
     let handleSearchChange
     if (!props.handleSearchChange) { 
         handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => { 
             event.preventDefault()
-            data.map((value) => {
-                if (event.target.value === value.projectName) { 
+            foundTasks.map((value) => {
+                if (event.target.value === value.project.name) { 
                     setFoundTasks([...foundTasks, value])
                 }
             })
@@ -45,10 +59,10 @@ const SearchComponent: React.FC<propsType> = (props: propsType) => {
                 {foundTasks.map((value) => { 
                     return (
                         <div className="found-task" onClick={() => navigate("/task/" + value.id)}>
-                            <img src={value.projectIcon.fileUrl} alt="" className="project-icon"/>
+                            <img src={asFileUrl(value.project.icon?.filePath)} alt="" className="project-icon"/>
                             <div className="found-task-description">
                                 <h4>{value.title}</h4>
-                                <p>{value.projectName}</p>
+                                <p>{value.project.name}</p>
                             </div>
                         </div>
                     )

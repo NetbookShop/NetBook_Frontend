@@ -1,47 +1,90 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavProps } from "../../Utils/Types";
 import NavigationMapComponent from "../../Components/NavigationMap/NavigationMap";
 import "./ProjectEdit.css"
-import data from "../../TestData/ProjectEdit.json"
-import { UserScheme } from "../../Schemes/User";
-import { FileScheme } from "../../Schemes/File";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { FileApi, FileModel, Project, ProjectControllersApi, UserControllersApi, UserModel } from "task-manager";
+import { ApiConfig, asFileUrl } from "../../Gateway/Config";
+import checkMark from "../../Static/Images/check-mark.png"
+import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
 
 const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => { 
     props.setCategory("projects")
     let elements = new Map<string, string>()
-    elements.set("Проекты", "/projects")
-    elements.set(data.name, `/project/${data.id}`)
-    elements.set("Редактировать", `/project/${data.id}/edit`)
-    const [ description, setDescription ] = useState<string>(''); 
-    const [ name, setName ] = useState('')
-    const [ foundUsers, setFoundUsers ] = useState<Array<UserScheme>>([]); 
-    const [ searchRequest, setSearchRequest ] = useState()
-    const [ owner, setOwner ] = useState(data.owner) 
-    const [ uploadedIcon, setUploadedIcon ] = useState<FileScheme>()
-    const [ image, setImage ] = useState<string | ArrayBuffer | null>()
-    const navigate = useNavigate()
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => { 
+
+    const { id } = useParams()
+    const [ project, setProject ] = useState<Project>()
+    const [ description, setDescription ] = useState<string>(); 
+    const [ name, setName ] = useState<string>()
+    const [ usersList, setUsersList ] = useState<Array<UserModel>>([])
+    const [ searchRequest, setSearchRequest ] = useState('')
+    const [ owner, setOwner ] = useState<UserModel>() 
+    const [ uploadedIcon, setUploadedIcon ] = useState<FileModel>()
+    const [ image, setImage ] = useState<string | ArrayBuffer | null>()
+    const [ errorMessage, setErrorMessage ] = useState<string>()
+    const navigate = useNavigate()
+    const filteredUsers = usersList.filter(user =>
+        user.fullName.toLowerCase().includes(searchRequest.toLowerCase())
+    );
+
+    elements.set("Проекты", "/projects")
+    elements.set(project?.name || "", `/project/${id}`)
+    elements.set("Редактировать", `/project/${id}/edit`)
+
+    useEffect(() => {
+        (async () => { 
+            let projectApi = new ProjectControllersApi(ApiConfig)
+            let userApi = new UserControllersApi(ApiConfig) 
+
+            try { 
+                let projectResponse = await projectApi.getProject(id || "")
+                setProject(projectResponse.data)
+                if (project !== undefined) { 
+                    setName(project.name)
+                    setDescription(project.description)
+                }
+                let usersResponse = await userApi.getUsers()
+                setUsersList(usersResponse.data)
+            } catch (e) { 
+                console.error(e)
+            }
+        })()
+    }, [props.user])
+
+    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => { 
         if (event.target.files === null) { 
             return  
         }
+
+        const fileApi = new FileApi(ApiConfig)
         const file = event.target.files[0]
+        
+        let fileResponse = await fileApi.uploadFileForm(file)
+        setUploadedIcon(fileResponse.data)
 
         const reader = new FileReader();
-        reader.readAsDataURL(file)
+        reader.readAsBinaryString(file)
 
         reader.onloadend = () => {
             setImage(reader.result);
         }
     }
 
-    const serachUsersToSelect = (event: React.ChangeEvent<HTMLInputElement>) => { 
-        
-    }
+    const submitProjectEdit = async () => {
+        let projectApi = new ProjectControllersApi(ApiConfig)
+        try { 
+            projectApi.updateProject(
+                id || "", 
+                { 
+                    name: name,
+                    description: description,  
+                    iconId: uploadedIcon?.id, 
+                }
+            )
+        } catch { 
 
-    const submitProjectEdit = (id: string) => { 
-        // TODO: будет выполнен запрос к бекенду 
+        }
         setTimeout(() => navigate(`/project/${id}`), 400)
     }
 
@@ -50,13 +93,13 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
             <NavigationMapComponent elements={elements}/>
             <div className="projectedit-form">
                 <div className="projectedit-project-image-container">
-                    <img src={
+                    <img src={asFileUrl(
                         (
                             image === null ||
                             image === undefined
                         )
-                        ? data.icon.fileUrl
-                        : String(image)}
+                        ? project?.icon?.filePath
+                        : String(image))}
                         alt=""
                         className="projectedit-project-icon"
                     />
@@ -92,21 +135,32 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
                     </div>
                     <div className="project-edit-owner edit-project-field">
                         <p>Руководитель</p>
+                        <input type="text" onChange={(e) => setSearchRequest(e.target.value)}/>
                         <div className="input-owner">
                             {owner !== undefined ? 
                                 <div className="owner-user">
-                                    <img src={owner.avatar.fileUrl} alt="" className="avatar-icon-projectedit"/>
-                                    <p>{ owner.name }</p>
+                                    <img src={asFileUrl(owner.avatar?.filePath)} alt="" className="avatar-icon-projectedit"/>
+                                    <p>{ owner.fullName }</p>
                                 </div>
                             : null }
                             { searchRequest !== undefined ?
                             <div className="found-users">
-                                {foundUsers.map((user) => { 
+                                {filteredUsers.map((user) => { 
                                     return (
-                                        <div className="found-user-result">
-                                            <img src={user.avatar.fileUrl} alt="" className="found-user-icon"/>
-                                            <p>{ user.name }</p>
+                                        <div className="found-user-result" onClick={() => setOwner(user)}>
+                                            <img src={asFileUrl(user.avatar?.filePath)} alt="" className="found-user-icon"/>
+                                            <p>{ user.fullName }</p>
+                                            {owner?.id === user.id ? 
+                                                <div className="check-mark-active">
+                                                    <img src={checkMark} alt="" width={26} height={24}/>
+                                                </div>
+                                                : 
+                                                <div className="check-mark-inactive">
+                
+                                                </div>
+                                            }
                                         </div>
+
                                     )
                                 })}
                             </div> 
@@ -114,7 +168,8 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
                         </div>
                     </div>
                 </div>
-                <div className="projectedit-submit" onClick={() => submitProjectEdit(data.id)}>
+                <ErrorMessage errorMessage={errorMessage} setErrorMessage={setErrorMessage}/> 
+                <div className="projectedit-submit" onClick={() => submitProjectEdit()}>
                     Сохранить
                 </div>
             </div>

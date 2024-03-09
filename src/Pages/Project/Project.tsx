@@ -54,7 +54,7 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
                         setTasksGroups([...tasksGroups, value.name])
                     } 
                 })
-                let tasksResponse = await tasksApi.getTasks(undefined, project?.id || "")
+                let tasksResponse = await tasksApi.getTasks(project?.id || "")
                 setTasks(tasksResponse.data)
             } catch (e) { 
                 console.error(e)

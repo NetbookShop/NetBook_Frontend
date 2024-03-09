@@ -1,5 +1,4 @@
 import { Dispatch, useState, useEffect } from "react";
-import { UserScheme } from "../../Schemes/User";
 import checkMark from "../../Static/Images/check-mark.png"
 import "./UserSelector.css"
 import { UserControllersApi, UserModel } from "task-manager";

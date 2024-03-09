@@ -4,12 +4,29 @@ import ActionsButtonsComponent from "../../Components/Actions/Actions";
 import { useNavigate } from "react-router-dom";
 import arrowIcon from "../../Static/Images/arrow-icon-long.png"
 import "./ProjectCreate.css"
+import { useState } from 'react'
+import { ProjectControllersApi } from "task-manager";
+import { ApiConfig } from "../../Gateway/Config";
 
 const ProjectCreatePage: React.FC<NavProps> = (props: NavProps) => { 
     props.setCategory("none")
 
-    const saveProject = () => { 
+    const [name, setName] = useState('')
+    const [description, setDescription] = useState('')
+    const saveProject = async () => { 
+        let projectApi = new ProjectControllersApi(ApiConfig)
 
+        try { 
+            await projectApi.createProject({ 
+                name: name, 
+                description: description, 
+            })
+
+            navigate("/projects")
+        } catch (e) { 
+            console.error(e)
+        }
+        
     }
 
     const navigate = useNavigate()
@@ -32,6 +49,7 @@ const ProjectCreatePage: React.FC<NavProps> = (props: NavProps) => {
                             id="name" 
                             placeholder="Название проекта" 
                             className="create-team-field-input"
+                            onChange={(e) => setName(e.target.value)}
                         />
                     </div>
                     <div className="create-team-field">
@@ -41,6 +59,7 @@ const ProjectCreatePage: React.FC<NavProps> = (props: NavProps) => {
                             id="name" 
                             placeholder="Описание проекта." 
                             className="create-team-field-input"
+                            onChange={(e) => setDescription(e.target.value)}
                         />
                     </div>
                     <div className="create-team-actions">

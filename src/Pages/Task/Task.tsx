@@ -1,25 +1,22 @@
 import NavigationMapComponent from "../../Components/NavigationMap/NavigationMap";
 import { NavProps } from "../../Utils/Types";
 import "./Task.css"
-import data from "../../TestData/Task.json"
 import { useEffect, useState } from "react";
 import addIcon from "../../Static/Images/add-icon.png"
 import Modal from "../../Modals/Base/Base";
 import AssignTask from "../../Modals/Task/AssignTask";
-import { Comment as CommentModel, CommentApi, TaskControllersApi, TaskModel } from "task-manager";
+import { Comment as CommentModel, CommentApi, TaskControllersApi, TaskModel, TaskTag, ProjectControllersApi, Project } from "task-manager";
 import { ApiConfig, asFileUrl } from "../../Gateway/Config";
 import { useParams } from "react-router-dom";
 
 const TaskPage: React.FC<NavProps> = (props: NavProps) => { 
-    let elements = new Map<string, string>()
-    const [task, setTask] = useState<TaskModel>()
-    const { id } = useParams()
-    const taskId = id 
-    const taskTags = data.task.tags 
-    elements.set("Проекты", "/projects")
-    elements.set(data.project.name, `/project/${data.project.id}`)
-    elements.set(data.task.name, `/task/${data.task.id}`)
     props.setCategory("projects")
+
+    const { taskId, projectId } = useParams()
+    const [ project, setProject ] = useState<Project>()
+
+    const [ task, setTask ] = useState<TaskModel>()
+    const [ taskTags, setTaskTags ] = useState<Array<TaskTag>>([])
     const [ commentText, setCommentText ] = useState<string>()
     const [ comments, setComments ] = useState<Array<CommentModel>>([])
     const [ currentCommentID, setCurrentCommentID] = useState<string>()
@@ -27,11 +24,10 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
     const [ isOpenAssignUser, setIsOpenAssignUser ] = useState(false)
     let commentApi = new CommentApi(ApiConfig)
 
-    const OnCommentInput = (e: React.ChangeEvent<HTMLInputElement>) => { 
-        setCommentText(e.target.value)
-
-        return 
-    }
+    let elements = new Map<string, string>()
+    elements.set("Проекты", "/projects")
+    elements.set(project?.name || "", `/project/${project?.id || ""}`)
+    elements.set(task?.title || "", `/task/${task?.id || ""}`)
 
     const addComment = async () => {
         let commentResponse = await commentApi.createComment({ 
@@ -62,7 +58,7 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
                     })
                     comments[index].text = currentCommentText
                 } catch (e) { 
-                    console.error(e)
+                    console.error(e) 
                 } 
                 return 
             }
@@ -76,6 +72,7 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
             await commentApi.deleteComment(id)
         } catch (e) { 
             console.error(e)
+            return 
         }
         setComments(comments.filter((value, index) => {
             console.log(id, value.id)
@@ -89,12 +86,15 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
 
     useEffect(() => {
         let taskApi = new TaskControllersApi(ApiConfig)
-        
+        let projectApi = new ProjectControllersApi(ApiConfig)
+
         const getData = async () => { 
             try { 
                 let taskResponse = await taskApi.getTask(taskId || "")
                 setTask(taskResponse.data)
-
+                setTaskTags(taskResponse.data.tags || [])
+                let projectResponse = await projectApi.getProject(projectId || "")
+                setProject(projectResponse.data)
             } catch (e) { 
                 console.error(e)
             }
@@ -131,7 +131,7 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
                         <div className="comments-container">
                             <div className="create-comment">
                                 <img src={asFileUrl(props.user?.avatar?.filePath)} alt="" className="comment-profile-image"  height={34} width={34}/>
-                                <input type="text" className="create-comment-input" placeholder="Добавить коментарий" value={commentText} onChange={OnCommentInput}/>
+                                <input type="text" className="create-comment-input" placeholder="Добавить коментарий" value={commentText} onChange={(e) => setCommentText(e.target.value)}/>
                             </div>
                             <div className="apply-comment" onClick={addComment}><p>Опубликовать</p></div>
                             {comments.map((value) => {
@@ -200,7 +200,7 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
                                 {taskTags.map((value) => { 
                                     return (
                                         <div className="metainfo-task-tag">
-                                            {value}
+                                            {value.name}
                                         </div>
                                     )
                                 })}
