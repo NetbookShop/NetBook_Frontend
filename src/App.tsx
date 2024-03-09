@@ -22,6 +22,7 @@ import NavbarComponent from './Components/Navbar/Navbar';
 import { NavigationCategoryTypes } from './Utils/Types';
 import { UserControllersApi, UserModel } from 'task-manager';
 import { ApiConfig, removeToken, setAccessTokenForClient } from './Gateway/Config';
+import UserEditPage from './Pages/UserEdit/UserEdit';
 
 function App() {	
 	const [cookies, setCookies, removeCookies] = useCookies([AuthorizationCookieKey]);
@@ -70,6 +71,7 @@ function App() {
 					<Route path="/" element={<HomePage  setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>
 					<Route path="/home" element={<HomePage  setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>
 					<Route path="/user/:id" element={<UserPage  setCategory={setNavigationCategory} user={currentUser} />} action={localAuthCheck}/>
+					<Route path="/user/:id/edit" element={<UserEditPage setCategory={setNavigationCategory} user={currentUser} />} action={localAuthCheck}/>
 					<Route path="/project/:id" element={<ProjectPage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/> 
 					<Route path='/project/:id/edit' element={<ProjectEditPage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>
 					<Route path="/project/create" element={<ProjectCreatePage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>

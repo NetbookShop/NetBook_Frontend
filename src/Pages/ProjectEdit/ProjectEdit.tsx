@@ -7,6 +7,7 @@ import { FileApi, FileModel, Project, ProjectControllersApi, UserControllersApi,
 import { ApiConfig, asFileUrl } from "../../Gateway/Config";
 import checkMark from "../../Static/Images/check-mark.png"
 import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
+import ActionsButtonsComponent from "../../Components/Actions/Actions";
 
 const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => { 
     props.setCategory("projects")
@@ -43,6 +44,7 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
                 if (project !== undefined) { 
                     setName(project.name)
                     setDescription(project.description)
+                    setOwner(projectResponse.data.createdBy)
                 }
                 let usersResponse = await userApi.getUsers()
                 setUsersList(usersResponse.data)
@@ -59,16 +61,16 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
 
         const fileApi = new FileApi(ApiConfig)
         const file = event.target.files[0]
-        
-        let fileResponse = await fileApi.uploadFileForm(file)
-        setUploadedIcon(fileResponse.data)
+    
 
         const reader = new FileReader();
-        reader.readAsBinaryString(file)
+        reader.readAsDataURL(file)
 
         reader.onloadend = () => {
             setImage(reader.result);
         }
+        let fileResponse = await fileApi.uploadFileForm(structuredClone(file))
+        setUploadedIcon(fileResponse.data)
     }
 
     const submitProjectEdit = async () => {
@@ -93,13 +95,13 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
             <NavigationMapComponent elements={elements}/>
             <div className="projectedit-form">
                 <div className="projectedit-project-image-container">
-                    <img src={asFileUrl(
+                    <img src={
                         (
                             image === null ||
                             image === undefined
                         )
-                        ? project?.icon?.filePath
-                        : String(image))}
+                        ? asFileUrl(project?.icon?.filePath)
+                        : String(image)}
                         alt=""
                         className="projectedit-project-icon"
                     />
@@ -111,7 +113,7 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
                             onChange={handleFileChange}
                             style={{ display: 'none' }}
                         />
-                        <p className="projectedit-icon-button">Изменить значок</p>
+                        <div className="projectedit-icon-button">Изменить значок</div>
                     </label>
                 </div>
                 <div className="projectedit-fields">
@@ -135,7 +137,6 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
                     </div>
                     <div className="project-edit-owner edit-project-field">
                         <p>Руководитель</p>
-                        <input type="text" onChange={(e) => setSearchRequest(e.target.value)}/>
                         <div className="input-owner">
                             {owner !== undefined ? 
                                 <div className="owner-user">
@@ -148,8 +149,10 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
                                 {filteredUsers.map((user) => { 
                                     return (
                                         <div className="found-user-result" onClick={() => setOwner(user)}>
-                                            <img src={asFileUrl(user.avatar?.filePath)} alt="" className="found-user-icon"/>
-                                            <p>{ user.fullName }</p>
+                                            <div className="left-content-user">
+                                                <img src={asFileUrl(user.avatar?.filePath)} alt="" className="found-user-icon"/>
+                                                <p>{ user.fullName }</p>
+                                            </div>
                                             {owner?.id === user.id ? 
                                                 <div className="check-mark-active">
                                                     <img src={checkMark} alt="" width={26} height={24}/>
@@ -169,9 +172,8 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
                     </div>
                 </div>
                 <ErrorMessage errorMessage={errorMessage} setErrorMessage={setErrorMessage}/> 
-                <div className="projectedit-submit" onClick={() => submitProjectEdit()}>
-                    Сохранить
-                </div>
+                
+                <ActionsButtonsComponent submitAction={() => submitProjectEdit()} cancelAction={() => navigate("/projects")} submitText="Сохранить"/>
             </div>
         </div>
     )

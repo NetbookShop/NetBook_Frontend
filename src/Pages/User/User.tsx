@@ -65,7 +65,7 @@ const UserPage: React.FC<NavProps> = (props: NavProps) => {
                         <h1 className="userpage-username">
                             {user.fullName}
                         </h1>   
-                        <div className="account-control">
+                        <div className="account-control" onClick={() => navigate(`/user/${id}/edit`)}>
                             Управление аккаунтом
                         </div>
                         <div className="account-info-container">

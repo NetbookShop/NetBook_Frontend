@@ -30,6 +30,9 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
     elements.set(task?.title || "", `/task/${task?.id || ""}`)
 
     const addComment = async () => {
+        if (commentText === undefined || taskId === undefined) { 
+            return  
+        }
         let commentResponse = await commentApi.createComment({ 
             text: commentText, 
             taskId: taskId, 
