@@ -1,5 +1,4 @@
 import { Dispatch, useState, useEffect } from "react";
-import data from "../../TestData/CreateUser.json"
 import UserSelectorComponent from "../../Components/UserSelector/UserSelector";
 import ActionsButtonsComponent from "../../Components/Actions/Actions";
 import { ProjectControllersApi, UserControllersApi, UserModel } from "task-manager";
@@ -13,7 +12,7 @@ const AddUserToProjectModal: React.FC<ModalProps> = (props: ModalProps) => {
         let projectApi = new ProjectControllersApi(ApiConfig)
         try { 
             selectedUsers.forEach(async (element) => {
-                let response = await projectApi.addUserToProject(props.projectId, {
+                await projectApi.addUserToProject(props.projectId, {
                     userId: element
                 });
             });
