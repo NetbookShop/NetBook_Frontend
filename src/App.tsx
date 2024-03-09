@@ -76,6 +76,7 @@ function App() {
 					<Route path='/project/:projectId/task/:taskId' element={<TaskPage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/> 
 					<Route path="/projects" element={<ProjectsListPage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>
 					<Route path="/teams" element={<TeamsListPage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>
+					<Route path='/task/:taskId' element={<TaskPage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/> 
 					<Route path="/team/:id" element={<TeamPage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>
 					<Route path="/team/:id/attendance" element={<WorkersAttendancePage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>
 					<Route path='/team/:id/schedule' element={<SchedulePage setCategory={setNavigationCategory} user={currentUser}/>} action={localAuthCheck}/>

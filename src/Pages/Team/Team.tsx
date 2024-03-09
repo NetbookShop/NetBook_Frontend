@@ -83,7 +83,7 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
                                                     </NavLink>
                                                 )
                                             })}
-                                            <div className="group-add-user" onClick={() => {GroupAddUser(value.name, value.id || "")}}>
+                                            <div className="group-add-user" onClick={() => {GroupAddUser(value.role, value.id || "")}}>
                                                 <img src={addIcon} alt="" className="team-avatar-icon"/>
                                                 <p>Добавить сотрудника</p>
                                             </div>

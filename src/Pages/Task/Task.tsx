@@ -93,6 +93,11 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
                 let taskResponse = await taskApi.getTask(taskId || "")
                 setTask(taskResponse.data)
                 setTaskTags(taskResponse.data.tags || [])
+                let commentsResponse = await commentApi.getComments(taskId)
+                setComments(commentsResponse.data)
+                if (projectId === "" || projectId === undefined || projectId === null) {
+                    return 
+                }
                 let projectResponse = await projectApi.getProject(projectId || "")
                 setProject(projectResponse.data)
             } catch (e) { 
@@ -101,16 +106,6 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
         }
         getData()
     }, [])
-    useEffect(() => { 
-        (async () => { 
-            try { 
-                let commentsResponse = await commentApi.getComments(taskId)
-                setComments(commentsResponse.data)
-            } catch (e) { 
-                console.error(e)
-            }
-        })() 
-    }, [comments])
 
     return ( 
         <div className="task-root">
