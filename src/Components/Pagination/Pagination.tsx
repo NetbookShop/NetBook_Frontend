@@ -1,4 +1,4 @@
-import ArrowIcon from "../../Pages/arrow"
+import ArrowIcon from "../../Static/Images/arrow-icon.png"
 import { range } from "../../Utils/Range"
 import "./Pagination.css"
 

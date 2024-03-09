@@ -6,7 +6,6 @@ type props = { userId: string, avatarUrl: string }
 const ProfileComponent: React.FC<props> = (props: props) => { 
     return (
         <div className="profile-root">
-            {/* TODO: make window like in search window */}
             <NavLink to={"/user/" + props.userId} className="profile-link">
                 <img src={props.avatarUrl} alt="" className="profile-image"/>
             </NavLink>
