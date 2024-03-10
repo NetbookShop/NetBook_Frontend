@@ -16,7 +16,7 @@ const PaginationNavigation: React.FC<props> = (props: props) => {
             <li>
                 <div className="left-arrow">
                     <button className="arrow-button" onClick={() => props.setCurrentPage(props.currentPage - 1)}>
-                        <ArrowIcon />
+                        <img src={ArrowIcon } alt="" width={24} height={24} />
                     </button>
                 </div>
             </li>
@@ -28,7 +28,7 @@ const PaginationNavigation: React.FC<props> = (props: props) => {
             <li>
                 <div className="right-arrow">
                     <button className="arrow-button" onClick={() => props.setCurrentPage(props.currentPage + 1)}>
-                        <ArrowIcon />
+                        <img src={ArrowIcon } alt="" width={24} height={24}/>
                     </button>
                 </div>
             </li>

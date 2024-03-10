@@ -7,7 +7,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FileApi, FileModel, UserControllersApi } from "task-manager";
 import { ApiConfig, asFileUrl } from "../../Gateway/Config";
 import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
-import { upload } from "@testing-library/user-event/dist/upload";
 
 const UserEditPage: React.FC<NavProps> = (props: NavProps) => { 
     const navigate = useNavigate()
@@ -46,7 +45,6 @@ const UserEditPage: React.FC<NavProps> = (props: NavProps) => {
             console.error(e)
         }
     }
-
     useEffect(() => { 
         (async () => { 
             try { 

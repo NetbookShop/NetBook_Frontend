@@ -131,7 +131,12 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
                             </div>
                         )
                     })}
-                    <div className="tasks">
+                </div>
+                <div className="users-info">
+                    <ArrowIcon width={28} height={28}/>
+                    <p>Не сгруппированные</p>
+                </div>
+                <div className="tasks-ungrouped">
                     {tasksGroups.map((group) => {
                         return (
                             <div className="grouped-tasks-window">
@@ -156,7 +161,6 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
                         )
                         })}
                     </div>
-                </div>
             </div>
         </div>
     )
