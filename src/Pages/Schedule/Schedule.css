@@ -1,0 +1,30 @@
+.schdule-navbar { 
+    display: flex;
+    align-items: center;
+}
+
+.schedule-navbar-name { 
+    align-items: center;
+    margin: 10px 10px;
+    width: 210px;   
+}
+
+.schedule-days-container { 
+    display: flex;
+}
+
+.schedule-day-info { 
+    display: flex;
+    min-width: 200px;
+    align-items: center;
+    justify-content: center;
+}
+
+.schedule-day-arrow { 
+    rotate: 180deg;
+    margin: 0 10px; 
+}
+
+.schedule-days-work { 
+    margin: 0 50px; 
+}
