@@ -8,21 +8,23 @@ import ArrowIcon from "../arrow";
 import { NavLink, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Modal from "../../Modals/Base/Base";
-import { Project, ProjectControllersApi, TaskControllersApi, TaskModel, UserModel } from "task-manager";
+import { Project, ProjectControllersApi, TaskControllersApi, TaskModel, TaskType, UserModel } from "task-manager";
 import { ApiConfig, asFileUrl } from "../../Gateway/Config";
 import AddUserToProjectModal from "../../Modals/Project/AddUserToProject";
 
 const ProjectPage: React.FC<NavProps> = (props: NavProps) => { 
     const [project, setProject] = useState<Project>()
     const [tasks, setTasks] = useState<Array<TaskModel>>([])
-    let usersNames: Array<string> = []
-    let users: Array<UserModel> = [] 
+    const [usersNames, setUsersNames] = useState<Array<string>>([])
+    // let usersNames: Array<string> = []
+    const [users, setUsers] = useState<Array<UserModel>>([])
     tasks.forEach((value) => { 
         if (value !== undefined && value.assignedUser !== null) {
             if (value.assignedUser !== undefined) {  
                 if (usersNames.indexOf(value.assignedUser.fullName || "") === -1) { 
-                    users.push(value.assignedUser)
-                    usersNames.push(value.assignedUser.fullName || "")
+                    setUsers([...users, value.assignedUser])
+                    // users.push(value.assignedUser)
+                    setUsersNames([...usersNames, value.assignedUser.fullName || ""])
                 }
             } 
         } 
@@ -33,7 +35,7 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
     elemMaps.set("Проекты", "/projects")
     elemMaps.set(project?.name || "", `/project/` + project?.id)
     const [isOepnCreateTask, setIsCreateTaskOpen] = useState(false)
-    const [tasksGroups, setTasksGroups] = useState<Array<string>>([])
+    const [tasksGroups, setTasksGroups] = useState<Array<TaskType>>()
     const [currentUserId, setCurrentUserId] = useState('')
     const [currentStatusName, setCurrentStatusName] = useState('')
     const [isAddUserOpen, setIsAddUserOpen] = useState(false)
@@ -42,19 +44,16 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
         setCurrentStatusName(group)
         setIsCreateTaskOpen(true)
     }
-    const projectApi = new ProjectControllersApi(ApiConfig)
-    const tasksApi = new TaskControllersApi(ApiConfig)
+
     useEffect(() => { 
         const getData = async () => { 
+            const projectApi = new ProjectControllersApi(ApiConfig)
+            const tasksApi = new TaskControllersApi(ApiConfig)
             try { 
                 let response = await projectApi.getProject(id || "")
                 setProject(response.data)
-                response.data.taskTypes?.forEach((value) => {
-                    if (tasksGroups.indexOf(value.name) === -1) { 
-                        setTasksGroups([...tasksGroups, value.name])
-                    } 
-                })
-                let tasksResponse = await tasksApi.getTasks(project?.id || "")
+                setTasksGroups(response.data.taskTypes?.slice())
+                let tasksResponse = await tasksApi.getTasks(response.data.id)
                 setTasks(tasksResponse.data)
             } catch (e) { 
                 console.error(e)
@@ -62,7 +61,7 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
         }
 
         getData()
-    }, [tasksGroups])
+    }, [])
 
     return (
         <div className="projectpage-root">
@@ -85,10 +84,10 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
             </div>
             <div className="project-board-container">
                 <div className="tasks-groups">
-                    {tasksGroups.map((value) => { 
+                    {tasksGroups?.map((value) => { 
                         return (
                             <div className="task-group">
-                                <p className="task-group-name">{value}</p>
+                                <p className="task-group-name">{value.name}</p>
                             </div>
                         )
                         }
@@ -104,11 +103,11 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
                                     <p>{user.fullName}</p>
                                 </div>
                                 <div className="user-tasks-container">
-                                {tasksGroups.map((group) => {
+                                {tasksGroups?.map((group) => {
                                     return (
                                         <div className="grouped-tasks-window">
                                             {tasks.map((task) => { 
-                                                if (task.status !== group) { 
+                                                if (task.status !== group.name) { 
                                                     return null 
                                                 } 
                                                 return (
@@ -120,7 +119,7 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
                                                     </div>
                                                 )
                                             })}
-                                            <div className="create-task" onClick={() => openCreateTaskModal(user, group)}>
+                                            <div className="create-task" onClick={() => openCreateTaskModal(user, group.name)}>
                                                 <img src={closeIcon} alt="close-icon" />
                                                 <p>Создать задачу</p>
                                             </div>
@@ -137,7 +136,7 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
                     <p>Не сгруппированные</p>
                 </div>
                 <div className="tasks-ungrouped">
-                    {tasksGroups.map((group) => {
+                    {tasksGroups?.map((group) => {
                         return (
                             <div className="grouped-tasks-window">
                                 {tasks.map((task) => { 
@@ -153,7 +152,7 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
                                         </div>
                                     )
                                 })}
-                                <div className="create-task" onClick={() => openCreateTaskModal(props.user, group)}>
+                                <div className="create-task" onClick={() => openCreateTaskModal(props.user, group.name)}>
                                     <img src={closeIcon} alt="close-icon" />
                                     <p>Создать задачу</p>
                                 </div>
