@@ -11,11 +11,7 @@
 }
 
 .left-arrow { 
-    rotate: 90deg; 
-}
-
-.right-arrow { 
-    rotate: -90deg;
+    rotate: -180deg; 
 }
 
 .page { 

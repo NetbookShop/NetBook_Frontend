@@ -43,7 +43,7 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
             const taskApi = new TaskControllersApi(ApiConfig)
  
             try { 
-                let tasksResponse = await taskApi.getTasks(props.user?.id || "")
+                let tasksResponse = await taskApi.getTasks(undefined, props.user?.id || "", undefined, true)
                 setCurrentTasks(tasksResponse.data)          
             } catch (e) { 
                 console.error(e)
@@ -84,7 +84,7 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
                     )
                 })}
             </div>
-            <div className="tasks">
+            <div className="home-tasks">
                 <div className="tasks-navbar">
                     {tasksCategories.map((group) => { 
                         return (

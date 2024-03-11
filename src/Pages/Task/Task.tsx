@@ -216,13 +216,13 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
                         <div className="metainfo-field">
                             <p className="metainfo-header">Создано</p>
                             <div className="maininfo-value">
-                                {task?.startedAt.toString()}
+                                {task?.startedAt.toString().slice(0, 10)}
                             </div>
                         </div>
                         <div className="metainfo-field">
                             <p className="metainfo-header">Закончится в</p>
                             <div className="metainfo-value">
-                                {task?.endsAt?.toString()}
+                                {task?.endsAt?.toString().slice(0, 10)}
                             </div>
                         </div>
                     </div>

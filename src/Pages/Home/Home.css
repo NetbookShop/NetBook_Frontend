@@ -68,7 +68,7 @@
     padding-left: 30px;
 }
 
-.tasks { 
+.home-tasks { 
     margin-top: 30px; 
 }
 
@@ -88,6 +88,7 @@
     padding-bottom: 5px;
     font-size: 17px; 
     background-color: white;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.3);
 }
 
 .tasks-navbar-counter { 
@@ -152,6 +153,10 @@
 .home-task-container a { 
     text-decoration: none;
     color: black; 
+}
+
+.home-task-container { 
+    margin: 10px 0; 
 }
 
 .avatar-owner-icon { 
