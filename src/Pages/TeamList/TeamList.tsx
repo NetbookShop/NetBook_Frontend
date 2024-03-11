@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import NavigationMapComponent from "../../Components/NavigationMap/NavigationMap";
 import { NavProps } from "../../Utils/Types";
 import "./TeamList.css"
-import data from "../../TestData/TeamsList.json"
 import properties from "../../Static/Images/propertiesIcon.svg"
 import { NavLink } from "react-router-dom";
 import Modal from "../../Modals/Base/Base";
@@ -54,11 +53,11 @@ const TeamsListPage: React.FC<NavProps> = (props: NavProps) => {
                         <NavLink to={`/team/${value.id}`} className="team-list-container">
                             <div className="team-container-left-content">
                                 <div className="team-container-name">
-                                    <img src={asFileUrl(value.avatar?.filePath)} alt="" width={24} height={24} className="avatar-icon"/>
+                                    <img src={asFileUrl(value.avatar?.id)} alt="" width={24} height={24} className="avatar-icon"/>
                                     <p className="team-name">{value.name}</p>
                                 </div>
                                 <div className="team-container-owner">
-                                    <img src={asFileUrl(value.createdBy?.avatar?.filePath)} alt="" className="avatar-icon"/>
+                                    <img src={asFileUrl(value.createdBy?.avatar?.id)} alt="" className="avatar-icon"/>
                                     <p className="owner-name">{value.createdBy?.fullName}</p>
                                 </div>
                             </div>

@@ -58,7 +58,7 @@ const UserPage: React.FC<NavProps> = (props: NavProps) => {
                 <div className="user-left-navbar-main">
                     <div className="user-avatar">
                         {user.avatar !== null ? 
-                            <img src={asFileUrl(user.avatar?.filePath || "")} alt="" className="user-avatar-icon" width={"160px"} height={"160px"}/>
+                            <img src={asFileUrl(user.avatar?.id || "")} alt="" className="user-avatar-icon" width={"160px"} height={"160px"}/>
                         : null } 
                     </div>
                     <div className="user-left-navbar-info">
@@ -95,10 +95,10 @@ const UserPage: React.FC<NavProps> = (props: NavProps) => {
                                     {userTeams.map((value) => { 
                                         return ( 
                                             <div className="account-team-container" onClick={() => navigate(`/team/${value.id}`)}>
-                                                <img src={asFileUrl(value.avatar?.filePath || "")} alt="" className="account-team-logo" width={30} height={30}/>
+                                                <img src={asFileUrl(value.avatar?.id || "")} alt="" className="account-team-logo" width={30} height={30}/>
                                                 <div className="account-team-info">
                                                     <p>{value.name}</p>
-                                                    {/* <p className="account-team-memebers-count">{value.membersCount} Участника</p> */}
+
                                                     <p className="account-team-memebers-count">2 Участника</p>
                                                 </div>
                                             </div>

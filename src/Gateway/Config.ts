@@ -54,5 +54,6 @@ export function isAuthorized(cookies: any) {
 }
 
 export function asFileUrl(fileUrl: string | null | undefined) { 
+    console.log(baseDownloadPath + fileUrl)
     return baseDownloadPath + fileUrl
 }

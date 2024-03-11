@@ -100,7 +100,7 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
                             image === null ||
                             image === undefined
                         )
-                        ? asFileUrl(project?.icon?.filePath)
+                        ? asFileUrl(project?.icon?.id)
                         : String(image)}
                         alt=""
                         className="projectedit-project-icon"
@@ -140,7 +140,7 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
                         <div className="input-owner">
                             {owner !== undefined ? 
                                 <div className="owner-user">
-                                    <img src={asFileUrl(owner.avatar?.filePath)} alt="" className="avatar-icon-projectedit"/>
+                                    <img src={asFileUrl(owner.avatar?.id)} alt="" className="avatar-icon-projectedit"/>
                                     <p>{ owner.fullName }</p>
                                 </div>
                             : null }
@@ -150,7 +150,7 @@ const ProjectEditPage: React.FC<NavProps> = (props: NavProps) => {
                                     return (
                                         <div className="found-user-result" onClick={() => setOwner(user)}>
                                             <div className="left-content-user">
-                                                <img src={asFileUrl(user.avatar?.filePath)} alt="" className="found-user-icon"/>
+                                                <img src={asFileUrl(user.avatar?.id)} alt="" className="found-user-icon"/>
                                                 <p>{ user.fullName }</p>
                                             </div>
                                             {owner?.id === user.id ? 

@@ -59,7 +59,7 @@ const SearchComponent: React.FC<propsType> = (props: propsType) => {
                 {foundTasks.map((value) => { 
                     return (
                         <div className="found-task" onClick={() => navigate("/task/" + value.id)}>
-                            <img src={asFileUrl(value.project.icon?.filePath)} alt="" className="project-icon"/>
+                            <img src={asFileUrl(value.project.icon?.id)} alt="" className="project-icon"/>
                             <div className="found-task-description">
                                 <h4>{value.title}</h4>
                                 <p>{value.project.name}</p>

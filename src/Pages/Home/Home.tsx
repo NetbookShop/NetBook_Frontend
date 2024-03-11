@@ -61,7 +61,7 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
                         <div className="project-card">
                             <div className="project-content">
                                 <div className="project-header">
-                                    <img src={asFileUrl(project.icon?.filePath)} alt="" width={24} height={24}/>
+                                    <img src={asFileUrl(project.icon?.id)} alt="" width={24} height={24}/>
                                     <h3 className="project-name">{project.name}</h3>
                                 </div>
                                 <p className="fast-links">Быстрые ссылки</p>
@@ -115,7 +115,7 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
                                     <NavLink to={`/task/${task.id}`}>
                                         <div className="task-content">
                                             <div className="left-content">
-                                                <img src={asFileUrl(task.project.icon?.filePath)} alt={task.project.icon?.fileName} className="project-icon"/>
+                                                <img src={asFileUrl(task.project.icon?.id)} alt={task.project.icon?.fileName} className="project-icon"/>
                                                 <div className="task-metadata">
                                                     <h4 className="task-title">{task.title}</h4>
                                                     <span className="task-project">{task.project.name}</span>
@@ -123,7 +123,7 @@ const HomePage: React.FC<NavProps> = (props: NavProps) => {
                                             </div>
                                             <div className="right-content">
                                                 <h4 className="task-project">Создано</h4>
-                                                <img src={asFileUrl(task.createdBy.avatar?.filePath)} alt={task.createdBy.avatar?.fileName} className="avatar-owner-icon"/>
+                                                <img src={asFileUrl(task.createdBy.avatar?.id)} alt={task.createdBy.avatar?.fileName} className="avatar-owner-icon"/>
                                             </div>
                                         </div>
                                     </NavLink>

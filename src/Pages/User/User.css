@@ -87,6 +87,7 @@
 
 .account-task { 
     display: flex;
+    margin: 10px 0; 
     flex-direction: column;
     padding: 15px 10px;
     background-color: rgb(216, 216, 216);   

@@ -36,7 +36,7 @@ const UserSelectorComponent: React.FC<props> = (props: props) => {
                     return (
                         <div className="user-list-selector">
                             <div className="user-list-container">
-                                <img src={asFileUrl(value.avatar?.filePath)} alt="" className="avatar-icon"/>
+                                <img src={asFileUrl(value.avatar?.id)} alt="" className="avatar-icon"/>
                                 <p>{value.fullName}</p>
                             </div>
 

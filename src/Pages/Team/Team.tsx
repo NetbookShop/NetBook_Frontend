@@ -48,7 +48,7 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
             </Modal>
             <div className="team-banner">
                 {team?.avatar !== null ?
-                    <img src={asFileUrl(team?.avatar?.filePath)} alt="banner" width={"100%"} height={"200px"}/>
+                    <img src={asFileUrl(team?.avatar?.id)} alt="banner" width={"100%"} height={"200px"}/>
                 : <img src={data.avatar.fileUrl} alt="banner" width={"100%"} height={"200px"}/>} 
             </div>
             <div className="team-container">
@@ -78,7 +78,7 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
                                             {value.users?.map((user) => { 
                                                 return ( 
                                                     <NavLink to={`/user/${user.id}`} className="group-user">
-                                                        <img src={asFileUrl(user.avatar?.filePath)} alt="" className="team-avatar-icon"/>
+                                                        <img src={asFileUrl(user.avatar?.id)} alt="" className="team-avatar-icon"/>
                                                         <p>{user?.fullName}</p>
                                                     </NavLink>
                                                 )

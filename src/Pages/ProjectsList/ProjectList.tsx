@@ -57,7 +57,7 @@ const ProjectsListPage: React.FC<NavProps> = (props: NavProps) => {
                             <li className="project-container">
                                 <div className="project-content-list">
                                     <div className="left-content">
-                                        <img src={asFileUrl(project.icon?.filePath)} alt="" className="project-icon"/>
+                                        <img src={asFileUrl(project.icon?.id)} alt="" className="project-icon"/>
                                         <div className="project-metadata">
                                             <h4 className="project-title"><NavLink to={"/project/" + project.id} className={"project-link"}>{project.name}</NavLink></h4>
                                         </div>
@@ -66,7 +66,7 @@ const ProjectsListPage: React.FC<NavProps> = (props: NavProps) => {
                                         <div className="created-at">{project.createdAt?.toString()}</div>
                                     </div>
                                     <div className="owner">
-                                        <img src={asFileUrl(project.createdBy?.avatar?.filePath)} alt="" className="avatar-icon" />
+                                        <img src={asFileUrl(project.createdBy?.avatar?.id)} alt="" className="avatar-icon" />
                                         <h4>{project.createdBy?.fullName}</h4>
                                     </div>
                                     <div className="properties">

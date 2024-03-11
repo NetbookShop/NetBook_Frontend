@@ -128,14 +128,14 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
                     <div className="activity">
                         <div className="comments-container">
                             <div className="create-comment">
-                                <img src={asFileUrl(props.user?.avatar?.filePath)} alt="" className="comment-profile-image"  height={34} width={34}/>
+                                <img src={asFileUrl(props.user?.avatar?.id)} alt="" className="comment-profile-image"  height={34} width={34}/>
                                 <input type="text" className="create-comment-input" placeholder="Добавить коментарий" value={commentText} onChange={(e) => setCommentText(e.target.value)}/>
                             </div>
                             <div className="apply-comment" onClick={addComment}><p>Опубликовать</p></div>
                             {comments.map((value) => {
                                 return ( 
                                     <div className="comment-container">
-                                        <img src={asFileUrl(value.createdBy.avatar?.filePath)} alt="" className="comment-profile-image" height={34} width={34}/>
+                                        <img src={asFileUrl(value.createdBy.avatar?.id)} alt="" className="comment-profile-image" height={34} width={34}/>
                                         <div className="comment-info">
                                             <div className="comment-header">
                                                 <p>{value.createdBy.fullName}</p>
@@ -183,7 +183,7 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
                             <div className="maininfo-value">
                             {task?.assignedUser  !== null && task?.assignedUser !== undefined ?  
                                 <div className="metainfo-account">
-                                    <img src={asFileUrl(task.assignedUser.avatar?.filePath)} alt="" className="comment-profile-image" width={25} height={25}/>
+                                    <img src={asFileUrl(task.assignedUser.avatar?.id)} alt="" className="comment-profile-image" width={25} height={25}/>
                                     <div>{task.assignedUser.fullName}</div>
                                 </div>
                             : <div className="metainfo-add-user" onClick={() => setIsOpenAssignUser(true)}>
@@ -208,7 +208,7 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
                             <p className="metainfo-header">Автор</p>
                             {task?.createdBy !== null ?  
                                 <div className="metainfo-account">
-                                    <img src={asFileUrl(task?.createdBy.avatar?.filePath)} alt="" className="comment-profile-image" width={25} height={25}/>
+                                    <img src={asFileUrl(task?.createdBy.avatar?.id)} alt="" className="comment-profile-image" width={25} height={25}/>
                                     <div>{task?.createdBy.fullName}</div>
                                 </div>
                             : null }

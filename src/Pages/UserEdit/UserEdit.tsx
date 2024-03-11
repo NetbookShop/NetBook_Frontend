@@ -97,7 +97,7 @@ const UserEditPage: React.FC<NavProps> = (props: NavProps) => {
                             image === null ||
                             image === undefined
                         )
-                        ? asFileUrl(props.user?.avatar?.filePath)
+                        ? asFileUrl(props.user?.avatar?.id)
                         : String(image)}
                         alt=""
                         className="projectedit-project-icon"

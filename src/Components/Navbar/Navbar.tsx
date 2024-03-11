@@ -38,7 +38,7 @@ const NavbarComponent: React.FC<props> = (props: props) => {
                         <div>
                             <ProfileComponent 
                                 userId={props.user.id || ""} 
-                                avatarUrl={asFileUrl(props.user.avatar?.filePath || "")}
+                                avatarUrl={asFileUrl(props.user.avatar?.id || "")}
                             />
                         </div>
                     : null }

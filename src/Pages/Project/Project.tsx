@@ -23,7 +23,6 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
             if (value.assignedUser !== undefined) {  
                 if (usersNames.indexOf(value.assignedUser.fullName || "") === -1) { 
                     setUsers([...users, value.assignedUser])
-                    // users.push(value.assignedUser)
                     setUsersNames([...usersNames, value.assignedUser.fullName || ""])
                 }
             } 
@@ -99,7 +98,7 @@ const ProjectPage: React.FC<NavProps> = (props: NavProps) => {
                             <div>
                                 <div className="users-info">
                                     <ArrowIcon width={28} height={28}/>
-                                    <img src={asFileUrl(user.avatar?.filePath)} alt="fuckyou" className="profile-image"></img>
+                                    <img src={asFileUrl(user.avatar?.id)} alt="fuckyou" className="profile-image"></img>
                                     <p>{user.fullName}</p>
                                 </div>
                                 <div className="user-tasks-container">
