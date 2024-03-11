@@ -6,7 +6,7 @@ import { NavLink, useNavigate, useParams } from "react-router-dom";
 import addIcon from "../../Static/Images/add-icon.png"
 import { useEffect, useState } from "react";
 import Modal from "../../Modals/Base/Base";
-import { Team, TeamControllersApi } from "task-manager";
+import { TaskControllersApi, TaskModel, Team, TeamControllersApi } from "task-manager";
 import { ApiConfig, asFileUrl } from "../../Gateway/Config";
 
 const TeamPage: React.FC<NavProps> = (props: NavProps) => { 
@@ -20,16 +20,21 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
         setIsOpenAddUserModal(true)
     }
 
+    const [tasks, setTasks] = useState<Array<TaskModel>>([])
     const [isOpenAddUserModal, setIsOpenAddUserModal] = useState(false); 
     const [isOpenUserModal, setIsOpenUserModal] = useState(false); 
     const [currentGroup, setCurrentGroup] = useState(''); 
     const teamApi = new TeamControllersApi(ApiConfig)
+    const taskApi = new TaskControllersApi(ApiConfig)
+
 
     useEffect(() => { 
         const getData = async () => { 
             try { 
                 let teamResponse = await teamApi.getTeam(id || "")
                 setTeam(teamResponse.data)
+                let tasksResponse = await taskApi.getTasks(undefined, undefined, teamResponse.data.id)
+                setTasks(tasksResponse.data)
             } catch (e) { 
                 console.error(e)
             }
@@ -103,17 +108,17 @@ const TeamPage: React.FC<NavProps> = (props: NavProps) => {
                 <div className="team-activity">
                     <div className="team-tasks">
                         <h3 className="team-info-header">Активность на работе</h3>
-                        {data.tasks.map((task) => { 
+                        {tasks?.map((task) => { 
                             return ( 
                                 <div className="team-task" onClick={() => navigate(`/task/${task.id}`)}>
-                                    <p className="team-task-name">{task.name}</p>
+                                    <p className="team-task-name">{task.title}</p>
                                     <div className="team-task-metainfo">
                                         <p className="team-project-name">
-                                            {task.projectName}
+                                            {task.project.name}
                                         </p>
                                         <p>•</p>
                                         <p className="team-project-data">
-                                            {task.createdAt}
+                                            {task.startedAt.toString().slice(0, 10)}
                                         </p>
                                     </div>  
                                 </div>

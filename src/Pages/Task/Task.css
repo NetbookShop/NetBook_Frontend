@@ -175,3 +175,19 @@
 .metainfo-add-user div { 
     display: inline;
 }
+
+.metainfo-complete-button { 
+    padding: 5px;
+    width: 100%;
+    background-color: blue;
+    color: white; 
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    border-radius: 3px;
+    cursor: pointer; 
+}
+
+.metainfo-complete-button:hover { 
+    background-color: rgb(1, 1, 130);
+}

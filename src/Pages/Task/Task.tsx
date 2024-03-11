@@ -22,12 +22,24 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
     const [ currentCommentID, setCurrentCommentID] = useState<string>()
     const [ currentCommentText, setCurrentCommentText] = useState('')
     const [ isOpenAssignUser, setIsOpenAssignUser ] = useState(false)
-    let commentApi = new CommentApi(ApiConfig)
+    const commentApi = new CommentApi(ApiConfig)
+    const taskApi = new TaskControllersApi(ApiConfig)
 
     let elements = new Map<string, string>()
     elements.set("Проекты", "/projects")
     elements.set(project?.name || "", `/project/${project?.id || ""}`)
     elements.set(task?.title || "", `/task/${task?.id || ""}`)
+
+    const completeTask = async (taskStatus: string) => { 
+        try { 
+            await taskApi.updateTask(taskId || "", { 
+                taskStatus: taskStatus
+            })
+            window.location.reload();
+        } catch (e) { 
+            console.error(e)
+        } 
+    }
 
     const addComment = async () => {
         if (commentText === undefined || taskId === undefined) { 
@@ -88,7 +100,7 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
     }
 
     useEffect(() => {
-        let taskApi = new TaskControllersApi(ApiConfig)
+
         let projectApi = new ProjectControllersApi(ApiConfig)
 
         const getData = async () => { 
@@ -219,12 +231,23 @@ const TaskPage: React.FC<NavProps> = (props: NavProps) => {
                                 {task?.startedAt.toString().slice(0, 10)}
                             </div>
                         </div>
+                        {task?.status !== "completed" ?
                         <div className="metainfo-field">
                             <p className="metainfo-header">Закончится в</p>
                             <div className="metainfo-value">
                                 {task?.endsAt?.toString().slice(0, 10)}
                             </div>
                         </div>
+                        : 
+                        <div className="metainfo-field">
+                            <p className="metainfo-header">Задача закончена</p>
+                        </div>
+                        } 
+                        {task?.status !== "completed" ? 
+                        <div className="metainfo-complete-button" onClick={() => completeTask("completed")}>
+                            Закончить задачу 
+                        </div>
+                        : null }
                     </div>
                 </div>
             </div>
