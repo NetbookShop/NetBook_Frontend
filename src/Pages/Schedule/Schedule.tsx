@@ -69,9 +69,9 @@ const SchedulePage: React.FC<NavProps> = (props: NavProps) => {
                         return ( 
                             <div>
                                 <div className="schedule-day-info">
-                                    <div>{value.startsAt.toString().slice(0, 10)}</div>
+                                    <div>{value.startsAt.toString().slice(11, 19)}</div>
                                     <img src={arrowIcon} alt="стрелка" className="schedule-day-arrow" width={25} height={20}/>
-                                    <div>{value.endsAt.toString().slice(0, 10)}</div>
+                                    <div>{value.endsAt.toString().slice(11, 19)}</div>
                                 </div>
                                 <hr />
                             </div>
@@ -86,9 +86,9 @@ const SchedulePage: React.FC<NavProps> = (props: NavProps) => {
                         return (
                             <div>
                                 <div className="schedule-day-info">
-                                    <div>{value.startsAt.toString().slice(0, 10)}</div>
+                                    <div>{value.startsAt.toString().slice(11, 19)}</div>
                                     <img src={arrowIcon} alt="стрелка" className="schedule-day-arrow" width={25} height={20}/>
-                                    <div>{value.endsAt.toString().slice(0, 10)}</div>
+                                    <div>{value.endsAt.toString().slice(11, 19)}</div>
                                 </div>
                                 <hr />
                             </div>
