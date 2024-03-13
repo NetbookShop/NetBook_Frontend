@@ -18,9 +18,6 @@ const SchedulePage: React.FC<NavProps> = (props: NavProps) => {
     elements.set("График", `/team/${team?.id || ""}/schedule`)
 
     const days: Array<string> = [] 
-    team?.dayTimetables?.map((value) => { 
-        days.push(value.name)
-    })
 
     useEffect(() => { 
         (async () => { 
