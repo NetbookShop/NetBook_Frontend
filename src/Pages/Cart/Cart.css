@@ -1,0 +1,56 @@
+.cart {
+    margin: 160px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.cart_card {
+    background-color: white;
+    width: 1500px;
+    padding: 40px;
+    border-radius: 8px;
+}
+
+.product_cards {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product_card_cart {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    background-color: white;
+    padding: 20px;
+    height: auto;
+    align-items: center;
+}
+
+.price_cart p {
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.itogo {
+    font-size: 20px;
+}
+
+.price_cart button {
+    padding: 5px;
+    background-color: white;
+    border: 1px solid red;
+    color: red;
+    cursor: pointer;
+    transition: 0.1s ease;
+    border-radius: 6px;
+    width: 100px;
+    height: 40px;
+    font-size: 15px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.price_cart button:hover {
+    background-color: red;
+    color: white;
+}

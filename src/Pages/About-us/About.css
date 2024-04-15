@@ -1,0 +1,19 @@
+.about {
+    margin-top: 160px;
+    max-width: 1170px;
+}
+
+.about h1 {
+    font-weight: 500;
+    margin-bottom: 50px;
+}
+
+.about p {
+    font-size: 18px;
+    margin-bottom: 50px;
+}
+
+.container {
+    height: auto;
+    padding: 0 150px;
+}

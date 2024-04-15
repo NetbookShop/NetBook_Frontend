@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { NavProps } from '../../Utils/Types';
 import { NavLink, useNavigate } from 'react-router-dom';
-import googleLogo from "../../Static/Images/google.png"
-import logo from "../../Static/Images/karma-systemlogo.png"
 import "./Login.css"
-import { RegisterUserApi } from 'task-manager';
+import { RegisterUserApi } from 'restclient';
 import { ApiConfig, setToken } from '../../Gateway/Config';
 import { useCookies } from 'react-cookie';
 import { AuthKey } from '../../Gateway/Consts';
@@ -46,7 +44,7 @@ const LoginPage: React.FC<NavProps> = (props: NavProps) => {
     return (
         <div className="login-root">
             <div className="login-container">
-                <div className="login-header"><img src={logo} alt="logo" className="header-logo"></img><h3>Карма менеджмент</h3></div>
+                <div className="login-header"><h3>Netbook Shop</h3></div>
                 <h2 className='login-header-login'>Войти</h2>
                 <form onSubmit={handleFormSubmit}>
                     <div className="input-field">
@@ -82,7 +80,6 @@ const LoginPage: React.FC<NavProps> = (props: NavProps) => {
                 <div className="oauth2">
                     <div className="oauth2-google">
                         <div className="google-content">
-                            <img src={googleLogo} alt="" width={30} height={30}/>
                             <p>Google</p>
                         </div>
                     </div>

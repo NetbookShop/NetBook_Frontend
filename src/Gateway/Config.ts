@@ -11,7 +11,7 @@
 
 
 
-import { Configuration } from "task-manager";
+import { Configuration } from "restclient";
 import { AuthKey, baseDownloadPath, basePath } from "./Consts";
 
 

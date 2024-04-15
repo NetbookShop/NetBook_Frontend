@@ -1,51 +1,49 @@
 import { NavLink } from "react-router-dom";
 import "./Navbar.css"
 import React from "react";
-import logo from "../../Static/Images/karma-systemlogo.png"
 import { NavigationCategoryTypes } from "../../Utils/Types";
-import SearchComponent from "../Search/Search";
-import NotificationComponent from "../Notification/Notification";
-import ProfileComponent from "../Profile/Profile";
-import { UserModel } from "task-manager";
-import { asFileUrl } from "../../Gateway/Config";
+import { UserControllersApi, UserModel } from "restclient";
+import { ApiConfig, asFileUrl } from "../../Gateway/Config";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import {
+  faCartShopping
+} from "@fortawesome/free-solid-svg-icons";
+import {
+  faUser
+} from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
 
 type props = { navigationCategory?: NavigationCategoryTypes, user: UserModel | undefined | null }
 
 
 const NavbarComponent: React.FC<props> = (props: props) => { 
+  const [user, setUser] = useState<UserModel>();
+  useEffect(() => {(async () => {  
+        
+    const userApi = new UserControllersApi(ApiConfig)
+    try {
+        let response = await userApi.getMe()
+        setUser(response.data)
+    } catch (e) { 
+        console.error()
+    }
+})()}, [props.user])
     return (
-        <div>
-            { props.navigationCategory !== "none" ?  
-            <header className="navbar-root">
-                <div className="navbar-left-content">
-                    <NavLink to="/" className="navbar-home-link logo-link">
-                        <img src={logo} alt="something" className="logo" width={40} height={40}/>
-                    </NavLink>
-                    <NavLink to="/" className={"navbar-projects-link " + (props.navigationCategory === "work" ? "current-link" : "")}>
-                        <p className="projects-link">Моя работа</p>
-                    </NavLink>
-                    <NavLink to="/projects" className={"navbar-projects-link " + (props.navigationCategory === "projects" ? "current-link" : "")}>
-                        <p className="projects-link">Проекты</p>
-                    </NavLink>
-                    <NavLink to="/teams" className={"navbar-projects-link " + (props.navigationCategory === "teams" ? "current-link" : "")}>
-                        <p className="projects-link">Команды</p>
-                    </NavLink>
-                </div>
-                <div className="navbar-right-content">
-                    <SearchComponent width={260}/>
-                    <NotificationComponent />
-                    {props.user !== undefined && props.user !== null ? 
-                        <div>
-                            <ProfileComponent 
-                                userId={props.user.id || ""} 
-                                avatarUrl={asFileUrl(props.user.avatar?.id || "")}
-                            />
-                        </div>
-                    : null }
-                </div>
-            </header>
-            : null } 
-        </div>
+        <header className="header">
+          <div className="header_logo">
+            <NavLink to="/"><h1>NetBook Shop</h1></NavLink>
+          </div>
+          <div className="header_list">
+            <NavLink to="/">Главная</NavLink>
+            <NavLink to="/catalog">Каталог</NavLink>
+            <NavLink to="/about_us">О нас</NavLink>
+            <NavLink to="/articles">Статьи</NavLink>
+            <NavLink to="/cart"><FontAwesomeIcon icon={faCartShopping} /></NavLink>
+            <NavLink to="/login"><FontAwesomeIcon icon={faUser} /></NavLink>
+            <NavLink to="/profile">{user?.fullName}</NavLink>
+          </div>
+        </header>
     )
 }
 

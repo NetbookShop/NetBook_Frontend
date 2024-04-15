@@ -1,0 +1,50 @@
+.profile {
+    display: flex;
+    flex-direction: column; /* Изменили направление флекс-контейнера на столбец */
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.profile_card {
+    width: 1000px;
+    height: 400px;
+    background-color: white;
+    padding: 40px;
+    display: flex;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile_photo {
+    font-size: 80px;
+    border: 1px solid black;
+    padding: 8px;
+    margin-right: 50px;
+} 
+
+.profile_info h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.profile_info h2 {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+.profile_info button {
+    padding: 10px;
+    background-color: white;
+    border: 1px solid red;
+    color: red;
+    cursor: pointer;
+    transition: 0.1s ease;
+    border-radius: 6px;
+    width: 100px;
+}
+
+.profile_info button:hover {
+    background-color: red;
+    color: white;
+}

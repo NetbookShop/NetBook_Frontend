@@ -1,5 +1,5 @@
 import {Dispatch } from 'react'
-import { UserModel } from 'task-manager'
+import { UserModel } from 'restclient'
 
 export type NavigationCategoryTypes = "projects" | "work" | "teams" | "nochoice" | "none"
 

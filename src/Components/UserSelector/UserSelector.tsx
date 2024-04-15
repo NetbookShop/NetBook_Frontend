@@ -1,7 +1,7 @@
 import { Dispatch, useState, useEffect } from "react";
 import checkMark from "../../Static/Images/check-mark.png"
 import "./UserSelector.css"
-import { UserControllersApi, UserModel } from "task-manager";
+import { UserControllersApi, UserModel } from "restclient";
 import { ApiConfig, asFileUrl } from "../../Gateway/Config";
 
 type props = { users: Array<UserModel>, selectedUsers: Array<string>, setSelectedUsers: Dispatch<Array<string>> }

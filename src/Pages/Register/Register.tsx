@@ -6,7 +6,7 @@ import "./Register.css"
 import logo from "../../Static/Images/karma-systemlogo.png"
 import googleLogo from "../../Static/Images/google.png"
 import { NavLink, useNavigate } from "react-router-dom";
-import { RegisterUserApi } from "task-manager";
+import { RegisterUserApi } from "restclient";
 import { ApiConfig, setToken } from "../../Gateway/Config";
 
 
@@ -69,7 +69,7 @@ const RegisterPage: React.FC<NavProps> = (props: NavProps) => {
     return (
         <div className="register-root">
             <div className="register-container">
-                <div className="register-header"><img src={logo} alt="logo" className="header-logo"></img><h3>Карма менеджмент</h3></div>
+                <div className="register-header"><h3>Карма менеджмент</h3></div>
                 <h2>Регистрация</h2>
                 <form onSubmit={handleSubmit} className="register-form">
                     <div className="input-field">
@@ -99,7 +99,6 @@ const RegisterPage: React.FC<NavProps> = (props: NavProps) => {
                 <div className="oauth2">
                     <div className="oauth2-google">
                         <div className="google-content">
-                            <img src={googleLogo} alt="" width={30} height={30}/>
                             <p>Google</p>
                         </div>
                     </div>

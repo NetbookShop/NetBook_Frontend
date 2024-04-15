@@ -1,143 +1,84 @@
-import { useEffect, useState } from "react";
-import Data from "../../TestData/Home.json"  
 import { NavProps } from "../../Utils/Types";
 import "./Home.css"
-import PaginationNavigation from "../../Components/Pagination/Pagination";
-import { NavLink, useNavigate } from "react-router-dom";
-import { Project, ProjectControllersApi, TaskControllersApi, TaskModel } from "task-manager";
-import { ApiConfig, asFileUrl } from "../../Gateway/Config";
+import { Link } from "react-router-dom";
+import ad1 from '../../Static/Images/asus-ad.png'
+import office from '../../Static/Images/office-category.png'
+import gaming from '../../Static/Images/gaming-category.png'
+import ultra from '../../Static/Images/ultrabook-category.png'
+import ReactDOM from 'react-dom';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
+
 
 const HomePage: React.FC<NavProps> = (props: NavProps) => { 
-    const [currentTasks, setCurrentTasks] = useState<Array<TaskModel>>([]); 
-    const [projects, setProjects] = useState<Array<Project>>([]); 
-    const tasksStatus = currentTasks.map((value) => { 
-        return value.status 
-    })
-    const tasksCategories = tasksStatus.filter((item, i, ar) => ar.indexOf(item) === i)
-    props.setCategory("work")
-    const [currentTasksCategory, setCurrentTasksCategory] = useState(tasksCategories.length > 1 ? tasksCategories[0] : '');  
-    const tasksCounterByCategory: { [key: string]: number } = currentTasks.reduce((counter: { [key: string]: number }, task) => {
-        counter[task.status] = (counter[task.status] || 0) + 1;
-        return counter;
-    }, {});
-    const [currentPage, setCurrentPage] = useState<number>(0); 
-    const navigate = useNavigate()
-
-    useEffect(() => { 
-        const projectApi = new ProjectControllersApi(ApiConfig)
-
-        const getData = async () => { 
-            try { 
-                let projectResponse = await projectApi.getProjectsList()
-                setProjects(projectResponse.data)
-  
-            } catch (e) { 
-                console.error(e)
-            }
-        }
-
-        getData()
-    }, [props.user]) 
-    useEffect(() => { 
-        (async () => {
-            const taskApi = new TaskControllersApi(ApiConfig)
- 
-            try { 
-                let tasksResponse = await taskApi.getTasks(undefined, props.user?.id || "", undefined, true)
-                setCurrentTasks(tasksResponse.data)          
-            } catch (e) { 
-                console.error(e)
-            }
-        })()
-    }, [props.user])
-
     return (
-        <div className="home-root">
-            <h1 className="your-work">Ваша работа</h1>
-            <h3 className="recent-projects">Недавние проекты</h3>
-            <div className="projects-container">
-                {projects.map((project) => { 
-                    return (
-                        <div className="project-card">
-                            <div className="project-content">
-                                <div className="project-header">
-                                    <img src={asFileUrl(project.icon?.id)} alt="" width={24} height={24}/>
-                                    <h3 className="project-name">{project.name}</h3>
-                                </div>
-                                <p className="fast-links">Быстрые ссылки</p>
-                                <ul>
-                                    <li className="tasks-group" onClick={() => navigate(`/project/${project.id}`)}>
-                                        <p className="tasks-type">Открытые задачи </p>
-                                        <p className="tasks-count">{tasksCounterByCategory['open'] || 0}</p>
-                                    </li>
-                                    <li className="tasks-group" onClick={() => navigate(`/project/${project.id}`)}>
-                                        <p className="tasks-type">Завершенные задачи</p>
-                                        <p className="tasks-count">{tasksCounterByCategory["completed"] || 0}</p>
-                                    </li>
-                                    <li className="tasks-group" onClick={() => navigate(`/project/${project.id}`)}>
-                                        <p className="tasks-type">Назначеные задачи</p>
-                                        <p className="tasks-count">{tasksCounterByCategory['onWork'] || 0}</p>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    )
-                })}
+    <div className="main_page">
+    <Carousel>
+      <div>
+          <img src={ad1} />
+      </div>
+      <div>
+          <img src={ad1} />
+      </div>
+      <div>
+          <img src={ad1} />
+      </div>
+      </Carousel>
+      <div className="categories">
+        <h1>Категории</h1>
+        <div className="categories_cards">
+          <div className="categories_card">
+            <Link to="gaming_laptops">
+              <div className="card_img">
+                <img src={gaming} alt="" />
+              </div>
+            </Link>
+            <Link to="gaming-laptops"><h2>Игровые</h2></Link>
+            <div className="card_items">
+              <Link to="#"><h4>Asus ROG</h4></Link>
+              <Link to="#"><h4>Asus TUF</h4></Link>
+              <Link to="#"><h4>Lenovo Legion</h4></Link>
+              <Link to="#"><h4>Acer Nitro</h4></Link>
             </div>
-            <div className="home-tasks">
-                <div className="tasks-navbar">
-                    {tasksCategories.map((group) => { 
-                        return (
-                            <div className="tasks-navbar-link">
-                                <button
-                                    onClick={() => setCurrentTasksCategory(group)} 
-                                    className={
-                                        "tasks-navbar-choice " + 
-                                        (group === currentTasksCategory ? "current-link" : "")
-                                    }
-                                >
-                                    {group} 
-                                    <span className="tasks-navbar-counter">
-                                        {tasksCounterByCategory[group]}
-                                    </span>
-                                </button>
-                            </div>
-                        )
-                    })}
-                </div>
-                <ul className="tasks-list">
-                    <div className="task-timestmp">Сегодня</div>
-                    {currentTasks.map((task) => {
-                        return (
-                            <div>
-                                {task.status === currentTasksCategory ? 
-                                <li className="home-task-container">
-                                    <NavLink to={`/task/${task.id}`}>
-                                        <div className="task-content">
-                                            <div className="left-content">
-                                                <img src={asFileUrl(task.project.icon?.id)} alt={task.project.icon?.fileName} className="project-icon"/>
-                                                <div className="task-metadata">
-                                                    <h4 className="task-title">{task.title}</h4>
-                                                    <span className="task-project">{task.project.name}</span>
-                                                </div>
-                                            </div>
-                                            <div className="right-content">
-                                                <h4 className="task-project">Создано</h4>
-                                                <img src={asFileUrl(task.createdBy.avatar?.id)} alt={task.createdBy.avatar?.fileName} className="avatar-owner-icon"/>
-                                            </div>
-                                        </div>
-                                    </NavLink>
-                                </li>
-                                : null}
-                            </div>
-                        )
-                    })} 
-                </ul>
-                <div className="pagination-pages">
-                    <PaginationNavigation pageCounter={1} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
-                </div>
+          </div>
+          <div className="categories_card">
+            <Link to="gaming_laptops">
+              <div className="card_img">
+                <img src={office} alt="" />
+              </div>
+            </Link>
+            <Link to="gaming-laptops"><h2>Офисные</h2></Link>
+            <div className="card_items">
+              <Link to="#"><h4>HP</h4></Link>
+              <Link to="#"><h4>Asus VivoBook</h4></Link>
+              <Link to="#"><h4>Lenovo</h4></Link>
+              <Link to="#"><h4>Acer Aspire</h4></Link>
             </div>
+          </div>
+          <div className="categories_card">
+            <Link to="gaming_laptops">
+              <div className="card_img">
+                <img src={ultra} alt="" />
+              </div>
+            </Link>
+            <Link to="gaming-laptops"><h2>Ульрабуки</h2></Link>
+            <div className="card_items">
+              <Link to="#"><h4>Asus ZenBook</h4></Link>
+              <Link to="#"><h4>MacBook</h4></Link>
+              <Link to="#"><h4>Lenovo ThinkPad</h4></Link>
+            </div>
+          </div>
         </div>
+      </div>
+      <div className="why_us">
+        <h1>Почему именно мы?</h1>
+        <p>Мы предлагаем широкий ассортимент ноутбуков от лучших производителей, <br /> 
+          гарантируя высокое качество и надежность каждой модели. Наши профессиональные <br />
+          консультанты помогут вам сделать правильный выбор, а удобный процесс покупки обеспечит 
+          приятный опыт. <br />
+          Покупайте у нас и получайте уверенность в своем выборе.</p>
+      </div>
+    </div>
     )
 }
 

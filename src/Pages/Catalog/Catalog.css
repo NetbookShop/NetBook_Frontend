@@ -1,0 +1,94 @@
+.catalog {
+    margin: 160px 0;
+}
+
+.container {
+    height: auto;
+    padding: 0 150px;
+}
+
+.catalog h1 {
+    margin-bottom: 50px;
+}
+
+.sidebar {
+    float: left;
+}
+
+.filter {
+    width: 450px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+.filter h2 {
+    margin-bottom: 25px;
+}
+
+.filter h3 {
+    margin-bottom: 10px;
+}
+
+.filter_item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+}
+
+.filter_item label {
+    margin-bottom: 5px;
+}
+
+.input_num {
+    margin-right: 10px;
+    margin-bottom: 25px;
+}
+
+.product_cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.product_card_ {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    width: 250px;
+    height: auto;
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+}
+
+.product_card_img img {
+    width: 200px;
+}
+
+.product_card_ h2 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.price p {
+    font-weight: 500;
+    margin: 20px 0;
+}
+
+.price button {
+    width: 200px;
+    height: 30px;
+    border: 1px solid red;
+    background-color: white;
+    border-radius: 6px;
+    color: red;
+    cursor: pointer;
+    transition: 0.1s ease;
+}
+
+.price button:hover {
+    background-color: red;
+    color: white;
+}

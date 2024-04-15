@@ -1,0 +1,13 @@
+.articles {
+    margin: 160px 0;
+}
+
+.articles h1 {
+    font-weight: 500;
+    margin-bottom: 50px;
+}
+
+.container {
+    height: auto;
+    padding: 0 150px;
+}
