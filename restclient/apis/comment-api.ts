@@ -123,14 +123,13 @@ export const CommentApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @param {string} [taskId] 
          * @param {string} [userId] 
          * @param {number} [end] 
          * @param {number} [start] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getComments: async (taskId?: string, userId?: string, end?: number, start?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getComments: async (userId?: string, end?: number, start?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/comment`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -149,10 +148,6 @@ export const CommentApiAxiosParamCreator = function (configuration?: Configurati
                     ? await configuration.accessToken()
                     : await configuration.accessToken;
                 localVarHeaderParameter["Authorization"] = "Bearer " + accessToken;
-            }
-
-            if (taskId !== undefined) {
-                localVarQueryParameter['TaskId'] = taskId;
             }
 
             if (userId !== undefined) {
@@ -273,15 +268,14 @@ export const CommentApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {string} [taskId] 
          * @param {string} [userId] 
          * @param {number} [end] 
          * @param {number} [start] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getComments(taskId?: string, userId?: string, end?: number, start?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<Array<Comment>>>> {
-            const localVarAxiosArgs = await CommentApiAxiosParamCreator(configuration).getComments(taskId, userId, end, start, options);
+        async getComments(userId?: string, end?: number, start?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<Array<Comment>>>> {
+            const localVarAxiosArgs = await CommentApiAxiosParamCreator(configuration).getComments(userId, end, start, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -330,15 +324,14 @@ export const CommentApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @param {string} [taskId] 
          * @param {string} [userId] 
          * @param {number} [end] 
          * @param {number} [start] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getComments(taskId?: string, userId?: string, end?: number, start?: number, options?: AxiosRequestConfig): Promise<AxiosResponse<Array<Comment>>> {
-            return CommentApiFp(configuration).getComments(taskId, userId, end, start, options).then((request) => request(axios, basePath));
+        async getComments(userId?: string, end?: number, start?: number, options?: AxiosRequestConfig): Promise<AxiosResponse<Array<Comment>>> {
+            return CommentApiFp(configuration).getComments(userId, end, start, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -382,7 +375,6 @@ export class CommentApi extends BaseAPI {
     }
     /**
      * 
-     * @param {string} [taskId] 
      * @param {string} [userId] 
      * @param {number} [end] 
      * @param {number} [start] 
@@ -390,8 +382,8 @@ export class CommentApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommentApi
      */
-    public async getComments(taskId?: string, userId?: string, end?: number, start?: number, options?: AxiosRequestConfig) : Promise<AxiosResponse<Array<Comment>>> {
-        return CommentApiFp(this.configuration).getComments(taskId, userId, end, start, options).then((request) => request(this.axios, this.basePath));
+    public async getComments(userId?: string, end?: number, start?: number, options?: AxiosRequestConfig) : Promise<AxiosResponse<Array<Comment>>> {
+        return CommentApiFp(this.configuration).getComments(userId, end, start, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 

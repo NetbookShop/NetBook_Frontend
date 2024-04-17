@@ -74,7 +74,10 @@ const CartPage: React.FC<NavProps> = (props: NavProps) => {
                     </div>
                 </div>
             ))}
-            <p className="itogo">Итого: {calculateTotal()} ₸</p>
+            <p className="itogo">Сумма к оплате: {calculateTotal()} ₸</p>
+            <div className="buy_buttons">
+                <Link to='/by_cash'><button>Оформить</button></Link>
+            </div>
             </>
         )}
         </div>

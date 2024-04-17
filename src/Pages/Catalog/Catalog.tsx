@@ -502,8 +502,8 @@ const CatalogPage: React.FC<NavProps> = (props: NavProps) => {
                       <div className='product_card_items'>
                           <div className='price'>
                               <p>{product.price} ₸</p>
-                              <Link to='#'>
-                                  <button onClick={addToCart}>В корзину</button>
+                              <Link to={`/product/${product.id}`}>
+                                  <button>Подробнее</button>
                               </Link>
                           </div>
                       </div>

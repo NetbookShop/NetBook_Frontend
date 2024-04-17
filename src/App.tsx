@@ -18,6 +18,9 @@ import ArticlesPage from './Pages/Articles/Articles';
 import ProfilePage from './Pages/Profile/Profile';
 import ProductPage from './Pages/Product/Product';
 import CartPage from './Pages/Cart/Cart';
+import BycardPage from './Pages/Payment/Bycard/Bycard';
+import BycashPage from './Pages/Payment/Bycash/Bycash';
+import CashPage from './Pages/Payment/Cash/Cash'
 import FooterComponent from './Components/Footer/Footer';
 import { setAccessTokenForClient, removeToken, ApiConfig } from './Gateway/Config';
 import { ToastContainer } from 'react-toastify';
@@ -69,6 +72,9 @@ function App() {
 					<Route path="/product" element={<ProductPage  setCategory={setNavigationCategory} user={currentUser} addToCart={addToCart}/>} action={localAuthCheck}/>
 					<Route path="/product/:productId" element={<ProductPage  setCategory={setNavigationCategory} user={currentUser} addToCart={addToCart}/>} action={localAuthCheck}/>
 					<Route path="/cart" element={<CartPage  setCategory={setNavigationCategory} user={currentUser} />} action={localAuthCheck}/>
+					<Route path="/by_card" element={<BycardPage  setCategory={setNavigationCategory} user={currentUser} />} action={localAuthCheck}/>
+					<Route path="/by_cash" element={<BycashPage  setCategory={setNavigationCategory} user={currentUser} />} action={localAuthCheck}/>
+					<Route path="/cash" element={<CashPage  setCategory={setNavigationCategory} user={currentUser} />} action={localAuthCheck}/>
 			</Routes>
 			</div>
 			<FooterComponent user={currentUser}/>

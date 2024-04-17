@@ -1,5 +1,6 @@
 .product_main {
-    margin: 160px 0;
+    margin-top: 160px;
+    margin-bottom: 30px;
     height: auto;
     padding: 0 150px;
     display: flex;
@@ -65,4 +66,50 @@
 
 .product_detail hr {
     color: gray
+}
+
+.reviews {
+    display: flex;
+    justify-content: center;
+    width: 1200px;
+    background-color: white;
+    padding: 20px;
+    height: auto;
+    border-radius: 6px;
+    margin: 0 auto;
+    flex-direction: column;
+    margin-bottom: 100px;
+}
+
+.reviews textarea {
+    width: 100%;
+    height: 200px;
+}
+
+.reviews button {
+    padding: 10px;
+    background-color: white;
+    border: 1px solid red;
+    color: red;
+    cursor: pointer;
+    transition: 0.1s ease;
+    border-radius: 6px;
+    width: auto;
+    height: auto;
+    font-size: 15px;
+    margin-right: 10px;
+    margin: 20px 0;
+}
+
+.reviews button:hover {
+    background-color: red;
+    color: white;
+}
+
+.product_reviews h1 {
+    margin-bottom: 20px;
+}
+
+.product_reviews p {
+    margin-bottom: 10px;
 }

@@ -38,7 +38,6 @@ const NavbarComponent: React.FC<props> = (props: props) => {
             <NavLink to="/">Главная</NavLink>
             <NavLink to="/catalog">Каталог</NavLink>
             <NavLink to="/about_us">О нас</NavLink>
-            <NavLink to="/articles">Статьи</NavLink>
             <NavLink to="/cart"><FontAwesomeIcon icon={faCartShopping} /></NavLink>
             <NavLink to="/login"><FontAwesomeIcon icon={faUser} /></NavLink>
             <NavLink to="/profile">{user?.fullName}</NavLink>

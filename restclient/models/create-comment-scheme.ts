@@ -24,12 +24,6 @@ export interface CreateCommentScheme {
      * @type {string}
      * @memberof CreateCommentScheme
      */
-    taskId: string;
-
-    /**
-     * @type {string}
-     * @memberof CreateCommentScheme
-     */
     text: string;
 
     /**
